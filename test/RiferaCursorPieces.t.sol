@@ -281,6 +281,75 @@ contract RiferaCursorPiecesTest is Test {
         assertTrue(contains(svg4, "25,28 21,28"));
     }
 
+    // ---------- supply cap (1,111 per piece, 5,555 total) ----------
+
+    /// @notice Mint free Pointers for `count` fresh wallets (Agent ID each).
+    function fillPointer(uint256 count, uint256 start) internal {
+        for (uint256 i; i < count; i++) {
+            address w = address(uint160(0x10000 + start + i));
+            registry.mintTo(w);
+            vm.prank(w);
+            pieces.mint();
+        }
+    }
+
+    function testCapConstants() public view {
+        assertEq(pieces.MAX_SUPPLY_PER_PIECE(), 1111);
+        assertEq(pieces.MAX_TOTAL_SUPPLY(), 5555);
+        for (uint8 p; p < 5; p++) {
+            assertEq(pieces.mintedPerPiece(p), 0);
+            assertEq(pieces.remainingPerPiece(p), 1111);
+        }
+    }
+
+    function testMintedPerPieceCounts() public {
+        mintNext(alice, 0);
+        assertEq(pieces.mintedPerPiece(0), 1);
+        assertEq(pieces.remainingPerPiece(0), 1110);
+        mintNext(alice, 0.002 ether);
+        assertEq(pieces.mintedPerPiece(1), 1);
+        assertEq(pieces.remainingPerPiece(1), 1110);
+        assertEq(pieces.mintedPerPiece(2), 0);
+    }
+
+    function testPointerCapEnforced() public {
+        fillPointer(1111, 0);
+        assertEq(pieces.mintedPerPiece(0), 1111);
+        assertEq(pieces.remainingPerPiece(0), 0);
+        assertEq(pieces.totalMinted(), 1111);
+        // 1,112th wallet: mint reverts with PieceSoldOut(0) ...
+        address dave = makeAddr("dave");
+        registry.mintTo(dave);
+        vm.deal(dave, 1 ether);
+        vm.prank(dave);
+        vm.expectRevert(abi.encodeWithSelector(RiferaCursorPieces.PieceSoldOut.selector, uint8(0)));
+        pieces.mint();
+        // ... and the quote reverts too (never quote a mint that must fail).
+        vm.expectRevert(abi.encodeWithSelector(RiferaCursorPieces.PieceSoldOut.selector, uint8(0)));
+        pieces.nextMintQuote(dave);
+        assertEq(pieces.totalMinted(), 1111);
+    }
+
+    function testCapPerPieceIndependent() public {
+        // Alice already holds a Pointer before the cap fills.
+        mintNext(alice, 0);
+        fillPointer(1110, 0); // Pointer now at 1,111 (sold out)
+        assertEq(pieces.mintedPerPiece(0), 1111);
+        assertEq(pieces.remainingPerPiece(0), 0);
+        // Pointer being sold out does NOT block Alice's Ember mint.
+        uint256 id = mintNext(alice, 0.002 ether);
+        assertEq(pieces.pieceOf(id), 1);
+        assertEq(pieces.mintedPerPiece(1), 1);
+        assertEq(pieces.remainingPerPiece(1), 1110);
+        // But a brand-new wallet cannot start (it must start at Pointer).
+        address dave = makeAddr("dave");
+        registry.mintTo(dave);
+        vm.deal(dave, 1 ether);
+        vm.prank(dave);
+        vm.expectRevert(abi.encodeWithSelector(RiferaCursorPieces.PieceSoldOut.selector, uint8(0)));
+        pieces.mint();
+    }
+
     // ---------- owner controls / withdraw safety net ----------
 
     function testOnlyOwnerCanOpenClose() public {

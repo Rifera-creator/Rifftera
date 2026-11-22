@@ -23,6 +23,10 @@ interface IAgentId {
 /// max 5 per wallet (one complete set, no duplicates, no 6th mint).
 /// First mint per wallet is FREE (gas only); mints 2-5 cost 0.002 BNB each.
 /// Minting requires holding a Binance Agent ID (balanceOf > 0).
+/// Supply is capped: 1,111 per piece (1,111 Pointer, 1,111 Ember, 1,111
+/// Verdant, 1,111 Frost, 1,111 Void), 5,555 total — one piece type selling
+/// out does not change any other piece's cap, but a wallet always starts
+/// at Pointer, so once Pointer is sold out no new wallet can start.
 /// 100% of paid mint BNB goes straight to the owner (project wallet) in the
 /// same transaction — nothing is kept in this contract. Payment must be
 /// EXACT: underpayment and overpayment both revert (no refund path).
@@ -35,6 +39,12 @@ contract RiferaCursorPieces is ERC721, Ownable, ReentrancyGuard {
     uint256 public constant PIECE_PRICE = 0.002 ether;
     uint8 public constant MAX_PIECES_PER_WALLET = 5;
 
+    /// @notice Supply cap per piece: 1,111 of each piece (Pointer, Ember,
+    /// Verdant, Frost, Void). 1,111 sets max, 5,555 NFTs total.
+    uint256 public constant MAX_SUPPLY_PER_PIECE = 1111;
+    /// @notice Total supply cap across all 5 pieces: 5 x 1,111 = 5,555.
+    uint256 public constant MAX_TOTAL_SUPPLY = 5555;
+
     /// @notice Binance Agent ID NFT contract (BNB Chain mainnet).
     IAgentId public immutable agentId;
 
@@ -44,6 +54,10 @@ contract RiferaCursorPieces is ERC721, Ownable, ReentrancyGuard {
 
     uint256 public nextTokenId = 1;
     uint256 public totalMinted;
+
+    /// @notice Pieces minted per piece index (0-4). Public getter:
+    /// mintedPerPiece(piece) — the web reads this to show remaining supply.
+    mapping(uint8 => uint256) public mintedPerPiece;
 
     /// @notice Pieces minted by a wallet (0-5). Next piece = this count.
     mapping(address => uint256) public mintsByWallet;
@@ -58,6 +72,7 @@ contract RiferaCursorPieces is ERC721, Ownable, ReentrancyGuard {
     error MintClosed();
     error NoAgentId(address wallet);
     error MaxPiecesMinted(address wallet);
+    error PieceSoldOut(uint8 piece);
     error InsufficientPayment(uint256 required, uint256 sent);
     error ExcessPayment(uint256 required, uint256 sent);
     error WithdrawFailed();
@@ -75,11 +90,20 @@ contract RiferaCursorPieces is ERC721, Ownable, ReentrancyGuard {
 
     /// @notice Exact price of a wallet's next mint: 0 for the first
     /// (Pointer, free), 0.002 BNB for mints 2-5. Reverts if the wallet
-    /// already holds a complete set (no next mint exists).
+    /// already holds a complete set (no next mint exists), or if the next
+    /// piece type is sold out (cap 1,111 reached) — never quote a mint
+    /// that is guaranteed to fail.
     function nextMintQuote(address wallet) external view returns (uint256) {
         uint256 count = mintsByWallet[wallet];
         if (count >= MAX_PIECES_PER_WALLET) revert MaxPiecesMinted(wallet);
+        uint8 piece = uint8(count);
+        if (mintedPerPiece[piece] >= MAX_SUPPLY_PER_PIECE) revert PieceSoldOut(piece);
         return count == 0 ? 0 : PIECE_PRICE;
+    }
+
+    /// @notice Remaining supply of a piece: cap minus minted (0 when sold out).
+    function remainingPerPiece(uint8 piece) external view returns (uint256) {
+        return MAX_SUPPLY_PER_PIECE - mintedPerPiece[piece];
     }
 
     /// @notice Mint the next piece in sequence for the caller. Payable,
@@ -91,15 +115,18 @@ contract RiferaCursorPieces is ERC721, Ownable, ReentrancyGuard {
         uint256 count = mintsByWallet[msg.sender];
         if (count >= MAX_PIECES_PER_WALLET) revert MaxPiecesMinted(msg.sender);
 
+        uint8 piece = uint8(count); // 0 Pointer, 1 Ember, 2 Verdant, 3 Frost, 4 Void
+        if (mintedPerPiece[piece] >= MAX_SUPPLY_PER_PIECE) revert PieceSoldOut(piece);
+
         uint256 price = count == 0 ? 0 : PIECE_PRICE;
         if (msg.value < price) revert InsufficientPayment(price, msg.value);
         if (msg.value > price) revert ExcessPayment(price, msg.value);
 
-        uint8 piece = uint8(count); // 0 Pointer, 1 Ember, 2 Verdant, 3 Frost, 4 Void
         uint256 tokenId = nextTokenId++;
         _pieceOf[tokenId] = piece;
         _walletTokens[msg.sender][count] = tokenId;
         mintsByWallet[msg.sender] = count + 1;
+        mintedPerPiece[piece] += 1;
         totalMinted += 1;
         _safeMint(msg.sender, tokenId);
         emit PieceMinted(msg.sender, tokenId, piece, price);

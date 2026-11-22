@@ -67,6 +67,7 @@ TEMPLATE = r"""<!DOCTYPE html>
       <li><b>100% of paid mint BNB goes straight to the owner in the same transaction.</b> Nothing is kept in the contract (withdraw() exists only as a safety net for stuck dust).</li>
       <li>Payment must be <b>exact</b> — underpayment and overpayment both revert. Always call <b>nextMintQuote(wallet)</b> first.</li>
       <li>Max <b>5 pieces per wallet</b> (one complete set, one of each, in order). No 6th mint, no duplicates.</li>
+      <li><b>Supply cap: 1,111 per piece</b> (Pointer, Ember, Verdant, Frost, Void) — <b>5,555 total</b>. A sold-out piece reverts new mints of that piece (PieceSoldOut); since every wallet starts at Pointer, once Pointer sells out no new wallet can start. Check remaining with <b>mintedPerPiece(piece)</b> / <b>remainingPerPiece(piece)</b>.</li>
     </ul>
   </section>
 
@@ -86,6 +87,7 @@ TEMPLATE = r"""<!DOCTYPE html>
     <ul>
       <li><b>Agent ID required for every mint</b> — free or paid (same gate as RiferaFirstTake).</li>
       <li><b>Sequential mint:</b> Pointer (free) → Ember → Verdant → Frost → Void (0.002 BNB each).</li>
+      <li><b>Supply cap:</b> 1,111 per piece, 5,555 total — enforced on-chain (PieceSoldOut).</li>
       <li><b>On-chain SVG art:</b> each piece is a different pixel shard of the Rifera arrow cursor — Pointer sharp triangle (white), Ember jagged notched block (red), Verdant diagonal staircase (green), Frost widening wedge (blue), Void forked tail (purple).</li>
     </ul>
     <button class="btn" id="btn-deploy" type="button" disabled>Deploy RiferaCursorPieces</button>

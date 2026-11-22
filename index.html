@@ -57,6 +57,12 @@ canvas.piece-art{image-rendering:pixelated;display:block}
 .stat4 b{font-family:"Press Start 2P";font-size:clamp(17px,4.4vw,26px);display:block;color:#fff;line-height:1.35;margin-bottom:9px}
 .stat4 span{color:var(--muted);font-size:13.5px;font-family:"IBM Plex Mono"}
 @media(max-width:480px){.stat4{padding:16px 14px}}
+.supply-row{display:grid;grid-template-columns:1fr 1fr;position:relative;border:2px solid var(--line);border-top:0;background:var(--panel);box-shadow:6px 6px 0 #000;text-align:left;margin:-22px 0 22px}
+.supply-cell{padding:18px 22px;border-right:2px solid var(--line)}
+.supply-cell:last-child{border-right:0}
+.supply-cell b{font-family:"Press Start 2P";font-size:clamp(17px,4.4vw,26px);display:block;color:var(--yellow);line-height:1.35;margin-bottom:9px}
+.supply-cell span{color:var(--muted);font-size:13.5px;font-family:"IBM Plex Mono"}
+@media(max-width:480px){.supply-cell{padding:14px}}
 .nav-actions{display:flex;gap:10px;align-items:center}
 .btn-follow{background:var(--panel2)}
 .btn-follow svg{width:13px;height:13px;fill:#fff;flex:0 0 13px}
@@ -170,6 +176,10 @@ footer{margin-top:60px;border-top:2px solid var(--line);padding:26px 0 36px;colo
       <div class="stat4"><b>0,002 BNB</b><span>Per piece 2–5</span></div>
       <div class="stat4"><b>0,008 BNB</b><span>Full set</span></div>
     </div>
+    <div class="supply-row">
+      <div class="supply-cell"><b>1.111</b><span>Max sets &middot; 1.111 per piece</span></div>
+      <div class="supply-cell"><b>5.555</b><span>Total pieces max</span></div>
+    </div>
     <div class="hero-cta">
       <a class="btn btn-green" href="#game">Main Shard Rush</a>
       <a class="btn" href="#pieces">Lihat 5 keping</a>
@@ -225,10 +235,13 @@ footer{margin-top:60px;border-top:2px solid var(--line);padding:26px 0 36px;colo
         <div class="rowline"><span>Harga</span><b>FREE + 0,002 + 0,002 + 0,002 + 0,002 BNB</b></div>
         <div class="rowline"><span>Set lengkap</span><b>0,008 BNB</b></div>
         <div class="rowline"><span>Maks per wallet</span><b>5 keping (1 set)</b></div>
+        <div class="rowline"><span>Cap supply</span><b>1.111 per keping · total maks 5.555 NFT</b></div>
+        <div class="rowline"><span>Set lengkap maks</span><b>1.111 set</b></div>
         <div class="rowline"><span>Syarat</span><b>Binance Agent ID wajib</b></div>
         <div class="rowline"><span>Gambar</span><b>SVG on-chain, beda bentuk tiap keping</b></div>
         <div class="rowline"><span>Status kontrak</span><b>BELUM DEPLOY — belum ada alamat kontrak</b></div>
       </div>
+      <p class="sec-note" style="margin-top:12px;line-height:1.7">Cap 1.111 per keping — kalau Pointer habis, tidak ada wallet baru yang bisa mulai mint.</p>
     </div>
   </section>
 
@@ -301,6 +314,7 @@ Lakukan sekarang, lalu laporkan keping yang didapat.</div>
     <div class="faq">
       <details open><summary>Apa itu Rifera Cursor Pieces?</summary><p>Koleksi NFT baru bernama RPIECE: satu kursor panah pixel yang dipecah jadi 5 pita horizontal — Pointer, Ember, Verdant, Frost, dan Void. Kelima pita bertumpuk menyusun satu kursor utuh.</p></details>
       <details><summary>Sudah bisa mint?</summary><p>Belum. Kontrak RPIECE belum deploy dan belum ada alamat kontrak. Prompt mint di halaman ini disiapkan untuk dipakai setelah alamat resmi diumumkan. Jangan kirim BNB ke alamat mana pun yang mengatasnamakan RPIECE sebelum itu.</p></details>
+      <details><summary>Berapa total supply RPIECE?</summary><p>Maks 1.111 set lengkap: cap 1.111 keping per jenis (Pointer, Ember, Verdant, Frost, Void), jadi total maks 5.555 NFT. Karena mint wajib berurutan mulai dari Pointer, kalau Pointer habis, tidak ada wallet baru yang bisa mulai mint. Kontrak belum deploy, jadi belum ada satu pun keping yang terbit — angka di atas adalah cap-nya, bukan jumlah yang sudah mint.</p></details>
       <details><summary>Berapa harga tiap keping?</summary><p>Keping 1 Pointer FREE (gas saja). Keping 2 Ember, 3 Verdant, 4 Frost, dan 5 Void masing-masing 0,002 BNB. Satu set lengkap total 0,008 BNB, maks 5 keping per wallet, mint wajib berurutan.</p></details>
       <details><summary>Kenapa harus pakai agent?</summary><p>Mint RPIECE wajib Binance Agent ID. Kamu kirim prompt 4 baris, agent kamu yang memanggil kontrak — tidak ada tombol mint manual untuk manusia.</p></details>
       <details><summary>Game Shard Rush ini apa?</summary><p>Game browser gratis 100 ronde dengan 4 gaya yang bergantian tiap ronde — RUSH (kumpulkan 5 keping), DODGE (bertahan sampai waktu habis; keping memberi bonus skor dan +5 detik), CHASE (tangkap 5 keping yang kabur), BLITZ (30 detik, kumpulkan keping sebanyak-banyaknya, minimal 5 untuk lolos). Gerakkan kursor (mouse, sentuh, atau WASD) dan hindari glitch. Timer menyusut tiap 10 ronde dari 60 sampai 30 detik, glitch makin banyak dan cepat. Nyawa 3 untuk seluruh permainan, +1 tiap 20 ronde selesai (maks 5). Tamatkan ronde 100 untuk jadi CURSOR MASTER. Tidak perlu wallet untuk main, dan skor game bukan jumlah mint.</p></details>
@@ -311,7 +325,7 @@ Lakukan sekarang, lalu laporkan keping yang didapat.</div>
 
 <footer>
   <div class="wrap">
-    Rifera Cursor Pieces (RPIECE) — 5 keping, 1 kursor. Keping 1 FREE, keping 2–5 masing-masing 0,002 BNB, set lengkap 0,008 BNB, maks 5 per wallet.<br>
+    Rifera Cursor Pieces (RPIECE) — 5 keping, 1 kursor. Keping 1 FREE, keping 2–5 masing-masing 0,002 BNB, set lengkap 0,008 BNB, maks 5 per wallet. Supply maks 1.111 set · 1.111 keping per jenis · total 5.555 NFT.<br>
     Status: BELUM DEPLOY — belum ada alamat kontrak. Game di halaman ini gratis dan off-chain.
   </div>
 </footer>

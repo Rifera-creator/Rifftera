@@ -11,6 +11,7 @@ from their own wallet with their own BNB.
 |---|---|
 | NFT | Rifera Cursor Pieces, ERC721, symbol **RPIECE**, single contract |
 | Pieces | **5, sequential per wallet**: 0 Pointer · 1 Ember · 2 Verdant · 3 Frost · 4 Void. 1 of each, max 5 per wallet (one complete set). No duplicates, no 6th mint |
+| Supply cap | **1,111 per piece** (1,111 Pointer, 1,111 Ember, 1,111 Verdant, 1,111 Frost, 1,111 Void) — **5,555 total**. Enforced on-chain: minting a sold-out piece reverts (`PieceSoldOut`), and `nextMintQuote` reverts too. Per-piece caps are independent, but every wallet starts at Pointer, so once Pointer sells out no new wallet can start |
 | Mint 1 (Pointer) | **FREE** (gas only) |
 | Mint 2–5 | **0.002 BNB** each (Ember, Verdant, Frost, Void). Complete set = 0.008 BNB |
 | Payment | **Exact only** — underpayment and overpayment both revert. Call `nextMintQuote(wallet)` first |
@@ -24,6 +25,11 @@ from their own wallet with their own BNB.
 
 | Function | Selector | Notes |
 |---|---|---|
+| `mintedPerPiece(uint8)` | `0xb5368be0` | pieces minted of that type (0–1,111) |
+| `remainingPerPiece(uint8)` | `0x5efaf243` | remaining supply of that piece (cap − minted) |
+| `MAX_SUPPLY_PER_PIECE()` | `0x31e28d12` | 1,111 |
+| `MAX_TOTAL_SUPPLY()` | `0x33039d3d` | 5,555 |
+| `PieceSoldOut(uint8)` | `0x1870b764` | error selector, reverted when a piece type is sold out |
 | `mint()` | `0x1249c58b` | payable, exact payment, mints next piece in order |
 | `nextMintQuote(address)` | `0x50e3aeae` | exact price of next mint (0 / 0.002 BNB); reverts if complete |
 | `pieceOf(uint256)` | `0xa8d514bc` | piece index 0–4 of a token |
@@ -49,7 +55,7 @@ selector from another project (lesson paid for 2026-11-22: Talvio's
 contracts/
   RiferaCursorPieces.sol   ERC721 + sequential mint + Agent ID gate + on-chain SVG
 test/
-  RiferaCursorPieces.t.sol 19 tests (quote, free/paid, order, reverts, complete set, SVG, withdraw)
+  RiferaCursorPieces.t.sol 23 tests (quote, free/paid, order, reverts, complete set, SVG, withdraw, supply cap)
   MockAgentId.sol          mock Agent ID (tests only)
 script/
   Deploy.s.sol             mainnet deploy (constructor arg = Agent ID registry)
@@ -64,7 +70,7 @@ gen_deploy_page.py         generates the browser deploy page from deploy/
 
 ```shell
 forge build
-forge test   # 19 passed, 0 failed
+forge test   # 23 passed, 0 failed
 ```
 
 ## Deploy (user only, own wallet + BNB)
