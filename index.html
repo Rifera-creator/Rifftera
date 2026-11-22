@@ -41,17 +41,16 @@ canvas.piece-art{image-rendering:pixelated;display:block}
 .hero h1 em{font-style:normal;color:var(--green)}
 .hero p{position:relative;max-width:620px;margin:16px auto 0;color:var(--muted);font-size:17px;line-height:1.65}
 .hero p b{color:#fff}
-.badge{display:inline-block;position:relative;margin-top:18px;font-family:"Press Start 2P";font-size:10px;background:var(--yellow);color:#000;border:2px solid #000;box-shadow:4px 4px 0 #000;padding:10px 12px}
-.hero-cursor{position:relative;margin:30px auto 4px;width:min(400px,88vw);border:3px solid #3a3a5e;background:#0b0b18;box-shadow:0 0 0 2px #000,12px 12px 0 #000}
+.badge{display:inline-block;position:relative;margin-top:16px;font-family:"IBM Plex Mono";font-size:11px;font-weight:600;letter-spacing:.08em;background:#14142a;color:var(--yellow);border:1.5px solid var(--yellow);padding:6px 10px}
+.hero-cursor{position:relative;margin:34px auto 4px;width:min(470px,94vw);border:3px solid #3a3a5e;background:#0b0b18;box-shadow:0 0 0 2px #000,0 0 70px rgba(191,90,242,.28),14px 14px 0 #000}
 .hero-cursor canvas{width:100%;height:auto}
 .hero-cursor figcaption{display:flex;justify-content:space-between;gap:8px;padding:12px 14px;border-top:2px solid var(--line);font-family:"IBM Plex Mono";font-size:12px;color:var(--muted);background:var(--panel);text-align:left}
 .hero-cursor figcaption b{color:#fff}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);border:2px solid var(--line);background:var(--panel);box-shadow:6px 6px 0 #000;margin:22px 0 18px;position:relative}
-.stat{padding:17px;border-right:2px solid var(--line)}
-.stat:last-child{border-right:0}
-.stat b{font-family:"Press Start 2P";font-size:13px;display:block;margin-bottom:7px;line-height:1.5}
-.stat span{color:var(--muted);font-size:13px}
-@media(max-width:700px){.stats{grid-template-columns:1fr 1fr}.stat:nth-child(2){border-right:0}.stat:nth-child(1),.stat:nth-child(2){border-bottom:2px solid var(--line)}}
+.chips3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:24px 0 20px;position:relative}
+.chip3{--cc:#fff;border:2px solid var(--cc);background:var(--panel);box-shadow:5px 5px 0 #000;padding:18px 14px;text-align:center}
+.chip3 b{font-family:"Press Start 2P";font-size:clamp(14px,3.4vw,19px);display:block;color:var(--cc);line-height:1.4;margin-bottom:8px}
+.chip3 span{color:var(--muted);font-size:12.5px;font-family:"IBM Plex Mono"}
+@media(max-width:640px){.chips3{grid-template-columns:1fr}}
 .hero-cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;position:relative}
 .hero-cta .btn{padding:14px 18px}
 section{padding:52px 0 8px}
@@ -141,18 +140,17 @@ footer{margin-top:60px;border-top:2px solid var(--line);padding:26px 0 36px;colo
 <main id="top" class="wrap">
   <div class="hero">
     <div class="kicker">Rifera Cursor Pieces &bull; RPIECE &bull; BNB Chain</div>
-    <h1>5 PIECES<br><em>ONE CURSOR</em></h1>
-    <p>Satu koleksi baru, dibangun dari nol: <b>Rifera Cursor Pieces (RPIECE)</b>. Susun 5 keping pixel menjadi satu kursor panah utuh. Keping pertama <b>FREE</b>, empat keping berikutnya masing-masing <b>0,002 BNB</b>. Set lengkap <b>0,008 BNB</b>, maks <b>5 keping per wallet</b>, wajib Binance Agent ID.</p>
+    <h1>5 PIECES.<br><em>ONE CURSOR.</em></h1>
+    <p>Lima keping pixel menyusun satu kursor panah utuh. Keping pertama <b>FREE</b>.</p>
     <div><span class="badge">BELUM DEPLOY — BELUM ADA ALAMAT KONTRAK</span></div>
     <figure class="hero-cursor" style="margin-left:auto;margin-right:auto">
       <canvas id="heroCursor" width="400" height="400" role="img" aria-label="Kursor panah pixel utuh tersusun dari 5 keping RPIECE"></canvas>
       <figcaption><span><b>First Cursor — utuh</b></span><span>5 keping tersusun</span></figcaption>
     </figure>
-    <div class="stats">
-      <div class="stat"><b>5</b><span>Keping per set</span></div>
-      <div class="stat"><b>FREE</b><span>Keping 1 · Pointer</span></div>
-      <div class="stat"><b>0,002 BNB</b><span>Per keping 2–5</span></div>
-      <div class="stat"><b>0,008 BNB</b><span>Set lengkap per wallet</span></div>
+    <div class="chips3">
+      <div class="chip3" style="--cc:#32d74b"><b>FREE</b><span>Keping 1 · Pointer</span></div>
+      <div class="chip3" style="--cc:#32ade6"><b>0,002 BNB</b><span>Per keping 2–5</span></div>
+      <div class="chip3" style="--cc:#bf5af2"><b>0,008 BNB</b><span>Set lengkap · maks 5 / wallet</span></div>
     </div>
     <div class="hero-cta">
       <a class="btn btn-green" href="#game">Main Shard Rush</a>
@@ -191,13 +189,13 @@ footer{margin-top:60px;border-top:2px solid var(--line);padding:26px 0 36px;colo
 
   <section id="pieces">
     <div class="sec-head"><h2><span class="dots"><i></i><i></i><i></i><i></i></span> Lima keping</h2><span class="sec-note">RPIECE &bull; BELUM DEPLOY</span></div>
-    <p class="sec-sub">Setiap keping adalah pecahan asli dari satu kursor pixel yang sama — garis patahnya bergerigi dan saling mengunci. Mint berurutan, tidak bisa loncat: mulai dari Pointer, selesai di Void.</p>
+    <p class="sec-sub">Setiap keping adalah satu pita horizontal dari kursor pixel yang sama — lima warna bertumpuk menyusun satu panah utuh. Mint berurutan, tidak bisa loncat: mulai dari Pointer, selesai di Void.</p>
     <div class="pieces">
       <article class="piece" style="--pc:#eef0ff;--pg:rgba(238,240,255,.28)"><div class="piece-stage"><canvas class="shard-piece" data-piece="0" width="300" height="300" role="img" aria-label="Keping 1 Pointer — ujung lancip kursor pixel"></canvas></div><div class="pnum">KEPING 01 / 05</div><h3>1 · Pointer</h3><p>Ujung lancip. Titik mulai setiap kursor.</p><span class="price free">FREE</span></article>
-      <article class="piece" style="--pc:#ff3b30;--pg:rgba(255,59,48,.3)"><div class="piece-stage"><canvas class="shard-piece" data-piece="1" width="300" height="300" role="img" aria-label="Keping 2 Ember — badan kiri kursor pixel bergerigi"></canvas></div><div class="pnum">KEPING 02 / 05</div><h3>2 · Ember</h3><p>Badan bara. Menyala setelah Pointer terpasang.</p><span class="price paid">0,002 BNB</span></article>
-      <article class="piece" style="--pc:#32d74b;--pg:rgba(50,215,75,.28)"><div class="piece-stage"><canvas class="shard-piece" data-piece="2" width="300" height="300" role="img" aria-label="Keping 3 Verdant — diagonal tengah kursor pixel"></canvas></div><div class="pnum">KEPING 03 / 05</div><h3>3 · Verdant</h3><p>Diagonal hijau. Penyeimbang di tengah susunan.</p><span class="price paid">0,002 BNB</span></article>
-      <article class="piece" style="--pc:#32ade6;--pg:rgba(50,173,230,.3)"><div class="piece-stage"><canvas class="shard-piece" data-piece="3" width="300" height="300" role="img" aria-label="Keping 4 Frost — pinggang kursor pixel bertakik"></canvas></div><div class="pnum">KEPING 04 / 05</div><h3>4 · Frost</h3><p>Pinggang es. Mengunci bentuk kursor.</p><span class="price paid">0,002 BNB</span></article>
-      <article class="piece" style="--pc:#bf5af2;--pg:rgba(191,90,242,.32)"><div class="piece-stage"><canvas class="shard-piece" data-piece="4" width="300" height="300" role="img" aria-label="Keping 5 Void — ekor kursor pixel bercabang"></canvas></div><div class="pnum">KEPING 05 / 05</div><h3>5 · Void</h3><p>Ekor terakhir. Kursor utuh dan siap staking.</p><span class="price paid">0,002 BNB</span></article>
+      <article class="piece" style="--pc:#ff3b30;--pg:rgba(255,59,48,.3)"><div class="piece-stage"><canvas class="shard-piece" data-piece="1" width="300" height="300" role="img" aria-label="Keping 2 Ember — pita kedua kursor pixel"></canvas></div><div class="pnum">KEPING 02 / 05</div><h3>2 · Ember</h3><p>Badan bara. Menyala setelah Pointer terpasang.</p><span class="price paid">0,002 BNB</span></article>
+      <article class="piece" style="--pc:#32d74b;--pg:rgba(50,215,75,.28)"><div class="piece-stage"><canvas class="shard-piece" data-piece="2" width="300" height="300" role="img" aria-label="Keping 3 Verdant — pita tengah kursor pixel"></canvas></div><div class="pnum">KEPING 03 / 05</div><h3>3 · Verdant</h3><p>Pita hijau. Penyeimbang di tengah susunan.</p><span class="price paid">0,002 BNB</span></article>
+      <article class="piece" style="--pc:#32ade6;--pg:rgba(50,173,230,.3)"><div class="piece-stage"><canvas class="shard-piece" data-piece="3" width="300" height="300" role="img" aria-label="Keping 4 Frost — pita keempat kursor pixel"></canvas></div><div class="pnum">KEPING 04 / 05</div><h3>4 · Frost</h3><p>Pita es. Mengunci bentuk kursor.</p><span class="price paid">0,002 BNB</span></article>
+      <article class="piece" style="--pc:#bf5af2;--pg:rgba(191,90,242,.32)"><div class="piece-stage"><canvas class="shard-piece" data-piece="4" width="300" height="300" role="img" aria-label="Keping 5 Void — pita terbawah kursor pixel"></canvas></div><div class="pnum">KEPING 05 / 05</div><h3>5 · Void</h3><p>Ekor terakhir. Kursor utuh dan siap staking.</p><span class="price paid">0,002 BNB</span></article>
     </div>
     <div class="card" style="margin-top:20px">
       <h3>Aturan koleksi RPIECE</h3>
@@ -280,7 +278,7 @@ Lakukan sekarang, lalu laporkan keping yang didapat.</div>
   <section id="faq">
     <div class="sec-head"><h2><span class="dots"><i></i><i></i><i></i><i></i></span> FAQ</h2></div>
     <div class="faq">
-      <details open><summary>Apa itu Rifera Cursor Pieces?</summary><p>Koleksi NFT baru bernama RPIECE: satu kursor panah pixel yang dipecah jadi 5 keping — Pointer, Ember, Verdant, Frost, dan Void. Setiap keping beda bentuk patahnya, dan kelimanya menyusun satu kursor utuh.</p></details>
+      <details open><summary>Apa itu Rifera Cursor Pieces?</summary><p>Koleksi NFT baru bernama RPIECE: satu kursor panah pixel yang dipecah jadi 5 pita horizontal — Pointer, Ember, Verdant, Frost, dan Void. Kelima pita bertumpuk menyusun satu kursor utuh.</p></details>
       <details><summary>Sudah bisa mint?</summary><p>Belum. Kontrak RPIECE belum deploy dan belum ada alamat kontrak. Prompt mint di halaman ini disiapkan untuk dipakai setelah alamat resmi diumumkan. Jangan kirim BNB ke alamat mana pun yang mengatasnamakan RPIECE sebelum itu.</p></details>
       <details><summary>Berapa harga tiap keping?</summary><p>Keping 1 Pointer FREE (gas saja). Keping 2 Ember, 3 Verdant, 4 Frost, dan 5 Void masing-masing 0,002 BNB. Satu set lengkap total 0,008 BNB, maks 5 keping per wallet, mint wajib berurutan.</p></details>
       <details><summary>Kenapa harus pakai agent?</summary><p>Mint RPIECE wajib Binance Agent ID. Kamu kirim prompt 4 baris, agent kamu yang memanggil kontrak — tidak ada tombol mint manual untuk manusia.</p></details>
@@ -302,18 +300,14 @@ Lakukan sekarang, lalu laporkan keping yang didapat.</div>
 var MASK=[
 "1000000000000000","1100000000000000","1110000000000000","1111000000000000",
 "1111100000000000","1111110000000000","1111111000000000","1111111100000000",
-"1111111110000000","1111111111000000","1111111111100000","1111111000000000",
-"1111110000000000","1111100111000000","1111000111000000","1110000111100000",
-"1100000011110000","1000000011110000","0000000011110000","0000000011110000"];
+"1111111110000000","1111111111000000","1111111111100000","1111111100000000",
+"0001111000000000","0001111000000000","0000111100000000","0000111100000000",
+"0000111100000000","0000111100000000","0000011110000000","0000011110000000"];
 function pieceOf(r,c){
-  if(r<6) return 0;
-  if(r===6 && c===4) return 2;
-  if(r===9 && c===4) return 2;
-  if(r===10 && (c===3||c===4)) return 1;
-  if(r===13 && c>=7) return 4;
-  if(r<10 && c<5) return 1;
-  if(r<12 && c>=5) return 2;
-  if(r<14) return 3;
+  if(r<4) return 0;
+  if(r<8) return 1;
+  if(r<12) return 2;
+  if(r<16) return 3;
   return 4;
 }
 var DEFS=[
@@ -373,13 +367,19 @@ function drawFullCursor(cv){
   var g=ctx.createRadialGradient(S/2,S*0.42,10,S/2,S*0.42,S*0.62);
   g.addColorStop(0,'rgba(191,90,242,.25)'); g.addColorStop(1,'rgba(0,0,0,0)');
   ctx.fillStyle=g; ctx.fillRect(0,0,S,S);
-  var cols=16, rows=20, cell=S/24, ox=(S-cols*cell)/2, oy=(S-rows*cell)/2;
+  var cols=16, rows=20, cell=S/21, ox=(S-cols*cell)/2, oy=(S-rows*cell)/2-10;
+  ctx.save();
+  ctx.fillStyle='rgba(0,0,0,.55)'; ctx.shadowColor='rgba(0,0,0,.8)'; ctx.shadowBlur=18;
+  ctx.beginPath(); ctx.ellipse(S/2,oy+rows*cell+20,S*0.30,13,0,0,6.29); ctx.fill();
+  ctx.restore();
   ctx.fillStyle='#000';
   for(var r=0;r<rows;r++) for(var c=0;c<cols;c++) if(MASK[r][c]==='1') ctx.fillRect(ox+c*cell-1.5,oy+r*cell-1.5,cell+3,cell+3);
+  ctx.save(); ctx.shadowColor='rgba(191,90,242,.45)'; ctx.shadowBlur=26;
   for(var r2=0;r2<rows;r2++) for(var c2=0;c2<cols;c2++) if(MASK[r2][c2]==='1'){
     ctx.fillStyle=DEFS[pieceOf(r2,c2)].main;
     ctx.fillRect(ox+c2*cell,oy+r2*cell,cell,cell);
   }
+  ctx.restore();
   ctx.fillStyle='rgba(255,255,255,.85)';
   ctx.fillRect(ox+2*cell,oy+2*cell,cell,cell);
 }
