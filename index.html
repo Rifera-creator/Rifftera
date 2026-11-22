@@ -80,6 +80,8 @@ section{padding:52px 0 8px}
 #cv{display:block;width:100%;height:auto;background:#0a0a18;touch-action:none;cursor:crosshair}
 .game-help{display:flex;gap:8px 18px;flex-wrap:wrap;padding:12px 14px;border-top:2px solid var(--line);color:var(--muted);font-size:13.5px;background:var(--panel)}
 .game-help b{color:#fff}
+.progress{height:10px;background:#0a0a16;border-bottom:2px solid var(--line)}
+.progress-fill{height:100%;width:0;background:linear-gradient(90deg,var(--red),#ff9500,var(--yellow),var(--green),var(--cyan),var(--purple));transition:width .45s ease}
 .pieces{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-top:22px}
 @media(max-width:1020px){.pieces{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:640px){.pieces{grid-template-columns:1fr 1fr}}
@@ -178,28 +180,29 @@ footer{margin-top:60px;border-top:2px solid var(--line);padding:26px 0 36px;colo
   <section id="game">
     <div class="sec-head">
       <h2><svg class="logo-mark" aria-hidden="true"><use href="#rifera-mark"/></svg> Shard Rush</h2>
-      <span class="sec-note">3 ronde &times; 60 detik &bull; 15 keping &bull; 3 nyawa</span>
+      <span class="sec-note">100 ronde &bull; 4 gaya &bull; 3 nyawa (+1 tiap 20 ronde)</span>
     </div>
-    <p class="sec-sub">Satu arena, tiga ronde: tiap ronde 60 detik untuk menyentuh kelima keping — total 15 keping dalam satu permainan, dan tiap ronde glitch makin banyak dan makin cepat. Kena glitch hilang 1 nyawa; nyawa cuma 3 untuk seluruh permainan, tidak reset tiap ronde. Angka di game ini adalah aturan permainan saja — bukan jumlah mint atau stok.</p>
+    <p class="sec-sub">Satu arena, <b>100 ronde</b>, empat gaya yang bergantian tiap ronde: <b>RUSH</b> kumpulkan 5 keping, <b>DODGE</b> bertahan sampai waktu habis, <b>CHASE</b> tangkap keping yang kabur, <b>BLITZ</b> kumpulkan keping sebanyak-banyaknya dalam 30 detik. Timer menyusut tiap 10 ronde (60 detik turun sampai 30 detik) dan glitch makin banyak dan makin cepat. Nyawa 3 untuk seluruh permainan, +1 tiap 20 ronde selesai (maks 5). Tamatkan ronde 100 untuk jadi <b>CURSOR MASTER</b>. Angka di game ini adalah aturan permainan saja — bukan jumlah mint atau stok.</p>
     <div class="game-shell">
       <div class="game-top">
         <div class="hud">
-          <span class="chip">RONDE <b id="gRound">1/3</b></span>
+          <span class="chip">RONDE <b id="gRound">1/100</b></span>
+          <span class="chip">GAYA <b id="gStyle">RUSH</b></span>
           <span class="chip">SKOR <b id="gScore">0</b></span>
           <span class="chip">TERBAIK <b id="gBest">0</b></span>
           <span class="chip">WAKTU <b id="gTime">60</b></span>
           <span class="chip">KEPING
             <canvas class="shard-ic" data-icon="0" width="44" height="44" aria-hidden="true"></canvas><canvas class="shard-ic" data-icon="1" width="44" height="44" aria-hidden="true"></canvas><canvas class="shard-ic" data-icon="2" width="44" height="44" aria-hidden="true"></canvas><canvas class="shard-ic" data-icon="3" width="44" height="44" aria-hidden="true"></canvas><canvas class="shard-ic" data-icon="4" width="44" height="44" aria-hidden="true"></canvas>
             <b id="gShard">0/5</b></span>
-          <span class="chip">TOTAL <b id="gTotal">0/15</b></span>
           <span class="chip">NYAWA <b class="lives" id="gLives">&#10084;&#10084;&#10084;</b></span>
         </div>
         <button class="btn btn-green" id="btnStart">Start</button>
       </div>
-      <canvas id="cv" width="900" height="520" aria-label="Game Shard Rush — 3 ronde kali 60 detik, kumpulkan 5 keping tiap ronde, hindari glitch"></canvas>
+      <div class="progress" role="progressbar" aria-label="Progress ronde dari 100" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="gProgWrap"><div class="progress-fill" id="gProg"></div></div>
+      <canvas id="cv" width="900" height="520" aria-label="Game Shard Rush — 100 ronde, 4 gaya bergantian, kumpulkan keping dan hindari glitch"></canvas>
       <div class="game-help">
         <span><b>Gerak:</b> mouse / sentuh &amp; geser / WASD / panah</span>
-        <span><b>Menang:</b> 15 keping dalam 3 ronde</span>
+        <span><b>Menang:</b> tamatkan ronde 100 — CURSOR MASTER</span>
         <span><b>Kalah:</b> nyawa habis atau waktu ronde habis</span>
       </div>
     </div>
@@ -300,7 +303,7 @@ Lakukan sekarang, lalu laporkan keping yang didapat.</div>
       <details><summary>Sudah bisa mint?</summary><p>Belum. Kontrak RPIECE belum deploy dan belum ada alamat kontrak. Prompt mint di halaman ini disiapkan untuk dipakai setelah alamat resmi diumumkan. Jangan kirim BNB ke alamat mana pun yang mengatasnamakan RPIECE sebelum itu.</p></details>
       <details><summary>Berapa harga tiap keping?</summary><p>Keping 1 Pointer FREE (gas saja). Keping 2 Ember, 3 Verdant, 4 Frost, dan 5 Void masing-masing 0,002 BNB. Satu set lengkap total 0,008 BNB, maks 5 keping per wallet, mint wajib berurutan.</p></details>
       <details><summary>Kenapa harus pakai agent?</summary><p>Mint RPIECE wajib Binance Agent ID. Kamu kirim prompt 4 baris, agent kamu yang memanggil kontrak — tidak ada tombol mint manual untuk manusia.</p></details>
-      <details><summary>Game Shard Rush ini apa?</summary><p>Game browser gratis 3 ronde &times; 60 detik: gerakkan kursor (mouse, sentuh, atau WASD), sentuh 5 keping tiap ronde — total 15 keping — dan hindari glitch. Nyawa cuma 3 untuk seluruh permainan, dan tiap ronde glitch makin banyak dan makin cepat. Tidak perlu wallet untuk main, dan skor game bukan jumlah mint.</p></details>
+      <details><summary>Game Shard Rush ini apa?</summary><p>Game browser gratis 100 ronde dengan 4 gaya yang bergantian tiap ronde — RUSH (kumpulkan 5 keping), DODGE (bertahan sampai waktu habis; keping memberi bonus skor dan +5 detik), CHASE (tangkap 5 keping yang kabur), BLITZ (30 detik, kumpulkan keping sebanyak-banyaknya, minimal 5 untuk lolos). Gerakkan kursor (mouse, sentuh, atau WASD) dan hindari glitch. Timer menyusut tiap 10 ronde dari 60 sampai 30 detik, glitch makin banyak dan cepat. Nyawa 3 untuk seluruh permainan, +1 tiap 20 ronde selesai (maks 5). Tamatkan ronde 100 untuk jadi CURSOR MASTER. Tidak perlu wallet untuk main, dan skor game bukan jumlah mint.</p></details>
       <details><summary>Set lengkap gunanya apa?</summary><p>Set 5 keping lengkap dalam satu wallet memenuhi syarat staking pool BNB. Detail pool diumumkan saat kontrak deploy.</p></details>
     </div>
   </section>
@@ -500,35 +503,46 @@ document.getElementById('btnCopyBuy').addEventListener('click',function(){
   copyText(document.getElementById('buyPrompt').innerText,document.getElementById('buyCopyMsg'));
 });
 
-// ===== Shard Rush game: one arena, move only =====
+// ===== Shard Rush game: 100 rounds, 4 rotating styles, one arena =====
 (function(){
   var cv=document.getElementById('cv'), ctx=cv.getContext('2d');
   var W=900,H=520;
   var running=false,raf=0,lastTs=0;
   var px=450,py=260,tx=450,ty=260,keys={};
-  var shards=[],glitches=[],score=0,best=0,timeLeft=60,lives=3,got=0,totalGot=0,invuln=0,over=false,win=false;
-  var round=1,interT=0;
-  var ROUNDS=[{n:3,cap:5,sp:52,label:'PELAN'},{n:4,cap:6,sp:82,label:'SEDANG'},{n:5,cap:7,sp:112,label:'CEPAT'}];
-  var elScore=document.getElementById('gScore'),elBest=document.getElementById('gBest'),elTime=document.getElementById('gTime'),elShard=document.getElementById('gShard'),elTotal=document.getElementById('gTotal'),elRound=document.getElementById('gRound'),elLives=document.getElementById('gLives'),btn=document.getElementById('btnStart');
+  var shards=[],glitches=[],score=0,best=0,timeLeft=60,lives=3,got=0,invuln=0,over=false,win=false;
+  var round=1,interT=0,dodgeSpawnT=0;
+  var STYLES=[
+    {name:'RUSH', color:'#32d74b', desc:'Kumpul 5 keping sebelum waktu habis, hindari glitch.'},
+    {name:'DODGE',color:'#32ade6', desc:'Bertahan sampai waktu habis. Keping = bonus skor + 5 detik.'},
+    {name:'CHASE',color:'#ffd60a', desc:'Kepingnya kabur dari kamu — tangkap semua 5 keping.'},
+    {name:'BLITZ',color:'#ff3b30', desc:'30 detik — kumpul keping sebanyak-banyaknya, minimal 5 untuk lolos.'}
+  ];
+  function styleOf(r){return STYLES[(r-1)%4];}
+  function timeFor(r){ if(styleOf(r).name==='BLITZ') return 30; return Math.max(30, 60-5*Math.floor((r-1)/10)); }
+  function glitchCount(r){ var n=Math.min(10, 3+Math.floor((r-1)/10)); if(styleOf(r).name==='CHASE') n=Math.max(1,n-2); return n; }
+  function glitchCap(r){ return glitchCount(r)+3; }
+  function glitchSpeed(r){ return Math.min(235, 50+(r-1)*2.1); }
+  var elScore=document.getElementById('gScore'),elBest=document.getElementById('gBest'),elTime=document.getElementById('gTime'),elShard=document.getElementById('gShard'),elRound=document.getElementById('gRound'),elStyle=document.getElementById('gStyle'),elLives=document.getElementById('gLives'),elProg=document.getElementById('gProg'),elProgWrap=document.getElementById('gProgWrap'),btn=document.getElementById('btnStart');
   var icons=document.querySelectorAll('.shard-ic');
-  function hearts(){var s='';for(var i=0;i<3;i++)s+=i<lives?'\u2764':'\u2661';return s;}
+  function hearts(){var s='';for(var i=0;i<5;i++){ if(i<lives) s+='\u2764'; else if(i<3) s+='\u2661'; }return s;}
   function syncHud(){
     elScore.textContent=score; elBest.textContent=best;
-    elRound.textContent=round+'/3'; elTotal.textContent=totalGot+'/15';
-    elTime.textContent=Math.max(0,Math.ceil(timeLeft)); elShard.textContent=got+'/5';
+    elRound.textContent=round+'/100'; elStyle.textContent=styleOf(round).name;
+    elTime.textContent=Math.max(0,Math.ceil(timeLeft));
+    var st=styleOf(round).name;
+    elShard.textContent = st==='DODGE' ? (got+' bonus') : st==='BLITZ' ? (got+'/min 5') : (got+'/5');
     elLives.innerHTML=hearts();
-    icons.forEach(function(ic,i){ic.classList.toggle('got',i<got);});
+    icons.forEach(function(ic,i){ic.classList.toggle('got',i<Math.min(got,5));});
+    var pct=win?100:(round-1);
+    elProg.style.width=pct+'%'; elProgWrap.setAttribute('aria-valuenow',pct);
   }
-  function spawnShards(){
-    shards=[];
-    for(var i=0;i<5;i++){
-      var x,y,ok,tries=0;
-      do{ok=true;x=70+Math.random()*(W-140);y=70+Math.random()*(H-140);tries++;
-        shards.forEach(function(s){if(Math.hypot(s.x-x,s.y-y)<110)ok=false;});
-        if(Math.hypot(px-x,py-y)<90)ok=false;
-      }while(!ok&&tries<60);
-      shards.push({i:i,x:x,y:y,taken:false,bob:Math.random()*6.28});
-    }
+  function newShard(idx){
+    var x=0,y=0,ok,tries=0;
+    do{ok=true;x=70+Math.random()*(W-140);y=70+Math.random()*(H-140);tries++;
+      shards.forEach(function(s){if(!s.taken&&Math.hypot(s.x-x,s.y-y)<110)ok=false;});
+      if(Math.hypot(px-x,py-y)<90)ok=false;
+    }while(!ok&&tries<60);
+    return {i:idx,x:x,y:y,taken:false,bob:Math.random()*6.28,age:0};
   }
   function spawnGlitch(n){
     glitches=[];
@@ -536,17 +550,31 @@ document.getElementById('btnCopyBuy').addEventListener('click',function(){
       var edge=Math.floor(Math.random()*4),x,y;
       if(edge===0){x=Math.random()*W;y=-24;}else if(edge===1){x=Math.random()*W;y=H+24;}
       else if(edge===2){x=-24;y=Math.random()*H;}else{x=W+24;y=Math.random()*H;}
-      glitches.push({x:x,y:y,sp:ROUNDS[round-1].sp+Math.random()*30+got*6,ph:Math.random()*6.28});
+      glitches.push({x:x,y:y,sp:glitchSpeed(round)+Math.random()*26+(styleOf(round).name==='RUSH'?got*4:0),ph:Math.random()*6.28});
     }
   }
-  function reset(){
-    px=tx=W/2;py=ty=H/2;score=0;timeLeft=60;lives=3;got=0;totalGot=0;round=1;interT=0;invuln=0;over=false;win=false;
-    spawnShards(); spawnGlitch(ROUNDS[0].n); syncHud();
-  }
-  function nextRound(){
-    round++; got=0; timeLeft=60; invuln=1.4; interT=1.8;
+  function setupRound(){
+    got=0; timeLeft=timeFor(round); invuln=1.2; dodgeSpawnT=0;
     px=tx=W/2; py=ty=H/2;
-    spawnShards(); spawnGlitch(ROUNDS[round-1].n); syncHud();
+    var st=styleOf(round).name;
+    shards=[];
+    if(st==='DODGE'){ shards.push(newShard(Math.floor(Math.random()*5))); }
+    else if(st==='BLITZ'){ for(var i=0;i<3;i++) shards.push(newShard(i%5)); }
+    else { for(var j=0;j<5;j++) shards.push(newShard(j)); }
+    spawnGlitch(glitchCount(round));
+    syncHud();
+  }
+  function reset(){
+    score=0;lives=3;round=1;interT=0;over=false;win=false;
+    setupRound();
+  }
+  function completeRound(){
+    score+=150+Math.ceil(Math.max(0,timeLeft))*2;
+    if(styleOf(round).name==='DODGE') score+=100;
+    if(round>=100){ score+=500; endGame(true); return; }
+    if(round%20===0&&lives<5) lives++;
+    round++; interT=2.0;
+    setupRound();
   }
   function endGame(w){
     running=false;over=true;win=w;
@@ -588,28 +616,35 @@ document.getElementById('btnCopyBuy').addEventListener('click',function(){
       ctx.fillStyle='rgba(4,4,12,.72)'; ctx.fillRect(0,0,W,H);
       ctx.textAlign='center'; ctx.fillStyle='#fff';
       if(over&&win){
-        ctx.font='28px "Press Start 2P"'; ctx.fillText('SET LENGKAP!',W/2,H/2-38);
+        ctx.font='28px "Press Start 2P"'; ctx.fillText('CURSOR MASTER!',W/2,H/2-38);
         ctx.font='15px "IBM Plex Mono"'; ctx.fillStyle='#b3b5d1';
-        ctx.fillText('15 keping terkumpul dalam 3 ronde. Skor akhir: '+score,W/2,H/2+2);
+        ctx.fillText('100 ronde tamat! Skor akhir: '+score,W/2,H/2+2);
         ctx.fillText('Di dunia nyata: set lengkap RPIECE = syarat staking.',W/2,H/2+30);
       }else if(over){
         ctx.font='28px "Press Start 2P"'; ctx.fillText('GAME OVER',W/2,H/2-38);
         ctx.font='15px "IBM Plex Mono"'; ctx.fillStyle='#b3b5d1';
-        ctx.fillText('Berhenti di ronde '+round+'/3 · Keping total: '+totalGot+'/15 · Skor: '+score,W/2,H/2+2);
+        ctx.fillText('Berhenti di ronde '+round+'/100 \u00b7 Gaya '+styleOf(round).name+' \u00b7 Skor: '+score,W/2,H/2+2);
         ctx.fillText('Tekan Main lagi untuk coba lagi.',W/2,H/2+30);
       }else{
-        ctx.font='24px "Press Start 2P"'; ctx.fillText('SHARD RUSH',W/2,H/2-34);
-        ctx.font='15px "IBM Plex Mono"'; ctx.fillStyle='#b3b5d1';
-        ctx.fillText('3 ronde \u00d7 60 detik. Sentuh 5 keping tiap ronde, hindari glitch.',W/2,H/2+4);
-        ctx.fillText('Nyawa cuma 3 untuk seluruh permainan. Tekan Start untuk mulai.',W/2,H/2+32);
+        ctx.font='24px "Press Start 2P"'; ctx.fillText('SHARD RUSH',W/2,H/2-58);
+        ctx.font='14px "IBM Plex Mono"'; ctx.fillStyle='#b3b5d1';
+        ctx.fillText('100 ronde \u00b7 4 gaya bergantian: RUSH \u00b7 DODGE \u00b7 CHASE \u00b7 BLITZ',W/2,H/2-16);
+        ctx.fillText('Timer menyusut tiap 10 ronde (60 \u2192 30 dtk), glitch makin ganas.',W/2,H/2+10);
+        ctx.fillText('Nyawa 3 untuk seluruh permainan, +1 tiap 20 ronde selesai.',W/2,H/2+36);
+        ctx.fillText('Tamatkan ronde 100 = CURSOR MASTER. Tekan Start untuk mulai.',W/2,H/2+62);
       }
       ctx.textAlign='left';
     }else if(interT>0){
+      var stl=styleOf(round);
       ctx.fillStyle='rgba(4,4,12,.72)'; ctx.fillRect(0,0,W,H);
-      ctx.textAlign='center'; ctx.fillStyle='#fff';
-      ctx.font='28px "Press Start 2P"'; ctx.fillText('RONDE '+round+' / 3',W/2,H/2-20);
+      ctx.textAlign='center';
       ctx.font='15px "IBM Plex Mono"'; ctx.fillStyle='#b3b5d1';
-      ctx.fillText('Glitch: '+ROUNDS[round-1].label+' \u00b7 Keping ronde ini: 0/5 \u00b7 Skor: '+score,W/2,H/2+16);
+      ctx.fillText('RONDE '+round+' / 100',W/2,H/2-64);
+      ctx.font='30px "Press Start 2P"'; ctx.fillStyle=stl.color;
+      ctx.fillText(stl.name,W/2,H/2-16);
+      ctx.font='14px "IBM Plex Mono"'; ctx.fillStyle='#b3b5d1';
+      ctx.fillText(stl.desc,W/2,H/2+18);
+      ctx.fillText('Waktu '+timeFor(round)+' dtk \u00b7 Glitch '+glitchCount(round)+' \u00b7 Nyawa '+lives+' \u00b7 Skor '+score,W/2,H/2+44);
       ctx.textAlign='left';
     }
   }
@@ -625,6 +660,26 @@ document.getElementById('btnCopyBuy').addEventListener('click',function(){
     if(keys['arrowdown']||keys['s'])ty+=sp*dt;
     tx=Math.max(28,Math.min(W-28,tx)); ty=Math.max(28,Math.min(H-28,ty));
     px+=(tx-px)*Math.min(1,dt*14); py+=(ty-py)*Math.min(1,dt*14);
+    var stName=styleOf(round).name;
+    if(stName==='CHASE'){
+      var cs=Math.min(125,74+round*0.5);
+      shards.forEach(function(s){
+        if(s.taken)return;
+        var dx=s.x-px,dy=s.y-py,d=Math.hypot(dx,dy)||1;
+        s.x+=dx/d*cs*dt+Math.cos(ts/280+s.bob)*16*dt;
+        s.y+=dy/d*cs*dt+Math.sin(ts/320+s.bob)*16*dt;
+        s.x=Math.max(38,Math.min(W-38,s.x)); s.y=Math.max(38,Math.min(H-38,s.y));
+      });
+    }
+    if(stName==='DODGE'){
+      if(shards.length&&!shards[0].taken){
+        shards[0].age+=dt;
+        if(shards[0].age>7){shards=[];dodgeSpawnT=1.0;}
+      }else if(!shards.length){
+        dodgeSpawnT-=dt;
+        if(dodgeSpawnT<=0)shards.push(newShard(Math.floor(Math.random()*5)));
+      }
+    }
     glitches.forEach(function(g){
       var dx=px-g.x,dy=py-g.y,d=Math.hypot(dx,dy)||1;
       g.x+=dx/d*g.sp*dt; g.y+=dy/d*g.sp*dt;
@@ -638,16 +693,24 @@ document.getElementById('btnCopyBuy').addEventListener('click',function(){
     shards.forEach(function(s){
       if(s.taken)return;
       if(Math.hypot(px-s.x,py-s.y)<40){
-        s.taken=true; got++; totalGot++; score+=100+Math.ceil(timeLeft); syncHud();
-        if(got>=5){
-          if(round>=3){score+=250; endGame(true); return;}
-          score+=150; nextRound(); return;
+        if(stName==='DODGE'){
+          s.taken=true; shards=[]; got++; score+=50; timeLeft+=5; dodgeSpawnT=1.4; syncHud();
+        }else if(stName==='BLITZ'){
+          s.taken=true; got++; score+=100; shards.push(newShard(got%5)); syncHud();
+        }else{
+          s.taken=true; got++; score+=100+Math.ceil(timeLeft); syncHud();
+          if(got>=5){ completeRound(); return; }
+          if(stName==='RUSH'&&glitches.length<glitchCap(round)) spawnGlitch(glitches.length+1);
         }
-        if(glitches.length<ROUNDS[round-1].cap) spawnGlitch(glitches.length+1);
       }
     });
     if(!running)return;
-    if(timeLeft<=0){endGame(false); return;}
+    if(timeLeft<=0){
+      if(stName==='DODGE'){ completeRound(); }
+      else if(stName==='BLITZ'){ if(got>=5){ completeRound(); } else { endGame(false); return; } }
+      else { endGame(false); return; }
+      if(!running)return;
+    }
     syncHud(); draw(ts);
     raf=requestAnimationFrame(loop);
   }
@@ -668,12 +731,11 @@ document.getElementById('btnCopyBuy').addEventListener('click',function(){
     if(running)return;
     cancelAnimationFrame(raf);
     reset(); running=true; over=false;
-    btn.textContent='Berjalan…';
+    btn.textContent='Berjalan\u2026';
     lastTs=performance.now();
     raf=requestAnimationFrame(loop);
   });
   reset(); running=false; draw(0);
-})();
-</script>
+})();</script>
 </body>
 </html>
