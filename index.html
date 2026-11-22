@@ -34,23 +34,33 @@ canvas.piece-art{image-rendering:pixelated;display:block}
 .btn:active{transform:translate(2px,2px);box-shadow:2px 2px 0 #000}
 .btn-white{background:#fff;color:#000;border-color:#fff}
 .btn-green{background:var(--green);color:#000;border-color:#000}
-.hero{padding:46px 0 8px;text-align:center;position:relative}
-.hero:before{content:"";position:absolute;inset:0;background:radial-gradient(700px 340px at 50% 18%,rgba(191,90,242,.18),transparent 62%),radial-gradient(520px 300px at 20% 60%,rgba(50,173,230,.12),transparent 60%);pointer-events:none}
-.kicker{position:relative;font-family:"IBM Plex Mono";font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
-.hero h1{position:relative;margin:18px 0 6px;line-height:1.15;font-family:"Press Start 2P";font-size:clamp(26px,6vw,52px);color:#fff;text-shadow:4px 4px 0 #2a2a44,7px 7px 0 #000}
-.hero h1 em{font-style:normal;color:var(--green)}
-.hero p{position:relative;max-width:620px;margin:16px auto 0;color:var(--muted);font-size:17px;line-height:1.65}
-.hero p b{color:#fff}
-.badge{display:inline-block;position:relative;margin-top:16px;font-family:"IBM Plex Mono";font-size:11px;font-weight:600;letter-spacing:.08em;background:#14142a;color:var(--yellow);border:1.5px solid var(--yellow);padding:6px 10px}
-.hero-cursor{position:relative;margin:34px auto 4px;width:min(470px,94vw);border:3px solid #3a3a5e;background:#0b0b18;box-shadow:0 0 0 2px #000,0 0 70px rgba(191,90,242,.28),14px 14px 0 #000}
-.hero-cursor canvas{width:100%;height:auto}
-.hero-cursor figcaption{display:flex;justify-content:space-between;gap:8px;padding:12px 14px;border-top:2px solid var(--line);font-family:"IBM Plex Mono";font-size:12px;color:var(--muted);background:var(--panel);text-align:left}
-.hero-cursor figcaption b{color:#fff}
-.chips3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:24px 0 20px;position:relative}
-.chip3{--cc:#fff;border:2px solid var(--cc);background:var(--panel);box-shadow:5px 5px 0 #000;padding:18px 14px;text-align:center}
-.chip3 b{font-family:"Press Start 2P";font-size:clamp(14px,3.4vw,19px);display:block;color:var(--cc);line-height:1.4;margin-bottom:8px}
-.chip3 span{color:var(--muted);font-size:12.5px;font-family:"IBM Plex Mono"}
-@media(max-width:640px){.chips3{grid-template-columns:1fr}}
+.hero{padding:44px 0 8px;text-align:center;position:relative}
+.hero:before{content:"";position:absolute;inset:0;background:radial-gradient(760px 380px at 50% 30%,rgba(191,90,242,.16),transparent 62%),radial-gradient(520px 300px at 18% 62%,rgba(50,173,230,.10),transparent 60%),radial-gradient(520px 300px at 82% 62%,rgba(255,59,48,.08),transparent 60%);pointer-events:none}
+.title-wrap{position:relative;display:inline-block;margin-top:6px}
+.hero h1{position:relative;margin:0;line-height:1.28;font-family:"Press Start 2P"}
+.hero h1 .l1{display:block;font-size:clamp(34px,8.5vw,74px);letter-spacing:.01em}
+.hero h1 .l1 span{text-shadow:3px 3px 0 rgba(0,0,0,.55),6px 6px 0 #000}
+.hero h1 .l2{display:block;margin-top:14px;font-size:clamp(19px,4.6vw,40px);letter-spacing:.04em;background:linear-gradient(180deg,#fdfdff 0%,#c9ccdd 34%,#767b94 50%,#d7dae8 66%,#565b70 100%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(3px 3px 0 #000) drop-shadow(0 0 14px rgba(200,205,230,.18))}
+.c-red{color:#ff3b30}.c-org{color:#ff9500}.c-yel{color:#ffd60a}.c-grn{color:#32d74b}.c-cyn{color:#32ade6}.c-pur{color:#bf5af2}
+.sparkle-layer{position:absolute;inset:-26px -34px;pointer-events:none}
+.sparkle-layer i{position:absolute;display:block;animation:twinkle 2.6s ease-in-out infinite}
+@keyframes twinkle{0%,100%{opacity:.15;transform:scale(.7) rotate(0deg)}50%{opacity:1;transform:scale(1.15) rotate(20deg)}}
+.hero p.tagline{position:relative;max-width:640px;margin:26px auto 0;color:var(--muted);font-family:"IBM Plex Mono";font-size:clamp(14px,2.6vw,16.5px);line-height:1.75}
+.hero p.tagline b{color:#fff}
+.badge{display:inline-block;position:relative;margin-top:18px;font-family:"IBM Plex Mono";font-size:11px;font-weight:600;letter-spacing:.08em;background:#14142a;color:var(--yellow);border:1.5px solid var(--yellow);padding:6px 10px}
+.hero-visual{position:relative;margin:26px auto 0;width:min(700px,96vw)}
+.hero-visual canvas{width:100%;height:auto;display:block}
+.stats4{display:grid;grid-template-columns:1fr 1fr;margin:26px 0 22px;position:relative;border:2px solid var(--line);background:var(--panel);box-shadow:6px 6px 0 #000;text-align:left}
+.stat4{padding:20px 22px;border-right:2px solid var(--line);border-bottom:2px solid var(--line)}
+.stat4:nth-child(2n){border-right:0}
+.stat4:nth-child(n+3){border-bottom:0}
+.stat4 b{font-family:"Press Start 2P";font-size:clamp(17px,4.4vw,26px);display:block;color:#fff;line-height:1.35;margin-bottom:9px}
+.stat4 span{color:var(--muted);font-size:13.5px;font-family:"IBM Plex Mono"}
+@media(max-width:480px){.stat4{padding:16px 14px}}
+.nav-actions{display:flex;gap:10px;align-items:center}
+.btn-follow{background:var(--panel2)}
+.btn-follow svg{width:13px;height:13px;fill:#fff;flex:0 0 13px}
+@media(max-width:520px){.btn-follow span{display:none}.btn-follow{padding:0 12px}}
 .hero-cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;position:relative}
 .hero-cta .btn{padding:14px 18px}
 section{padding:52px 0 8px}
@@ -133,24 +143,29 @@ footer{margin-top:60px;border-top:2px solid var(--line);padding:26px 0 36px;colo
     <nav class="nav-links">
       <a href="#game">Game</a><a href="#pieces">Pieces</a><a href="#mint">Mint</a><a href="#market">Market</a><a href="#stake">Staking</a><a href="#faq">FAQ</a>
     </nav>
-    <a class="btn btn-white" href="#game">Play now</a>
+    <div class="nav-actions">
+      <a class="btn btn-follow" href="https://x.com/FirstTake_xyz" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.41l-5.8-7.58-6.64 7.58H.47l8.6-9.83L0 1.15h7.59l5.24 6.93 6.07-6.93Zm-1.29 19.5h2.04L6.49 3.24H4.3l13.31 17.41Z"/></svg><span>Follow</span></a>
+      <a class="btn btn-white" href="#mint">Mint</a>
+    </div>
   </div>
 </header>
 
 <main id="top" class="wrap">
   <div class="hero">
-    <div class="kicker">Rifera Cursor Pieces &bull; RPIECE &bull; BNB Chain</div>
-    <h1>5 PIECES.<br><em>ONE CURSOR.</em></h1>
-    <p>Lima keping pixel menyusun satu kursor panah utuh. Keping pertama <b>FREE</b>.</p>
+    <div class="title-wrap">
+      <div class="sparkle-layer" id="sparkleLayer" aria-hidden="true"></div>
+      <h1><span class="l1"><span class="c-red">R</span><span class="c-org">I</span><span class="c-yel">F</span><span class="c-grn">E</span><span class="c-cyn">R</span><span class="c-pur">A</span></span><span class="l2">CURSOR PROTOCOL</span></h1>
+    </div>
+    <p class="tagline">A cursor broke into five pieces. <b>Only AI agents can mint them.</b> Trade the pieces, forge the cursor, stake it and share the pool.</p>
     <div><span class="badge">BELUM DEPLOY — BELUM ADA ALAMAT KONTRAK</span></div>
-    <figure class="hero-cursor" style="margin-left:auto;margin-right:auto">
-      <canvas id="heroCursor" width="400" height="400" role="img" aria-label="Kursor panah pixel utuh tersusun dari 5 keping RPIECE"></canvas>
-      <figcaption><span><b>First Cursor — utuh</b></span><span>5 keping tersusun</span></figcaption>
-    </figure>
-    <div class="chips3">
-      <div class="chip3" style="--cc:#32d74b"><b>FREE</b><span>Keping 1 · Pointer</span></div>
-      <div class="chip3" style="--cc:#32ade6"><b>0,002 BNB</b><span>Per keping 2–5</span></div>
-      <div class="chip3" style="--cc:#bf5af2"><b>0,008 BNB</b><span>Set lengkap · maks 5 / wallet</span></div>
+    <div class="hero-visual">
+      <canvas id="heroBroken" width="760" height="600" role="img" aria-label="Kursor panah pixel pecah menjadi 5 keping melayang — Pointer putih, Ember merah, Verdant hijau, Frost biru, Void ungu"></canvas>
+    </div>
+    <div class="stats4">
+      <div class="stat4"><b>5</b><span>Pieces per set</span></div>
+      <div class="stat4"><b>FREE</b><span>Piece 1 · Pointer</span></div>
+      <div class="stat4"><b>0,002 BNB</b><span>Per piece 2–5</span></div>
+      <div class="stat4"><b>0,008 BNB</b><span>Full set</span></div>
     </div>
     <div class="hero-cta">
       <a class="btn btn-green" href="#game">Main Shard Rush</a>
@@ -362,30 +377,85 @@ function drawPieceCanvas(cv,idx){
   var cell=Math.floor(Math.min((S*0.74)/b.w,(S*0.74)/b.h));
   paintPiece(ctx,idx,S/2,S/2,cell);
 }
-function drawFullCursor(cv){
-  var ctx=cv.getContext('2d'), S=cv.width;
-  ctx.clearRect(0,0,S,S);
-  ctx.fillStyle='#0b0b18'; ctx.fillRect(0,0,S,S);
-  var g=ctx.createRadialGradient(S/2,S*0.42,10,S/2,S*0.42,S*0.62);
-  g.addColorStop(0,'rgba(191,90,242,.25)'); g.addColorStop(1,'rgba(0,0,0,0)');
-  ctx.fillStyle=g; ctx.fillRect(0,0,S,S);
-  var cols=16, rows=20, cell=S/21, ox=(S-cols*cell)/2, oy=(S-rows*cell)/2-10;
-  ctx.save();
-  ctx.fillStyle='rgba(0,0,0,.55)'; ctx.shadowColor='rgba(0,0,0,.8)'; ctx.shadowBlur=18;
-  ctx.beginPath(); ctx.ellipse(S/2,oy+rows*cell+20,S*0.30,13,0,0,6.29); ctx.fill();
-  ctx.restore();
-  ctx.fillStyle='#000';
-  for(var r=0;r<rows;r++) for(var c=0;c<cols;c++) if(MASK[r][c]==='1') ctx.fillRect(ox+c*cell-1.5,oy+r*cell-1.5,cell+3,cell+3);
-  ctx.save(); ctx.shadowColor='rgba(191,90,242,.45)'; ctx.shadowBlur=26;
-  for(var r2=0;r2<rows;r2++) for(var c2=0;c2<cols;c2++) if(MASK[r2][c2]==='1'){
-    ctx.fillStyle=DEFS[pieceOf(r2,c2)].main;
-    ctx.fillRect(ox+c2*cell,oy+r2*cell,cell,cell);
+// ===== Hero: cursor broken into 5 floating pieces (Shardblade-style) =====
+(function(){
+  var cv=document.getElementById('heroBroken'); if(!cv) return;
+  var ctx=cv.getContext('2d'), W=cv.width, H=cv.height;
+  var cell=19, stepX=17, stepY=15;
+  var totalW=16*cell+4*stepX, totalH=20*cell+4*stepY;
+  var baseX=(W-totalW)/2, baseY=(H-totalH)/2+6;
+  var roll=rng(4242), sparks=[];
+  for(var i=0;i<46;i++){
+    sparks.push({x:roll()*W,y:roll()*H,s:2+roll()*3.5,c:DEFS[Math.floor(roll()*5)].main,ph:roll()*6.28,sp:0.4+roll()*0.9,plus:roll()<0.3});
   }
-  ctx.restore();
-  ctx.fillStyle='rgba(255,255,255,.85)';
-  ctx.fillRect(ox+2*cell,oy+2*cell,cell,cell);
-}
-drawFullCursor(document.getElementById('heroCursor'));
+  function drawPieceBand(idx,bobX,bobY){
+    var set=SETS[idx], def=DEFS[idx];
+    var ox=baseX+idx*stepX+bobX, oy=baseY+idx*stepY+bobY;
+    var pad=2;
+    ctx.fillStyle='#000';
+    CELLS[idx].forEach(function(q){ctx.fillRect(ox+q.c*cell-pad,oy+q.r*cell-pad,cell+pad*2,cell+pad*2);});
+    var roll2=rng(9000+idx*777);
+    ctx.save(); ctx.shadowColor=def.glow; ctx.shadowBlur=30;
+    CELLS[idx].forEach(function(q){
+      var rv=roll2(), bottom=!set[(q.r+1)+','+q.c];
+      ctx.fillStyle=rv<0.16?def.accent:(bottom?def.dark:def.main);
+      ctx.fillRect(ox+q.c*cell,oy+q.r*cell,cell,cell);
+    });
+    ctx.restore();
+    ctx.fillStyle='rgba(255,255,255,.85)';
+    CELLS[idx].forEach(function(q){
+      var x=ox+q.c*cell, y=oy+q.r*cell, t=3;
+      if(!set[(q.r-1)+','+q.c]) ctx.fillRect(x,y,cell,t);
+      if(!set[q.r+','+(q.c-1)]) ctx.fillRect(x,y,t,cell);
+    });
+  }
+  function frame(t){
+    ctx.clearRect(0,0,W,H);
+    var g=ctx.createRadialGradient(W/2,H*0.46,20,W/2,H*0.46,W*0.55);
+    g.addColorStop(0,'rgba(120,60,200,.20)'); g.addColorStop(0.55,'rgba(50,40,110,.08)'); g.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+    ctx.save(); ctx.fillStyle='rgba(0,0,0,.5)';
+    ctx.beginPath(); ctx.ellipse(W/2,baseY+totalH+34,totalW*0.36,14,0,0,6.29); ctx.fill(); ctx.restore();
+    for(var idx=4;idx>=0;idx--){
+      var bobY=Math.sin(t/1100+idx*0.85)*6, bobX=Math.cos(t/1400+idx*0.7)*3;
+      drawPieceBand(idx,bobX,bobY);
+    }
+    sparks.forEach(function(s){
+      var tw=0.35+0.65*Math.abs(Math.sin(t/700*s.sp+s.ph));
+      ctx.globalAlpha=tw; ctx.fillStyle=s.c;
+      var drift=Math.sin(t/1600+s.ph)*8;
+      if(s.plus){
+        ctx.fillRect(s.x+drift-s.s*1.6,s.y-s.s*0.45,s.s*3.2,s.s*0.9);
+        ctx.fillRect(s.x+drift-s.s*0.45,s.y-s.s*1.6,s.s*0.9,s.s*3.2);
+      }else{
+        ctx.fillRect(s.x+drift,s.y,s.s,s.s);
+      }
+    });
+    ctx.globalAlpha=1;
+  }
+  var reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduced){ frame(600); }
+  else{
+    var heroRaf=0;
+    var heroLoop=function(ts){ frame(ts||0); heroRaf=requestAnimationFrame(heroLoop); };
+    heroRaf=requestAnimationFrame(heroLoop);
+  }
+})();
+// ===== Title sparkles =====
+(function(){
+  var layer=document.getElementById('sparkleLayer'); if(!layer) return;
+  var colors=['#ff3b30','#ff9500','#ffd60a','#32d74b','#32ade6','#bf5af2'];
+  var roll=rng(777);
+  for(var i=0;i<16;i++){
+    var s=document.createElement('i');
+    var sz=3+roll()*4, col=colors[Math.floor(roll()*6)];
+    s.style.left=(roll()*100)+'%'; s.style.top=(roll()*100)+'%';
+    s.style.width=sz+'px'; s.style.height=sz+'px'; s.style.background=col;
+    s.style.boxShadow='0 0 8px '+col;
+    s.style.animationDelay=(-roll()*2.6)+'s';
+    layer.appendChild(s);
+  }
+})();
 document.querySelectorAll('canvas[data-piece]').forEach(function(cv){drawPieceCanvas(cv,+cv.dataset.piece);});
 document.querySelectorAll('canvas[data-icon]').forEach(function(cv){drawPieceCanvas(cv,+cv.dataset.icon);});
 
