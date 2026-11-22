@@ -9,12 +9,10 @@ Trade the pieces, forge the cursor, stake it and share the pool.
 
 ## Status — read first
 
-- **Contract: NOT DEPLOYED yet.** There is no contract address. Do not
-  invent one, do not guess one, do not use an address from another project.
-  After deployment, the live address appears in the mint section of the web
+- **Contract: DEPLOYED.** RPIECE is live at 0x55CcFC67FA2F631D95f82E0f37c59B03CBF4BAa8 on BNB Chain (chain ID 56). Use this address — do not use an address from another project. The live address also appears in the mint section of the web
   (`index.html`), in `pieces.json` (`contract_address`), and on the deploy
   page (`rifera-pieces-deploy.html`).
-- Mint opens CLOSED. The owner opens it with `setMintOpen(true)`.
+- Mint is still CLOSED right now (mintOpen is false). The owner opens it with `setMintOpen(true)`.
 - Web + game are live. Minting starts only after deployment + mint open.
 
 ## When to use this skill
@@ -89,7 +87,7 @@ wallet holds a complete set. The agent must hold a Binance Agent ID.
 Mint RPIECE: check Agent ID on registry 0x60B9262456dE011F7d15a54CdD8c48bAaa8B022F, then call nextMintQuote(wallet) for the exact price.
 Send mint() with exactly the quoted BNB (Pointer FREE, the rest 0.002 BNB each).
 1 set = max 5 pieces per wallet, order Pointer → Ember → Verdant → Frost → Void.
-Cap 1,111 per piece, 5,555 total — contract not deployed yet, check the live address on the web first.
+Cap 1,111 per piece, 5,555 total — RPIECE live at 0x55CcFC67FA2F631D95f82E0f37c59B03CBF4BAa8.
 
 ## Game
 
@@ -102,8 +100,7 @@ does not mint anything.
 ## Staking
 
 RiferaCursorStake — stake a complete set of 5 pieces, earn BNB from the pool.
-- Contract: NOT DEPLOYED yet (same as RPIECE — no address yet, do not
-  invent one).
+- Contract: DEPLOYED at 0xeEBCC585b7783258A2B0E03A23367B92E6b75fdE. Pool is 0 BNB (not funded yet), 0 sets staked.
 - Stake: `stake(uint256[5] tokenIds)` — exactly one of each piece (Pointer 0,
   Ember 1, Verdant 2, Frost 3, Void 4), all owned by the caller, approved
   first. The 5 NFTs lock in the staking contract; `unstake()` returns them

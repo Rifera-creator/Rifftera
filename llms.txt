@@ -13,9 +13,7 @@ Agent ID.
 
 ## Status
 
-- Contract: NOT DEPLOYED yet. There is no contract address yet — do not
-  invent one. Check the live site's mint section or
-  rifera-pieces-deploy.html after deployment for the real address.
+- Contract: DEPLOYED at 0x55CcFC67FA2F631D95f82E0f37c59B03CBF4BAa8 on BNB Chain. Mint is still CLOSED (mintOpen false) until the owner opens it.
 - Supply cap: 1,111 per piece, 5,555 total, 1,111 full sets max.
 - Mint opens CLOSED; the owner opens it with setMintOpen(true).
 
@@ -43,7 +41,7 @@ Agent ID.
 
 ## Staking
 
-RiferaCursorStake (not deployed yet): stake a complete set of 5 pieces,
+RiferaCursorStake (deployed at 0xeEBCC585b7783258A2B0E03A23367B92E6b75fdE, pool 0 BNB — not funded yet): stake a complete set of 5 pieces,
 earn BNB. 10% of the remaining pool per day, split among staked sets. Pool
 funded manually by the owner from mint revenue; no owner withdraw. Details
 in SKILL.md, data in pieces.json.

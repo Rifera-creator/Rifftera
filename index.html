@@ -184,7 +184,7 @@ footer{margin-top:60px;border-top:2px solid var(--line);padding:26px 0 36px;colo
       <h1><span class="l1"><span class="c-red">R</span><span class="c-org">I</span><span class="c-yel">F</span><span class="c-grn">E</span><span class="c-cyn">R</span><span class="c-pur">A</span></span><span class="l2">CURSOR PROTOCOL</span></h1>
     </div>
     <p class="tagline">A cursor broke into five pieces. <b>Only AI agents can mint them.</b> Trade the pieces, forge the cursor, stake it and share the pool.</p>
-    <div><span class="badge">NOT DEPLOYED — NO CONTRACT ADDRESS YET</span></div>
+    <div><span class="badge">DEPLOYED ON BNB — MINT NOT OPEN YET</span></div>
     <div class="hero-visual">
       <canvas id="heroBroken" width="760" height="600" role="img" aria-label="Pixel arrow cursor broken into 5 floating pieces — white Pointer, red Ember, green Verdant, blue Frost, purple Void"></canvas>
     </div>
@@ -237,7 +237,7 @@ footer{margin-top:60px;border-top:2px solid var(--line);padding:26px 0 36px;colo
   </section>
 
   <section id="pieces">
-    <div class="sec-head"><h2><svg class="logo-mark" aria-hidden="true"><use href="#rifera-mark"/></svg> Five pieces</h2><span class="sec-note">RPIECE &bull; NOT DEPLOYED</span></div>
+    <div class="sec-head"><h2><svg class="logo-mark" aria-hidden="true"><use href="#rifera-mark"/></svg> Five pieces</h2><span class="sec-note">RPIECE &bull; LIVE ON BNB</span></div>
     <p class="sec-sub">Each piece is one horizontal band of the same pixel cursor — five stacked colors form one whole arrow. Minting goes in order, no skipping: start at Pointer, finish at Void.</p>
     <div class="pieces">
       <article class="piece" style="--pc:#eef0ff;--pg:rgba(238,240,255,.28)"><div class="piece-stage"><canvas class="shard-piece" data-piece="0" width="300" height="300" role="img" aria-label="Piece 1 Pointer — the sharp tip of the pixel cursor"></canvas></div><div class="pnum">PIECE 01 / 05</div><h3>1 · Pointer</h3><p>The sharp tip. Every cursor starts here.</p><span class="price free">FREE</span></article>
@@ -257,7 +257,7 @@ footer{margin-top:60px;border-top:2px solid var(--line);padding:26px 0 36px;colo
         <div class="rowline"><span>Max full sets</span><b>1,111 sets</b></div>
         <div class="rowline"><span>Requirement</span><b>Binance Agent ID required</b></div>
         <div class="rowline"><span>Artwork</span><b>On-chain SVG, different shape per piece</b></div>
-        <div class="rowline"><span>Contract status</span><b>NOT DEPLOYED — no contract address yet</b></div>
+        <div class="rowline"><span>Contract status</span><b>DEPLOYED — 0x55CcFC67FA2F631D95f82E0f37c59B03CBF4BAa8 · mint closed until the owner opens it</b></div>
       </div>
       <p class="sec-note" style="margin-top:12px;line-height:1.7">Cap of 1,111 per piece — if Pointer sells out, no new wallet can start minting.</p>
     </div>
@@ -283,7 +283,7 @@ footer{margin-top:60px;border-top:2px solid var(--line);padding:26px 0 36px;colo
         <div class="prompt-text">Mint RPIECE: check Agent ID on registry 0x60B9262456dE011F7d15a54CdD8c48bAaa8B022F, then call nextMintQuote(wallet) for the exact price.
 Send mint() with exactly the quoted BNB (Pointer FREE, the rest 0.002 BNB each).
 1 set = max 5 pieces per wallet, order Pointer → Ember → Verdant → Frost → Void.
-Cap 1,111 per piece, 5,555 total — contract not deployed yet, check the live address on the web first.</div>
+Cap 1,111 per piece, 5,555 total — RPIECE live at 0x55CcFC67FA2F631D95f82E0f37c59B03CBF4BAa8.</div>
         <p class="sec-note" style="margin-top:14px;line-height:1.7">Exactly the same prompt as in the Mint section below — there is no other version.</p>
       </div>
     </div>
@@ -291,7 +291,7 @@ Cap 1,111 per piece, 5,555 total — contract not deployed yet, check the live a
 
   <section id="mint">
     <div class="sec-head"><h2><svg class="logo-mark" aria-hidden="true"><use href="#rifera-mark"/></svg> Mint via agent</h2><span class="sec-note">4-line prompt &bull; direct execute</span></div>
-    <p class="sec-sub">RPIECE mints only through an agent with a Binance Agent ID — there is no manual mint button. The contract is <b>not deployed yet</b>, so use the prompt below once the official contract address is announced. Never mint to any address before the official announcement.</p>
+    <p class="sec-sub">RPIECE mints only through an agent with a Binance Agent ID — there is no manual mint button. The contract is deployed at <b>0x55CcFC67FA2F631D95f82E0f37c59B03CBF4BAa8</b> — but mint is still closed (mintOpen is false). Use the prompt below once the owner opens mint. Never mint to any other address.</p>
     <div class="grid2">
       <div class="steps">
         <div class="step"><div class="num">1</div><p><b>Get your Agent ID.</b> In the Binance app, open Agentic Wallet and claim your Agent ID. Keep a little BNB for gas.</p></div>
@@ -308,23 +308,23 @@ Cap 1,111 per piece, 5,555 total — contract not deployed yet, check the live a
         <div class="prompt-text" id="promptText">Mint RPIECE: check Agent ID on registry 0x60B9262456dE011F7d15a54CdD8c48bAaa8B022F, then call nextMintQuote(wallet) for the exact price.
 Send mint() with exactly the quoted BNB (Pointer FREE, the rest 0.002 BNB each).
 1 set = max 5 pieces per wallet, order Pointer → Ember → Verdant → Frost → Void.
-Cap 1,111 per piece, 5,555 total — contract not deployed yet, check the live address on the web first.</div>
+Cap 1,111 per piece, 5,555 total — RPIECE live at 0x55CcFC67FA2F631D95f82E0f37c59B03CBF4BAa8.</div>
         <div class="copy-row">
           <button class="btn btn-white" id="btnCopy">Copy prompt</button>
           <span class="copy-msg" id="copyMsg" role="status"></span>
         </div>
-        <p class="sec-note" style="margin-top:16px;line-height:1.8">Status: NOT DEPLOYED — no RPIECE contract address yet. This page shows no mint counts because no piece has been issued yet.</p>
+        <p class="sec-note" style="margin-top:16px;line-height:1.8">Status: DEPLOYED at 0x55CcFC67FA2F631D95f82E0f37c59B03CBF4BAa8 — mint closed until the owner opens it. totalMinted is 0 so far.</p>
       </div>
     </div>
   </section>
 
   <section id="market">
     <div class="sec-head"><h2><svg class="logo-mark" aria-hidden="true"><use href="#rifera-mark"/></svg> Pieces marketplace</h2><span class="sec-note">RPIECE only</span></div>
-    <p class="sec-sub">This marketplace is for RPIECE pieces only. The prices below are <b>sample prices</b> per piece to preview the layout — not the official mint prices (mint stays FREE / 0.002 BNB) and there are no live listings yet because the contract is not deployed. Click Buy to see the buy prompt on this page too.</p>
+    <p class="sec-sub">This marketplace is for RPIECE pieces only. The prices below are <b>sample prices</b> per piece to preview the layout — not the official mint prices (mint stays FREE / 0.002 BNB) and there are no live listings yet because no piece has been minted (mint still closed). Click Buy to see the buy prompt on this page too.</p>
     <div class="listings" id="listings"></div>
     <div class="buy-panel" id="buyPanel" hidden>
       <h3 id="buyTitle">Buy piece</h3>
-      <p>Buy through your agent from this page. Copy the prompt below and send it to your agent once the RPIECE contract is officially deployed and the listing is live.</p>
+      <p>Buy through your agent from this page. Copy the prompt below and send it to your agent once mint is open and the listing is live.</p>
       <div class="prompt-text" id="buyPrompt"></div>
       <div class="copy-row">
         <button class="btn btn-white" id="btnCopyBuy">Copy buy prompt</button>
@@ -334,8 +334,8 @@ Cap 1,111 per piece, 5,555 total — contract not deployed yet, check the live a
   </section>
 
   <section id="stake">
-    <div class="sec-head"><h2><svg class="logo-mark" aria-hidden="true"><use href="#rifera-mark"/></svg> Full-set staking</h2><span class="sec-note">RiferaCursorStake &bull; NOT DEPLOYED</span></div>
-    <p class="sec-sub">Stake <b>1 full set</b> — Pointer + Ember + Verdant + Frost + Void — into the <b>RiferaCursorStake</b> staking contract and earn <b>BNB</b> rewards from the pool. Status: <b>staking is NOT DEPLOYED</b> — the staking contract has no address yet, so you cannot stake yet.</p>
+    <div class="sec-head"><h2><svg class="logo-mark" aria-hidden="true"><use href="#rifera-mark"/></svg> Full-set staking</h2><span class="sec-note">RiferaCursorStake &bull; LIVE ON BNB</span></div>
+    <p class="sec-sub">Stake <b>1 full set</b> — Pointer + Ember + Verdant + Frost + Void — into the <b>RiferaCursorStake</b> staking contract and earn <b>BNB</b> rewards from the pool. Staking is live at <b>0xeEBCC585b7783258A2B0E03A23367B92E6b75fdE</b> — but the pool is empty (0 BNB, not funded yet) and 0 sets are staked, so rewards are 0 until the owner funds the pool and sets are staked.</p>
     <div class="grid2" style="grid-template-columns:1fr 1fr">
       <div class="card">
         <h3>Staking requirements</h3>
@@ -344,7 +344,7 @@ Cap 1,111 per piece, 5,555 total — contract not deployed yet, check the live a
           <div class="rowline"><span>How to stake</span><b>5 NFTs locked into the staking contract</b></div>
           <div class="rowline"><span>Unstake</span><b>All 5 NFTs returned to your wallet</b></div>
           <div class="rowline"><span>Full set cost</span><b>0.008 BNB</b></div>
-          <div class="rowline"><span>Status</span><b>NOT DEPLOYED — staking not open yet</b></div>
+          <div class="rowline"><span>Status</span><b>DEPLOYED — pool empty (0 BNB), 0 sets staked</b></div>
         </div>
       </div>
       <div class="card">
@@ -365,12 +365,12 @@ Cap 1,111 per piece, 5,555 total — contract not deployed yet, check the live a
     <div class="sec-head"><h2><svg class="logo-mark" aria-hidden="true"><use href="#rifera-mark"/></svg> FAQ</h2></div>
     <div class="faq">
       <details open><summary>What is Rifera Cursor Pieces?</summary><p>A new NFT collection called RPIECE: one pixel arrow cursor split into 5 horizontal bands — Pointer, Ember, Verdant, Frost, and Void. Stacked together, the five bands form one whole cursor.</p></details>
-      <details><summary>Can I mint yet?</summary><p>Not yet. The RPIECE contract is not deployed and there is no contract address. The mint prompt on this page is ready to use once the official address is announced. Do not send BNB to any address claiming to be RPIECE before that.</p></details>
-      <details><summary>What is the total RPIECE supply?</summary><p>Max 1,111 full sets: a cap of 1,111 pieces per type (Pointer, Ember, Verdant, Frost, Void), so 5,555 NFTs total max. Because minting must go in order starting from Pointer, if Pointer sells out, no new wallet can start minting. The contract is not deployed yet, so no piece has been issued — the numbers above are the cap, not the minted count.</p></details>
+      <details><summary>Can I mint yet?</summary><p>Not yet. RPIECE is deployed at 0x55CcFC67FA2F631D95f82E0f37c59B03CBF4BAa8, but mint is still closed — the owner has not opened it yet. The prompt on this page is ready to use once mint opens. Do not send BNB to any other address claiming to be RPIECE.</p></details>
+      <details><summary>What is the total RPIECE supply?</summary><p>Max 1,111 full sets: a cap of 1,111 pieces per type (Pointer, Ember, Verdant, Frost, Void), so 5,555 NFTs total max. Because minting must go in order starting from Pointer, if Pointer sells out, no new wallet can start minting. No piece has been issued yet (totalMinted 0) — the numbers above are the cap, not the minted count.</p></details>
       <details><summary>How much does each piece cost?</summary><p>Piece 1 Pointer is FREE (gas only). Pieces 2 Ember, 3 Verdant, 4 Frost, and 5 Void cost 0.002 BNB each. One full set totals 0.008 BNB, max 5 pieces per wallet, minting in order.</p></details>
       <details><summary>Why do I need an agent?</summary><p>RPIECE minting requires a Binance Agent ID. You send the 4-line prompt, your agent calls the contract — there is no manual mint button for humans.</p></details>
       <details><summary>What is the Shard Rush game?</summary><p>A free 100-round browser game with 4 styles rotating each round — RUSH (collect 5 pieces), DODGE (survive until time runs out; pieces give a score bonus and +5 seconds), CHASE (catch 5 fleeing pieces), BLITZ (30 seconds, collect as many pieces as you can, at least 5 to pass). Move the cursor (mouse, touch, or WASD) and dodge the glitches. The timer shrinks every 10 rounds from 60 to 30 seconds, and glitches grow in number and speed. 3 lives for the whole game, +1 every 20 rounds cleared (max 5). Clear round 100 to become CURSOR MASTER. No wallet needed to play, and game scores are not mint counts.</p></details>
-      <details><summary>What is a full set for?</summary><p>A full 5-piece set (Pointer + Ember + Verdant + Frost + Void) can be staked into the RiferaCursorStake contract: all five NFTs are locked into the contract and returned whole on unstake. The reward is BNB — every day 10% of the remaining pool is released and split evenly across all staked sets. The pool is funded manually by the owner from mint proceeds, cannot be withdrawn by the owner, and claims are open anytime. But staking is NOT DEPLOYED — the staking contract has no address yet, so you cannot stake yet.</p></details>
+      <details><summary>What is a full set for?</summary><p>A full 5-piece set (Pointer + Ember + Verdant + Frost + Void) can be staked into the RiferaCursorStake contract: all five NFTs are locked into the contract and returned whole on unstake. The reward is BNB — every day 10% of the remaining pool is released and split evenly across all staked sets. The pool is funded manually by the owner from mint proceeds, cannot be withdrawn by the owner, and claims are open anytime. Staking is live at 0xeEBCC585b7783258A2B0E03A23367B92E6b75fdE, but the pool holds 0 BNB so far — rewards start once the owner funds the pool and sets are staked.</p></details>
     </div>
   </section>
 </main>
@@ -378,7 +378,7 @@ Cap 1,111 per piece, 5,555 total — contract not deployed yet, check the live a
 <footer>
   <div class="wrap">
     Rifera Cursor Pieces (RPIECE) — 5 pieces, 1 cursor. Piece 1 FREE, pieces 2–5 cost 0.002 BNB each, full set 0.008 BNB, max 5 per wallet. Max supply 1,111 sets · 1,111 pieces per type · 5,555 NFTs total.<br>
-    Status: NOT DEPLOYED — no contract address yet. The game on this page is free and off-chain.
+    Status: DEPLOYED — RPIECE 0x55CcFC67FA2F631D95f82E0f37c59B03CBF4BAa8, staking 0xeEBCC585b7783258A2B0E03A23367B92E6b75fdE. Mint closed until the owner opens it. The game on this page is free and off-chain.
   </div>
 </footer>
 
