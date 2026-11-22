@@ -162,27 +162,29 @@ footer{margin-top:60px;border-top:2px solid var(--line);padding:26px 0 36px;colo
   <section id="game">
     <div class="sec-head">
       <h2><span class="dots"><i></i><i></i><i></i><i></i></span> Shard Rush</h2>
-      <span class="sec-note">60 detik &bull; 5 keping &bull; 3 nyawa</span>
+      <span class="sec-note">3 ronde &times; 60 detik &bull; 15 keping &bull; 3 nyawa</span>
     </div>
-    <p class="sec-sub">Satu arena, satu tujuan: gerakkan kursor, sentuh kelima keping sebelum waktu habis. Kena glitch hilang 1 nyawa. Angka di game ini adalah aturan permainan saja — bukan jumlah mint atau stok.</p>
+    <p class="sec-sub">Satu arena, tiga ronde: tiap ronde 60 detik untuk menyentuh kelima keping — total 15 keping dalam satu permainan, dan tiap ronde glitch makin banyak dan makin cepat. Kena glitch hilang 1 nyawa; nyawa cuma 3 untuk seluruh permainan, tidak reset tiap ronde. Angka di game ini adalah aturan permainan saja — bukan jumlah mint atau stok.</p>
     <div class="game-shell">
       <div class="game-top">
         <div class="hud">
+          <span class="chip">RONDE <b id="gRound">1/3</b></span>
           <span class="chip">SKOR <b id="gScore">0</b></span>
           <span class="chip">TERBAIK <b id="gBest">0</b></span>
           <span class="chip">WAKTU <b id="gTime">60</b></span>
           <span class="chip">KEPING
             <canvas class="shard-ic" data-icon="0" width="44" height="44" aria-hidden="true"></canvas><canvas class="shard-ic" data-icon="1" width="44" height="44" aria-hidden="true"></canvas><canvas class="shard-ic" data-icon="2" width="44" height="44" aria-hidden="true"></canvas><canvas class="shard-ic" data-icon="3" width="44" height="44" aria-hidden="true"></canvas><canvas class="shard-ic" data-icon="4" width="44" height="44" aria-hidden="true"></canvas>
             <b id="gShard">0/5</b></span>
+          <span class="chip">TOTAL <b id="gTotal">0/15</b></span>
           <span class="chip">NYAWA <b class="lives" id="gLives">&#10084;&#10084;&#10084;</b></span>
         </div>
         <button class="btn btn-green" id="btnStart">Start</button>
       </div>
-      <canvas id="cv" width="900" height="520" aria-label="Game Shard Rush — gerakkan kursor, kumpulkan 5 keping dalam 60 detik, hindari glitch"></canvas>
+      <canvas id="cv" width="900" height="520" aria-label="Game Shard Rush — 3 ronde kali 60 detik, kumpulkan 5 keping tiap ronde, hindari glitch"></canvas>
       <div class="game-help">
         <span><b>Gerak:</b> mouse / sentuh &amp; geser / WASD / panah</span>
-        <span><b>Menang:</b> 5 keping sebelum waktu habis</span>
-        <span><b>Kalah:</b> nyawa habis atau waktu habis</span>
+        <span><b>Menang:</b> 15 keping dalam 3 ronde</span>
+        <span><b>Kalah:</b> nyawa habis atau waktu ronde habis</span>
       </div>
     </div>
   </section>
@@ -282,7 +284,7 @@ Lakukan sekarang, lalu laporkan keping yang didapat.</div>
       <details><summary>Sudah bisa mint?</summary><p>Belum. Kontrak RPIECE belum deploy dan belum ada alamat kontrak. Prompt mint di halaman ini disiapkan untuk dipakai setelah alamat resmi diumumkan. Jangan kirim BNB ke alamat mana pun yang mengatasnamakan RPIECE sebelum itu.</p></details>
       <details><summary>Berapa harga tiap keping?</summary><p>Keping 1 Pointer FREE (gas saja). Keping 2 Ember, 3 Verdant, 4 Frost, dan 5 Void masing-masing 0,002 BNB. Satu set lengkap total 0,008 BNB, maks 5 keping per wallet, mint wajib berurutan.</p></details>
       <details><summary>Kenapa harus pakai agent?</summary><p>Mint RPIECE wajib Binance Agent ID. Kamu kirim prompt 4 baris, agent kamu yang memanggil kontrak — tidak ada tombol mint manual untuk manusia.</p></details>
-      <details><summary>Game Shard Rush ini apa?</summary><p>Game browser gratis 60 detik: gerakkan kursor (mouse, sentuh, atau WASD), sentuh 5 keping, hindari glitch dengan 3 nyawa. Tidak perlu wallet untuk main, dan skor game bukan jumlah mint.</p></details>
+      <details><summary>Game Shard Rush ini apa?</summary><p>Game browser gratis 3 ronde &times; 60 detik: gerakkan kursor (mouse, sentuh, atau WASD), sentuh 5 keping tiap ronde — total 15 keping — dan hindari glitch. Nyawa cuma 3 untuk seluruh permainan, dan tiap ronde glitch makin banyak dan makin cepat. Tidak perlu wallet untuk main, dan skor game bukan jumlah mint.</p></details>
       <details><summary>Set lengkap gunanya apa?</summary><p>Set 5 keping lengkap dalam satu wallet memenuhi syarat staking pool BNB. Detail pool diumumkan saat kontrak deploy.</p></details>
     </div>
   </section>
@@ -433,12 +435,15 @@ document.getElementById('btnCopyBuy').addEventListener('click',function(){
   var W=900,H=520;
   var running=false,raf=0,lastTs=0;
   var px=450,py=260,tx=450,ty=260,keys={};
-  var shards=[],glitches=[],score=0,best=0,timeLeft=60,lives=3,got=0,invuln=0,over=false,win=false;
-  var elScore=document.getElementById('gScore'),elBest=document.getElementById('gBest'),elTime=document.getElementById('gTime'),elShard=document.getElementById('gShard'),elLives=document.getElementById('gLives'),btn=document.getElementById('btnStart');
+  var shards=[],glitches=[],score=0,best=0,timeLeft=60,lives=3,got=0,totalGot=0,invuln=0,over=false,win=false;
+  var round=1,interT=0;
+  var ROUNDS=[{n:3,cap:5,sp:52,label:'PELAN'},{n:4,cap:6,sp:82,label:'SEDANG'},{n:5,cap:7,sp:112,label:'CEPAT'}];
+  var elScore=document.getElementById('gScore'),elBest=document.getElementById('gBest'),elTime=document.getElementById('gTime'),elShard=document.getElementById('gShard'),elTotal=document.getElementById('gTotal'),elRound=document.getElementById('gRound'),elLives=document.getElementById('gLives'),btn=document.getElementById('btnStart');
   var icons=document.querySelectorAll('.shard-ic');
   function hearts(){var s='';for(var i=0;i<3;i++)s+=i<lives?'\u2764':'\u2661';return s;}
   function syncHud(){
     elScore.textContent=score; elBest.textContent=best;
+    elRound.textContent=round+'/3'; elTotal.textContent=totalGot+'/15';
     elTime.textContent=Math.max(0,Math.ceil(timeLeft)); elShard.textContent=got+'/5';
     elLives.innerHTML=hearts();
     icons.forEach(function(ic,i){ic.classList.toggle('got',i<got);});
@@ -460,12 +465,17 @@ document.getElementById('btnCopyBuy').addEventListener('click',function(){
       var edge=Math.floor(Math.random()*4),x,y;
       if(edge===0){x=Math.random()*W;y=-24;}else if(edge===1){x=Math.random()*W;y=H+24;}
       else if(edge===2){x=-24;y=Math.random()*H;}else{x=W+24;y=Math.random()*H;}
-      glitches.push({x:x,y:y,sp:52+Math.random()*36+got*9,ph:Math.random()*6.28});
+      glitches.push({x:x,y:y,sp:ROUNDS[round-1].sp+Math.random()*30+got*6,ph:Math.random()*6.28});
     }
   }
   function reset(){
-    px=tx=W/2;py=ty=H/2;score=0;timeLeft=60;lives=3;got=0;invuln=0;over=false;win=false;
-    spawnShards(); spawnGlitch(3); syncHud();
+    px=tx=W/2;py=ty=H/2;score=0;timeLeft=60;lives=3;got=0;totalGot=0;round=1;interT=0;invuln=0;over=false;win=false;
+    spawnShards(); spawnGlitch(ROUNDS[0].n); syncHud();
+  }
+  function nextRound(){
+    round++; got=0; timeLeft=60; invuln=1.4; interT=1.8;
+    px=tx=W/2; py=ty=H/2;
+    spawnShards(); spawnGlitch(ROUNDS[round-1].n); syncHud();
   }
   function endGame(w){
     running=false;over=true;win=w;
@@ -509,25 +519,33 @@ document.getElementById('btnCopyBuy').addEventListener('click',function(){
       if(over&&win){
         ctx.font='28px "Press Start 2P"'; ctx.fillText('SET LENGKAP!',W/2,H/2-38);
         ctx.font='15px "IBM Plex Mono"'; ctx.fillStyle='#b3b5d1';
-        ctx.fillText('5 keping terkumpul. Skor akhir: '+score,W/2,H/2+2);
+        ctx.fillText('15 keping terkumpul dalam 3 ronde. Skor akhir: '+score,W/2,H/2+2);
         ctx.fillText('Di dunia nyata: set lengkap RPIECE = syarat staking.',W/2,H/2+30);
       }else if(over){
         ctx.font='28px "Press Start 2P"'; ctx.fillText('GAME OVER',W/2,H/2-38);
         ctx.font='15px "IBM Plex Mono"'; ctx.fillStyle='#b3b5d1';
-        ctx.fillText('Keping terkumpul: '+got+'/5 · Skor: '+score,W/2,H/2+2);
+        ctx.fillText('Berhenti di ronde '+round+'/3 · Keping total: '+totalGot+'/15 · Skor: '+score,W/2,H/2+2);
         ctx.fillText('Tekan Main lagi untuk coba lagi.',W/2,H/2+30);
       }else{
         ctx.font='24px "Press Start 2P"'; ctx.fillText('SHARD RUSH',W/2,H/2-34);
         ctx.font='15px "IBM Plex Mono"'; ctx.fillStyle='#b3b5d1';
-        ctx.fillText('Gerakkan kursor, sentuh 5 keping, hindari glitch.',W/2,H/2+4);
-        ctx.fillText('Tekan Start untuk mulai.',W/2,H/2+32);
+        ctx.fillText('3 ronde \u00d7 60 detik. Sentuh 5 keping tiap ronde, hindari glitch.',W/2,H/2+4);
+        ctx.fillText('Nyawa cuma 3 untuk seluruh permainan. Tekan Start untuk mulai.',W/2,H/2+32);
       }
+      ctx.textAlign='left';
+    }else if(interT>0){
+      ctx.fillStyle='rgba(4,4,12,.72)'; ctx.fillRect(0,0,W,H);
+      ctx.textAlign='center'; ctx.fillStyle='#fff';
+      ctx.font='28px "Press Start 2P"'; ctx.fillText('RONDE '+round+' / 3',W/2,H/2-20);
+      ctx.font='15px "IBM Plex Mono"'; ctx.fillStyle='#b3b5d1';
+      ctx.fillText('Glitch: '+ROUNDS[round-1].label+' \u00b7 Keping ronde ini: 0/5 \u00b7 Skor: '+score,W/2,H/2+16);
       ctx.textAlign='left';
     }
   }
   function loop(ts){
     if(!running)return;
     var dt=Math.min(0.05,(ts-lastTs)/1000||0.016); lastTs=ts;
+    if(interT>0){interT-=dt; draw(ts); raf=requestAnimationFrame(loop); return;}
     timeLeft-=dt; if(invuln>0)invuln-=dt;
     var sp=330;
     if(keys['arrowleft']||keys['a'])tx-=sp*dt;
@@ -549,13 +567,16 @@ document.getElementById('btnCopyBuy').addEventListener('click',function(){
     shards.forEach(function(s){
       if(s.taken)return;
       if(Math.hypot(px-s.x,py-s.y)<40){
-        s.taken=true; got++; score+=100+Math.ceil(timeLeft); syncHud();
-        if(got>=5){score+=250; endGame(true); return;}
-        if(glitches.length<6) spawnGlitch(glitches.length+1);
+        s.taken=true; got++; totalGot++; score+=100+Math.ceil(timeLeft); syncHud();
+        if(got>=5){
+          if(round>=3){score+=250; endGame(true); return;}
+          score+=150; nextRound(); return;
+        }
+        if(glitches.length<ROUNDS[round-1].cap) spawnGlitch(glitches.length+1);
       }
     });
     if(!running)return;
-    if(timeLeft<=0){endGame(got>=5); return;}
+    if(timeLeft<=0){endGame(false); return;}
     syncHud(); draw(ts);
     raf=requestAnimationFrame(loop);
   }
