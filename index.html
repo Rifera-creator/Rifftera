@@ -70,12 +70,13 @@ canvas.piece-art{image-rendering:pixelated;display:block}
 .stat4 b{font-family:"Press Start 2P";font-size:clamp(17px,4.4vw,26px);display:block;color:#fff;line-height:1.35;margin-bottom:9px}
 .stat4 span{color:var(--muted);font-size:13.5px;font-family:"IBM Plex Mono"}
 @media(max-width:480px){.stat4{padding:16px 14px}}
-.supply-row{display:grid;grid-template-columns:1fr 1fr;position:relative;border:2px solid var(--line);border-top:0;background:var(--panel);box-shadow:6px 6px 0 #000;text-align:left;margin:-22px 0 22px}
+.supply-row{display:grid;grid-template-columns:1fr 1fr 1fr;position:relative;border:2px solid var(--line);border-top:0;background:var(--panel);box-shadow:6px 6px 0 #000;text-align:left;margin:-22px 0 22px}
 .supply-cell{padding:18px 22px;border-right:2px solid var(--line)}
 .supply-cell:last-child{border-right:0}
 .supply-cell b{font-family:"Press Start 2P";font-size:clamp(17px,4.4vw,26px);display:block;color:var(--yellow);line-height:1.35;margin-bottom:9px}
 .supply-cell span{color:var(--muted);font-size:13.5px;font-family:"IBM Plex Mono"}
-@media(max-width:480px){.supply-cell{padding:14px}}
+@media(max-width:480px){.supply-cell{padding:14px 10px}.supply-cell b{font-size:14px}}
+.live-note{position:relative;margin:-10px 0 22px;text-align:left;font-family:"IBM Plex Mono";font-size:12px;color:var(--muted2);line-height:1.7;word-break:break-word}
 .nav-actions{display:flex;gap:10px;align-items:center}
 .btn-follow{background:var(--panel2)}
 .btn-follow svg{width:13px;height:13px;fill:#fff;flex:0 0 13px}
@@ -197,7 +198,9 @@ footer{margin-top:60px;border-top:2px solid var(--line);padding:26px 0 36px;colo
     <div class="supply-row">
       <div class="supply-cell"><b>1,111</b><span>Max sets &middot; 1,111 per piece</span></div>
       <div class="supply-cell"><b>5,555</b><span>Total pieces max</span></div>
+      <div class="supply-cell"><b id="liveMinted">3</b><span>Minted live &middot; all Pointer</span></div>
     </div>
+    <p class="live-note" id="liveMintedNote">Live from the contract 0x55CcFC67FA2F631D95f82E0f37c59B03CBF4BAa8 — Pointer 3 &middot; Ember 0 &middot; Verdant 0 &middot; Frost 0 &middot; Void 0</p>
     <div class="hero-cta">
       <a class="btn btn-green" href="#game">Play Shard Rush</a>
       <a class="btn" href="#pieces">See the 5 pieces</a>
@@ -313,7 +316,7 @@ Cap 1,111 per piece, 5,555 total — RPIECE live at 0x55CcFC67FA2F631D95f82E0f37
           <button class="btn btn-white" id="btnCopy">Copy prompt</button>
           <span class="copy-msg" id="copyMsg" role="status"></span>
         </div>
-        <p class="sec-note" style="margin-top:16px;line-height:1.8">Status: DEPLOYED at 0x55CcFC67FA2F631D95f82E0f37c59B03CBF4BAa8 — mint OPEN. totalMinted is 3 so far, all Pointer.</p>
+        <p class="sec-note" id="mintStatusNote" style="margin-top:16px;line-height:1.8">Status: DEPLOYED at 0x55CcFC67FA2F631D95f82E0f37c59B03CBF4BAa8 — mint OPEN. totalMinted is 3 so far, all Pointer.</p>
       </div>
     </div>
   </section>
@@ -803,5 +806,51 @@ document.getElementById('btnCopyBuy').addEventListener('click',function(){
   });
   reset(); running=false; draw(0);
 })();</script>
+<script>
+// ===== Live minted counter: read straight from the RPIECE contract (no wallet, no library) =====
+(function(){
+  var CONTRACT='0x55CcFC67FA2F631D95f82E0f37c59B03CBF4BAa8';
+  var RPCS=['https://bsc-dataseed.binance.org/','https://bsc-dataseed1.bnbchain.org/'];
+  var NAMES=['Pointer','Ember','Verdant','Frost','Void'];
+  function pad32(n){var h=n.toString(16);while(h.length<64)h='0'+h;return h;}
+  function callReq(id,data){return {jsonrpc:'2.0',id:id,method:'eth_call',params:[{to:CONTRACT,data:data},'latest']};}
+  function fetchCounts(rpc){
+    var batch=[callReq(1,'0xa2309ff8')]; // totalMinted()
+    for(var i=0;i<5;i++) batch.push(callReq(2+i,'0xb5368be0'+pad32(i))); // mintedPerPiece(0..4)
+    return fetch(rpc,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(batch)})
+      .then(function(r){if(!r.ok)throw new Error('rpc status '+r.status);return r.json();})
+      .then(function(res){
+        if(!Array.isArray(res))throw new Error('bad rpc reply');
+        var vals={};
+        res.forEach(function(item){
+          if(item&&typeof item.result==='string'&&item.result.length>2){
+            var v=parseInt(item.result,16);
+            if(isFinite(v))vals[item.id]=v;
+          }
+        });
+        if(vals[1]==null)throw new Error('no total');
+        for(var i=0;i<5;i++)if(vals[2+i]==null)throw new Error('missing piece count');
+        return vals;
+      });
+  }
+  function render(vals){
+    var total=vals[1];
+    var parts=NAMES.map(function(n,i){return n+' '+vals[2+i];}).join(' \u00b7 ');
+    var big=document.getElementById('liveMinted');
+    if(big)big.textContent=total.toLocaleString('en-US');
+    var note=document.getElementById('liveMintedNote');
+    if(note)note.textContent='Live from the contract '+CONTRACT+' \u2014 '+parts;
+    var status=document.getElementById('mintStatusNote');
+    if(status)status.textContent='Status: DEPLOYED at '+CONTRACT+' \u2014 mint OPEN. totalMinted is '+total+' so far \u2014 '+parts+'.';
+  }
+  function refresh(){
+    fetchCounts(RPCS[0]).then(render).catch(function(){
+      fetchCounts(RPCS[1]).then(render).catch(function(){/* RPC unreachable: keep the static fallback text */});
+    });
+  }
+  refresh();
+  setInterval(refresh,60000);
+})();
+</script>
 </body>
 </html>
