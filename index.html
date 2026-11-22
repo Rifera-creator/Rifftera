@@ -160,6 +160,17 @@ canvas.shard-piece{position:relative;width:152px;height:152px;image-rendering:pi
 .faq details:last-child{border-bottom:0}
 .faq summary{padding:16px 18px;cursor:pointer;font-weight:700;min-height:48px;display:flex;align-items:center}
 .faq p{margin:0;padding:0 18px 16px;color:var(--muted);line-height:1.65}
+.stake-panel{margin-top:22px;border:2px solid var(--line);background:var(--panel);box-shadow:6px 6px 0 #000;padding:20px}
+.stake-panel h3{margin:0 0 6px;font-size:16px}
+.stake-btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.stake-btns .btn:disabled,.fund-row .btn:disabled{opacity:.45;cursor:not-allowed}
+.stake-addr{font-family:"IBM Plex Mono";font-size:12.5px;color:var(--green);margin-top:10px;word-break:break-all}
+.fund-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;align-items:center}
+.fund-input{background:#06060f;border:2px solid var(--line);color:#fff;padding:10px 12px;font-family:"IBM Plex Mono";font-size:14px;min-height:44px;width:170px}
+.fund-note{font-family:"IBM Plex Mono";font-size:12px;color:var(--muted2);line-height:1.6}
+.stake-status{font-family:"IBM Plex Mono";font-size:13px;color:var(--muted);line-height:1.75;margin:16px 0 0;word-break:break-word;min-height:22px}
+.stake-status a{color:var(--green);text-decoration:underline}
+.stake-status .err{color:#ff6b64}
 footer{margin-top:60px;border-top:2px solid var(--line);padding:26px 0 36px;color:var(--muted2);font-family:"IBM Plex Mono";font-size:12px;line-height:1.8}
 </style>
 </head>
@@ -361,6 +372,27 @@ Cap 1,111 per piece, 5,555 total — RPIECE live at 0x55CcFC67FA2F631D95f82E0f37
         </div>
         <p style="margin-top:14px">The pool is funded manually by the owner from mint proceeds (fundPool) — <b>no automatic cut</b> from mint fees. The owner <b>cannot withdraw the pool</b>; BNB in the pool only leaves through staker claims. Claim anytime, and unstaking automatically pays out any pending reward. Rewards only run while sets are staked — if nobody stakes, nothing leaves the pool.</p>
       </div>
+    </div>
+    <div class="stake-panel">
+      <h3>Stake &amp; pool</h3>
+      <p class="sec-note" style="line-height:1.7">Connect a wallet on BNB Chain to stake a full set, claim rewards, or unstake. Pool numbers below are read live from the staking contract.</p>
+      <div class="rows">
+        <div class="rowline"><span>Pool balance</span><b id="poolBal">0 BNB</b></div>
+        <div class="rowline"><span>Staked sets</span><b id="stakedSetsLive">0</b></div>
+      </div>
+      <div class="stake-btns">
+        <button class="btn btn-white" id="btnConnect">Connect Wallet</button>
+        <button class="btn btn-green" id="btnStake" disabled>Stake full set</button>
+        <button class="btn" id="btnClaim" disabled>Claim rewards</button>
+        <button class="btn" id="btnUnstake" disabled>Unstake</button>
+      </div>
+      <div class="stake-addr" id="stakeAddr" role="status"></div>
+      <div class="fund-row">
+        <input class="fund-input" id="fundAmt" type="text" inputmode="decimal" placeholder="BNB amount" aria-label="BNB amount to fund the pool">
+        <button class="btn" id="btnFund" disabled>Fund pool (owner)</button>
+        <span class="fund-note" id="fundNote">Owner only — connect the owner wallet to fund the pool.</span>
+      </div>
+      <p class="stake-status" id="stakeStatus" role="status"></p>
     </div>
   </section>
 
@@ -850,6 +882,277 @@ document.getElementById('btnCopyBuy').addEventListener('click',function(){
   }
   refresh();
   setInterval(refresh,60000);
+})();
+</script>
+<script>
+// ===== Stake & pool panel: live pool stats + wallet actions (window.ethereum only, no library) =====
+(function(){
+  var RPIECE='0x55CcFC67FA2F631D95f82E0f37c59B03CBF4BAa8';
+  var STAKING='0xeEBCC585b7783258A2B0E03A23367B92E6b75fdE';
+  var OWNER='0x0b33ec8aa31c2039c2da673e7603852018c15de';
+  var RPCS=['https://bsc-dataseed.binance.org/','https://bsc-dataseed1.bnbchain.org/'];
+  var NAMES=['Pointer','Ember','Verdant','Frost','Void'];
+  var statusEl=document.getElementById('stakeStatus');
+  var addrEl=document.getElementById('stakeAddr');
+  var fundNote=document.getElementById('fundNote');
+  var btnConnect=document.getElementById('btnConnect');
+  var btnStake=document.getElementById('btnStake');
+  var btnClaim=document.getElementById('btnClaim');
+  var btnUnstake=document.getElementById('btnUnstake');
+  var btnFund=document.getElementById('btnFund');
+  var fundAmt=document.getElementById('fundAmt');
+  var account=null, busy=false;
+
+  // ---------- helpers ----------
+  function padAddr(a){var h=a.toLowerCase().replace(/^0x/,'');while(h.length<64)h='0'+h;return h;}
+  function padNum(n){var h=BigInt(n).toString(16);while(h.length<64)h='0'+h;return h;}
+  function fmtBnb(wei){
+    var w=BigInt(wei), neg=w<0n; if(neg)w=-w;
+    var whole=w/1000000000000000000n, frac=w%1000000000000000000n;
+    var fs=frac.toString(); while(fs.length<18)fs='0'+fs;
+    fs=fs.slice(0,6).replace(/0+$/,'');
+    return (neg?'-':'')+whole.toString()+(fs?'.'+fs:'')+' BNB';
+  }
+  function bnbToWei(str){
+    str=String(str||'').trim().replace(',','.');
+    if(!/^\d+(\.\d+)?$/.test(str))return null;
+    var parts=str.split('.'), whole=parts[0], frac=parts[1]||'';
+    if(frac.length>18)return null;
+    while(frac.length<18)frac+='0';
+    var wei=BigInt(whole)*1000000000000000000n+BigInt(frac||'0');
+    return wei>0n?wei:null;
+  }
+  function setStatus(html){ if(statusEl)statusEl.innerHTML=html; }
+  function setErr(msg){ setStatus('<span class="err">'+msg+'</span>'); }
+  function txLink(hash){ return 'Tx: <a href="https://bscscan.com/tx/'+hash+'" target="_blank" rel="noopener">'+hash.slice(0,10)+'\u2026'+hash.slice(-6)+'</a>'; }
+  function shortAddr(a){ return a.slice(0,6)+'\u2026'+a.slice(-4); }
+  function setBusy(b){
+    busy=b;
+    var on=!!account&&!b;
+    btnStake.disabled=!on; btnClaim.disabled=!on; btnUnstake.disabled=!on;
+    btnConnect.disabled=b;
+    refreshFundState();
+  }
+  function refreshFundState(){
+    if(!account){ btnFund.disabled=true; return; }
+    btnFund.disabled=busy||account.toLowerCase()!==OWNER;
+  }
+
+  // ---------- read-only pool stats via public RPC ----------
+  function rpcCall(rpc,to,data){
+    return fetch(rpc,{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({jsonrpc:'2.0',id:1,method:'eth_call',params:[{to:to,data:data},'latest']})})
+      .then(function(r){if(!r.ok)throw new Error('rpc status '+r.status);return r.json();})
+      .then(function(j){if(!j||typeof j.result!=='string'||j.result.length<=2)throw new Error('bad rpc reply');return j.result;});
+  }
+  function fetchPool(rpc){
+    return Promise.all([rpcCall(rpc,STAKING,'0x96365d44'),rpcCall(rpc,STAKING,'0xc1ca80cc')]) // poolBalance(), stakedSets()
+      .then(function(res){
+        var bal=document.getElementById('poolBal');
+        if(bal)bal.textContent=fmtBnb(BigInt(res[0]));
+        var sets=document.getElementById('stakedSetsLive');
+        if(sets)sets.textContent=BigInt(res[1]).toString();
+      });
+  }
+  function refreshPool(){
+    fetchPool(RPCS[0]).catch(function(){ return fetchPool(RPCS[1]); })
+      .catch(function(){/* RPC unreachable: keep the fallback text */});
+  }
+  refreshPool();
+  setInterval(refreshPool,60000);
+
+  // ---------- wallet ----------
+  function noWallet(){
+    setErr('No wallet found \u2014 open this page in MetaMask / Trust Wallet / Binance Wallet browser.');
+  }
+  function ethCall(to,data){
+    return window.ethereum.request({method:'eth_call',params:[{to:to,data:data},'latest']});
+  }
+  function waitReceipt(hash){
+    return new Promise(function(resolve,reject){
+      var tries=0;
+      (function poll(){
+        window.ethereum.request({method:'eth_getTransactionReceipt',params:[hash]})
+          .then(function(rc){
+            if(rc){ if(rc.status==='0x0')reject(new Error('Transaction reverted on-chain.')); else resolve(rc); return; }
+            if(++tries>90){reject(new Error('Timed out waiting for the transaction receipt.'));return;}
+            setTimeout(poll,2000);
+          })
+          .catch(function(){ if(++tries>90){reject(new Error('Timed out waiting for the transaction receipt.'));return;} setTimeout(poll,2000); });
+      })();
+    });
+  }
+  function sendTx(to,data,valueWei){
+    var tx={from:account,to:to,data:data,value:'0x'+(valueWei||0n).toString(16)};
+    return window.ethereum.request({method:'eth_sendTransaction',params:[tx]})
+      .then(function(hash){
+        setStatus('Transaction sent \u2014 waiting for confirmation\u2026<br>'+txLink(hash));
+        return waitReceipt(hash).then(function(){return hash;});
+      });
+  }
+  function friendlyErr(e){
+    if(e&&(e.code===4001||/reject|denied/i.test(e.message||'')))return 'Transaction rejected in your wallet \u2014 nothing was sent.';
+    return 'Error: '+((e&&e.message)?e.message:'something went wrong.');
+  }
+  function checkOwner(){
+    return ethCall(STAKING,'0x8da5cb5b') // owner()
+      .then(function(res){
+        var onChain=('0x'+res.slice(-40)).toLowerCase();
+        if(onChain===OWNER&&account.toLowerCase()===OWNER){
+          fundNote.textContent='You are the pool owner \u2014 enter an amount and fund the pool.';
+        }else{
+          fundNote.textContent='Only the owner can fund the pool from this page.';
+        }
+        refreshFundState();
+      })
+      .catch(function(){ refreshFundState(); });
+  }
+  function connect(){
+    if(!window.ethereum){ noWallet(); return; }
+    setBusy(true);
+    setStatus('Connecting wallet\u2026');
+    window.ethereum.request({method:'eth_requestAccounts'})
+      .then(function(accs){
+        if(!accs||!accs.length)throw new Error('No account returned by the wallet.');
+        account=accs[0];
+        return window.ethereum.request({method:'eth_chainId'});
+      })
+      .then(function(chainId){
+        if(parseInt(chainId,16)===56)return null;
+        setStatus('Wrong network \u2014 asking your wallet to switch to BNB Chain\u2026');
+        return window.ethereum.request({method:'wallet_switchEthereumChain',params:[{chainId:'0x38'}]})
+          .then(function(){ return window.ethereum.request({method:'eth_chainId'}); })
+          .then(function(cid2){
+            if(parseInt(cid2,16)!==56)throw new Error('Wrong chain \u2014 please switch your wallet to BNB Chain (chainId 56) and try again.');
+          });
+      })
+      .then(function(){
+        addrEl.textContent='Connected: '+shortAddr(account)+' \u00b7 BNB Chain';
+        setStatus('Wallet connected. You can stake a full set, claim rewards, or unstake.');
+        setBusy(false);
+        checkOwner();
+        refreshPool();
+      })
+      .catch(function(e){
+        account=null; addrEl.textContent='';
+        setErr(friendlyErr(e));
+        setBusy(false);
+      });
+  }
+
+  // ---------- actions ----------
+  function doStake(){
+    if(!account||busy)return;
+    setBusy(true);
+    setStatus('Checking your pieces\u2026');
+    ethCall(RPIECE,'0xa3b261f2'+padAddr(account)) // tokenIdsOf(wallet)
+      .then(function(res){
+        var hex=res.replace(/^0x/,'');
+        var off=parseInt(hex.slice(0,64),16)*2;
+        var len=parseInt(hex.slice(off,off+64),16);
+        var ids=[];
+        for(var i=0;i<len;i++) ids.push(BigInt('0x'+hex.slice(off+64+i*64,off+128+i*64)));
+        if(!ids.length)throw new Error('You hold no RPIECE pieces in this wallet \u2014 mint a full set first.');
+        return Promise.all(ids.map(function(id){
+          return ethCall(RPIECE,'0xa8d514bc'+padNum(id)).then(function(r){ // pieceOf(tokenId)
+            return {id:id,piece:parseInt(r,16)};
+          });
+        }));
+      })
+      .then(function(found){
+        var byPiece={};
+        found.forEach(function(f){ if(byPiece[f.piece]==null)byPiece[f.piece]=f.id; });
+        for(var p=0;p<5;p++){
+          if(byPiece[p]==null)throw new Error('Missing piece: '+NAMES[p]+' \u2014 you need all 5 pieces (Pointer, Ember, Verdant, Frost, Void) to stake. Staking stopped.');
+        }
+        var ordered=[byPiece[0],byPiece[1],byPiece[2],byPiece[3],byPiece[4]];
+        setStatus('Pieces complete \u2014 checking staking approval\u2026');
+        return ethCall(RPIECE,'0xe985e9c5'+padAddr(account)+padAddr(STAKING)) // isApprovedForAll(wallet, staking)
+          .then(function(res){
+            var approved=parseInt(res.slice(-2),16)!==0;
+            if(approved)return null;
+            setStatus('Approving the staking contract to move your 5 NFTs\u2026 confirm in your wallet.');
+            return sendTx(RPIECE,'0xa22cb465'+padAddr(STAKING)+padNum(1),0n) // setApprovalForAll(staking, true)
+              .then(function(h){ setStatus('Approval confirmed. '+txLink(h)+'<br>Staking your full set\u2026'); });
+          })
+          .then(function(){
+            setStatus('Staking your full set\u2026 confirm in your wallet.');
+            var data='0x17c54c64'+ordered.map(padNum).join(''); // stake(uint256[5])
+            return sendTx(STAKING,data,0n);
+          });
+      })
+      .then(function(hash){
+        setStatus('Done \u2014 your full set is staked. Rewards accrue from the pool while it stays staked.<br>'+txLink(hash));
+        refreshPool();
+      })
+      .catch(function(e){ setErr(friendlyErr(e)); })
+      .then(function(){ setBusy(false); });
+  }
+  function doClaim(){
+    if(!account||busy)return;
+    setBusy(true);
+    setStatus('Checking your pending reward\u2026');
+    ethCall(STAKING,'0xf40f0f52'+padAddr(account)) // pendingReward(wallet)
+      .then(function(res){
+        var pending=fmtBnb(BigInt(res));
+        setStatus('Pending reward: '+pending+'. Sending claim\u2026 confirm in your wallet.');
+        return sendTx(STAKING,'0x4e71d92d',0n); // claim()
+      })
+      .then(function(hash){
+        setStatus('Done \u2014 rewards claimed to your wallet.<br>'+txLink(hash));
+        refreshPool();
+      })
+      .catch(function(e){ setErr(friendlyErr(e)); })
+      .then(function(){ setBusy(false); });
+  }
+  function doUnstake(){
+    if(!account||busy)return;
+    setBusy(true);
+    setStatus('Unstaking \u2014 your 5 NFTs come back and any pending reward is paid out. Confirm in your wallet.');
+    sendTx(STAKING,'0x2def6620',0n) // unstake()
+      .then(function(hash){
+        setStatus('Done \u2014 your 5 pieces are back in your wallet and pending rewards were paid.<br>'+txLink(hash));
+        refreshPool();
+      })
+      .catch(function(e){ setErr(friendlyErr(e)); })
+      .then(function(){ setBusy(false); });
+  }
+  function doFund(){
+    if(!account||busy)return;
+    if(account.toLowerCase()!==OWNER){ setErr('Only the owner can fund the pool from this page.'); return; }
+    var wei=bnbToWei(fundAmt.value);
+    if(wei==null){ setErr('Enter a valid BNB amount greater than 0 (for example 0.05).'); return; }
+    setBusy(true);
+    setStatus('Checking pool ownership\u2026');
+    ethCall(STAKING,'0x8da5cb5b') // owner()
+      .then(function(res){
+        var onChain=('0x'+res.slice(-40)).toLowerCase();
+        if(onChain!==account.toLowerCase())throw new Error('Only the owner can fund the pool from this page.');
+        setStatus('Funding the pool with '+fmtBnb(wei)+'\u2026 confirm in your wallet.');
+        return sendTx(STAKING,'0x70f37d27',wei); // fundPool() payable
+      })
+      .then(function(hash){
+        setStatus('Done \u2014 pool funded. The BNB can only leave the pool through staker claims.<br>'+txLink(hash));
+        refreshPool();
+      })
+      .catch(function(e){ setErr(friendlyErr(e)); })
+      .then(function(){ setBusy(false); });
+  }
+
+  btnConnect.addEventListener('click',connect);
+  btnStake.addEventListener('click',doStake);
+  btnClaim.addEventListener('click',doClaim);
+  btnUnstake.addEventListener('click',doUnstake);
+  btnFund.addEventListener('click',doFund);
+  if(window.ethereum&&window.ethereum.on){
+    window.ethereum.on('accountsChanged',function(accs){
+      account=accs&&accs.length?accs[0]:null;
+      addrEl.textContent=account?('Connected: '+shortAddr(account)+' \u00b7 BNB Chain'):'';
+      if(account){ checkOwner(); } else { fundNote.textContent='Owner only \u2014 connect the owner wallet to fund the pool.'; }
+      setBusy(false);
+    });
+    window.ethereum.on('chainChanged',function(){ refreshPool(); });
+  }
 })();
 </script>
 </body>
