@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<link rel="icon" href="data:,">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2016%2020%22%3E%3Crect%20width%3D%2216%22%20height%3D%2220%22%20fill%3D%22%23080812%22%2F%3E%3Cpath%20fill%3D%22%23f4f4fa%22%20d%3D%22M0%200h1v1H0ZM0%201h2v1H0ZM0%202h3v1H0ZM0%203h4v1H0Z%22%2F%3E%3Cpath%20fill%3D%22%23ff3b30%22%20d%3D%22M0%204h5v1H0ZM0%205h6v1H0ZM0%206h7v1H0ZM0%207h8v1H0Z%22%2F%3E%3Cpath%20fill%3D%22%232fd653%22%20d%3D%22M0%208h9v1H0ZM0%209h10v1H0ZM0%2010h11v1H0ZM0%2011h8v1H0Z%22%2F%3E%3Cpath%20fill%3D%22%2332ade6%22%20d%3D%22M3%2012h4v1H3ZM3%2013h4v1H3ZM4%2014h4v1H4ZM4%2015h4v1H4Z%22%2F%3E%3Cpath%20fill%3D%22%23bf5af2%22%20d%3D%22M4%2016h4v1H4ZM4%2017h4v1H4ZM5%2018h4v1H5ZM5%2019h4v1H5Z%22%2F%3E%3C%2Fsvg%3E">
 <title>Rifera Cursor Pieces — RPIECE</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,8 +25,8 @@ canvas.piece-art{image-rendering:pixelated;display:block}
 .nav{position:sticky;top:0;z-index:50;background:rgba(8,8,18,.95);backdrop-filter:blur(10px);border-bottom:2px solid var(--line)}
 .nav-in{max-width:1080px;margin:0 auto;padding:0 18px;height:62px;display:flex;align-items:center;justify-content:space-between;gap:14px}
 .logo{display:flex;align-items:center;gap:10px;font-family:"Press Start 2P";font-size:12px}
-.dots{display:grid;grid-template-columns:1fr 1fr;width:18px;height:18px;gap:2px;flex:0 0 18px}
-.dots i{display:block}.dots i:nth-child(1){background:var(--red)}.dots i:nth-child(2){background:var(--green)}.dots i:nth-child(3){background:var(--cyan)}.dots i:nth-child(4){background:var(--purple)}
+.logo-mark{width:24px;height:30px;flex:0 0 24px;image-rendering:pixelated;filter:drop-shadow(0 0 5px rgba(191,90,242,.55)) drop-shadow(0 0 2px rgba(50,173,230,.4))}
+.sec-head .logo-mark{width:19px;height:24px;flex:0 0 19px}
 .nav-links{display:flex;gap:18px;font-family:"IBM Plex Mono";font-size:13px;color:var(--muted)}
 .nav-links a{padding:10px 2px}.nav-links a:hover{color:#fff}
 @media(max-width:860px){.nav-links{display:none}}
@@ -137,9 +137,10 @@ footer{margin-top:60px;border-top:2px solid var(--line);padding:26px 0 36px;colo
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="rifera-mark" viewBox="0 0 16 20"><path fill="#f4f4fa" d="M0 0h1v1H0ZM0 1h2v1H0ZM0 2h3v1H0ZM0 3h4v1H0Z"/><path fill="#ff3b30" d="M0 4h5v1H0ZM0 5h6v1H0ZM0 6h7v1H0ZM0 7h8v1H0Z"/><path fill="#2fd653" d="M0 8h9v1H0ZM0 9h10v1H0ZM0 10h11v1H0ZM0 11h8v1H0Z"/><path fill="#32ade6" d="M3 12h4v1H3ZM3 13h4v1H3ZM4 14h4v1H4ZM4 15h4v1H4Z"/><path fill="#bf5af2" d="M4 16h4v1H4ZM4 17h4v1H4ZM5 18h4v1H5ZM5 19h4v1H5Z"/></symbol></defs></svg>
 <header class="nav">
   <div class="nav-in">
-    <a class="logo" href="#top"><span class="dots"><i></i><i></i><i></i><i></i></span> Rifera Pieces</a>
+    <a class="logo" href="#top"><svg class="logo-mark" aria-hidden="true"><use href="#rifera-mark"/></svg> Rifera Pieces</a>
     <nav class="nav-links">
       <a href="#game">Game</a><a href="#pieces">Pieces</a><a href="#mint">Mint</a><a href="#market">Market</a><a href="#stake">Staking</a><a href="#faq">FAQ</a>
     </nav>
@@ -176,7 +177,7 @@ footer{margin-top:60px;border-top:2px solid var(--line);padding:26px 0 36px;colo
 
   <section id="game">
     <div class="sec-head">
-      <h2><span class="dots"><i></i><i></i><i></i><i></i></span> Shard Rush</h2>
+      <h2><svg class="logo-mark" aria-hidden="true"><use href="#rifera-mark"/></svg> Shard Rush</h2>
       <span class="sec-note">3 ronde &times; 60 detik &bull; 15 keping &bull; 3 nyawa</span>
     </div>
     <p class="sec-sub">Satu arena, tiga ronde: tiap ronde 60 detik untuk menyentuh kelima keping — total 15 keping dalam satu permainan, dan tiap ronde glitch makin banyak dan makin cepat. Kena glitch hilang 1 nyawa; nyawa cuma 3 untuk seluruh permainan, tidak reset tiap ronde. Angka di game ini adalah aturan permainan saja — bukan jumlah mint atau stok.</p>
@@ -205,7 +206,7 @@ footer{margin-top:60px;border-top:2px solid var(--line);padding:26px 0 36px;colo
   </section>
 
   <section id="pieces">
-    <div class="sec-head"><h2><span class="dots"><i></i><i></i><i></i><i></i></span> Lima keping</h2><span class="sec-note">RPIECE &bull; BELUM DEPLOY</span></div>
+    <div class="sec-head"><h2><svg class="logo-mark" aria-hidden="true"><use href="#rifera-mark"/></svg> Lima keping</h2><span class="sec-note">RPIECE &bull; BELUM DEPLOY</span></div>
     <p class="sec-sub">Setiap keping adalah satu pita horizontal dari kursor pixel yang sama — lima warna bertumpuk menyusun satu panah utuh. Mint berurutan, tidak bisa loncat: mulai dari Pointer, selesai di Void.</p>
     <div class="pieces">
       <article class="piece" style="--pc:#eef0ff;--pg:rgba(238,240,255,.28)"><div class="piece-stage"><canvas class="shard-piece" data-piece="0" width="300" height="300" role="img" aria-label="Keping 1 Pointer — ujung lancip kursor pixel"></canvas></div><div class="pnum">KEPING 01 / 05</div><h3>1 · Pointer</h3><p>Ujung lancip. Titik mulai setiap kursor.</p><span class="price free">FREE</span></article>
@@ -229,7 +230,7 @@ footer{margin-top:60px;border-top:2px solid var(--line);padding:26px 0 36px;colo
   </section>
 
   <section id="mint">
-    <div class="sec-head"><h2><span class="dots"><i></i><i></i><i></i><i></i></span> Mint via agent</h2><span class="sec-note">Prompt 4 baris &bull; direct execute</span></div>
+    <div class="sec-head"><h2><svg class="logo-mark" aria-hidden="true"><use href="#rifera-mark"/></svg> Mint via agent</h2><span class="sec-note">Prompt 4 baris &bull; direct execute</span></div>
     <p class="sec-sub">Mint RPIECE hanya lewat agent dengan Binance Agent ID — tidak ada tombol mint manual. Kontrak <b>belum deploy</b>, jadi prompt di bawah aktif dipakai setelah alamat kontrak resmi diumumkan. Jangan mint ke alamat mana pun sebelum pengumuman resmi.</p>
     <div class="grid2">
       <div class="steps">
@@ -258,7 +259,7 @@ Lakukan sekarang, lalu laporkan keping yang didapat.</div>
   </section>
 
   <section id="market">
-    <div class="sec-head"><h2><span class="dots"><i></i><i></i><i></i><i></i></span> Marketplace keping</h2><span class="sec-note">Khusus RPIECE saja</span></div>
+    <div class="sec-head"><h2><svg class="logo-mark" aria-hidden="true"><use href="#rifera-mark"/></svg> Marketplace keping</h2><span class="sec-note">Khusus RPIECE saja</span></div>
     <p class="sec-sub">Marketplace ini hanya untuk keping RPIECE. Harga di bawah adalah <b>harga contoh</b> per keping untuk gambaran tampilan — bukan harga mint resmi (mint tetap FREE / 0,002 BNB) dan belum ada listing live karena kontrak belum deploy. Klik Buy untuk melihat prompt belinya di halaman ini juga.</p>
     <div class="listings" id="listings"></div>
     <div class="buy-panel" id="buyPanel" hidden>
@@ -273,7 +274,7 @@ Lakukan sekarang, lalu laporkan keping yang didapat.</div>
   </section>
 
   <section id="stake">
-    <div class="sec-head"><h2><span class="dots"><i></i><i></i><i></i><i></i></span> Staking set lengkap</h2></div>
+    <div class="sec-head"><h2><svg class="logo-mark" aria-hidden="true"><use href="#rifera-mark"/></svg> Staking set lengkap</h2></div>
     <p class="sec-sub">Pegang kelima keping dalam satu wallet, dan set kamu memenuhi syarat staking pool BNB.</p>
     <div class="grid2" style="grid-template-columns:1fr 1fr">
       <div class="card">
@@ -293,7 +294,7 @@ Lakukan sekarang, lalu laporkan keping yang didapat.</div>
   </section>
 
   <section id="faq">
-    <div class="sec-head"><h2><span class="dots"><i></i><i></i><i></i><i></i></span> FAQ</h2></div>
+    <div class="sec-head"><h2><svg class="logo-mark" aria-hidden="true"><use href="#rifera-mark"/></svg> FAQ</h2></div>
     <div class="faq">
       <details open><summary>Apa itu Rifera Cursor Pieces?</summary><p>Koleksi NFT baru bernama RPIECE: satu kursor panah pixel yang dipecah jadi 5 pita horizontal — Pointer, Ember, Verdant, Frost, dan Void. Kelima pita bertumpuk menyusun satu kursor utuh.</p></details>
       <details><summary>Sudah bisa mint?</summary><p>Belum. Kontrak RPIECE belum deploy dan belum ada alamat kontrak. Prompt mint di halaman ini disiapkan untuk dipakai setelah alamat resmi diumumkan. Jangan kirim BNB ke alamat mana pun yang mengatasnamakan RPIECE sebelum itu.</p></details>
