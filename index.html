@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="id">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -171,82 +171,82 @@ footer{margin-top:60px;border-top:2px solid var(--line);padding:26px 0 36px;colo
       <h1><span class="l1"><span class="c-red">R</span><span class="c-org">I</span><span class="c-yel">F</span><span class="c-grn">E</span><span class="c-cyn">R</span><span class="c-pur">A</span></span><span class="l2">CURSOR PROTOCOL</span></h1>
     </div>
     <p class="tagline">A cursor broke into five pieces. <b>Only AI agents can mint them.</b> Trade the pieces, forge the cursor, stake it and share the pool.</p>
-    <div><span class="badge">BELUM DEPLOY — BELUM ADA ALAMAT KONTRAK</span></div>
+    <div><span class="badge">NOT DEPLOYED — NO CONTRACT ADDRESS YET</span></div>
     <div class="hero-visual">
-      <canvas id="heroBroken" width="760" height="600" role="img" aria-label="Kursor panah pixel pecah menjadi 5 keping melayang — Pointer putih, Ember merah, Verdant hijau, Frost biru, Void ungu"></canvas>
+      <canvas id="heroBroken" width="760" height="600" role="img" aria-label="Pixel arrow cursor broken into 5 floating pieces — white Pointer, red Ember, green Verdant, blue Frost, purple Void"></canvas>
     </div>
     <div class="stats4">
       <div class="stat4"><b>5</b><span>Pieces per set</span></div>
       <div class="stat4"><b>FREE</b><span>Piece 1 · Pointer</span></div>
-      <div class="stat4"><b>0,002 BNB</b><span>Per piece 2–5</span></div>
-      <div class="stat4"><b>0,008 BNB</b><span>Full set</span></div>
+      <div class="stat4"><b>0.002 BNB</b><span>Per piece 2–5</span></div>
+      <div class="stat4"><b>0.008 BNB</b><span>Full set</span></div>
     </div>
     <div class="supply-row">
-      <div class="supply-cell"><b>1.111</b><span>Max sets &middot; 1.111 per piece</span></div>
-      <div class="supply-cell"><b>5.555</b><span>Total pieces max</span></div>
+      <div class="supply-cell"><b>1,111</b><span>Max sets &middot; 1,111 per piece</span></div>
+      <div class="supply-cell"><b>5,555</b><span>Total pieces max</span></div>
     </div>
     <div class="hero-cta">
-      <a class="btn btn-green" href="#game">Main Shard Rush</a>
-      <a class="btn" href="#pieces">Lihat 5 keping</a>
-      <a class="btn" href="#mint">Cara mint</a>
+      <a class="btn btn-green" href="#game">Play Shard Rush</a>
+      <a class="btn" href="#pieces">See the 5 pieces</a>
+      <a class="btn" href="#mint">How to mint</a>
     </div>
   </div>
 
   <section id="game">
     <div class="sec-head">
       <h2><svg class="logo-mark" aria-hidden="true"><use href="#rifera-mark"/></svg> Shard Rush</h2>
-      <span class="sec-note">100 ronde &bull; 4 gaya &bull; 3 nyawa (+1 tiap 20 ronde)</span>
+      <span class="sec-note">100 rounds &bull; 4 styles &bull; 3 lives (+1 every 20 rounds)</span>
     </div>
-    <p class="sec-sub">Satu arena, <b>100 ronde</b>, empat gaya yang bergantian tiap ronde: <b>RUSH</b> kumpulkan 5 keping, <b>DODGE</b> bertahan sampai waktu habis, <b>CHASE</b> tangkap keping yang kabur, <b>BLITZ</b> kumpulkan keping sebanyak-banyaknya dalam 30 detik. Timer menyusut tiap 10 ronde (60 detik turun sampai 30 detik) dan glitch makin banyak dan makin cepat. Nyawa 3 untuk seluruh permainan, +1 tiap 20 ronde selesai (maks 5). Tamatkan ronde 100 untuk jadi <b>CURSOR MASTER</b>. Angka di game ini adalah aturan permainan saja — bukan jumlah mint atau stok.</p>
+    <p class="sec-sub">One arena, <b>100 rounds</b>, four styles rotating every round: <b>RUSH</b> collect 5 pieces, <b>DODGE</b> survive until time runs out, <b>CHASE</b> catch the fleeing pieces, <b>BLITZ</b> collect as many pieces as you can in 30 seconds. The timer shrinks every 10 rounds (60 seconds down to 30) and glitches grow in number and speed. 3 lives for the whole game, +1 every 20 rounds cleared (max 5). Clear round 100 to become <b>CURSOR MASTER</b>. The numbers in this game are game rules only — not mint counts or stock.</p>
     <div class="game-shell">
       <div class="game-top">
         <div class="hud">
-          <span class="chip">RONDE <b id="gRound">1/100</b></span>
-          <span class="chip">GAYA <b id="gStyle">RUSH</b></span>
-          <span class="chip">SKOR <b id="gScore">0</b></span>
-          <span class="chip">TERBAIK <b id="gBest">0</b></span>
-          <span class="chip">WAKTU <b id="gTime">60</b></span>
-          <span class="chip">KEPING
+          <span class="chip">ROUND <b id="gRound">1/100</b></span>
+          <span class="chip">STYLE <b id="gStyle">RUSH</b></span>
+          <span class="chip">SCORE <b id="gScore">0</b></span>
+          <span class="chip">BEST <b id="gBest">0</b></span>
+          <span class="chip">TIME <b id="gTime">60</b></span>
+          <span class="chip">PIECES
             <canvas class="shard-ic" data-icon="0" width="44" height="44" aria-hidden="true"></canvas><canvas class="shard-ic" data-icon="1" width="44" height="44" aria-hidden="true"></canvas><canvas class="shard-ic" data-icon="2" width="44" height="44" aria-hidden="true"></canvas><canvas class="shard-ic" data-icon="3" width="44" height="44" aria-hidden="true"></canvas><canvas class="shard-ic" data-icon="4" width="44" height="44" aria-hidden="true"></canvas>
             <b id="gShard">0/5</b></span>
-          <span class="chip">NYAWA <b class="lives" id="gLives">&#10084;&#10084;&#10084;</b></span>
+          <span class="chip">LIVES <b class="lives" id="gLives">&#10084;&#10084;&#10084;</b></span>
         </div>
         <button class="btn btn-green" id="btnStart">Start</button>
       </div>
-      <div class="progress" role="progressbar" aria-label="Progress ronde dari 100" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="gProgWrap"><div class="progress-fill" id="gProg"></div></div>
-      <canvas id="cv" width="900" height="520" aria-label="Game Shard Rush — 100 ronde, 4 gaya bergantian, kumpulkan keping dan hindari glitch"></canvas>
+      <div class="progress" role="progressbar" aria-label="Round progress out of 100" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="gProgWrap"><div class="progress-fill" id="gProg"></div></div>
+      <canvas id="cv" width="900" height="520" aria-label="Shard Rush game — 100 rounds, 4 rotating styles, collect pieces and dodge glitches"></canvas>
       <div class="game-help">
-        <span><b>Gerak:</b> mouse / sentuh &amp; geser / WASD / panah</span>
-        <span><b>Menang:</b> tamatkan ronde 100 — CURSOR MASTER</span>
-        <span><b>Kalah:</b> nyawa habis atau waktu ronde habis</span>
+        <span><b>Move:</b> mouse / touch &amp; drag / WASD / arrows</span>
+        <span><b>Win:</b> clear round 100 — CURSOR MASTER</span>
+        <span><b>Lose:</b> lives run out or the round timer ends</span>
       </div>
     </div>
   </section>
 
   <section id="pieces">
-    <div class="sec-head"><h2><svg class="logo-mark" aria-hidden="true"><use href="#rifera-mark"/></svg> Lima keping</h2><span class="sec-note">RPIECE &bull; BELUM DEPLOY</span></div>
-    <p class="sec-sub">Setiap keping adalah satu pita horizontal dari kursor pixel yang sama — lima warna bertumpuk menyusun satu panah utuh. Mint berurutan, tidak bisa loncat: mulai dari Pointer, selesai di Void.</p>
+    <div class="sec-head"><h2><svg class="logo-mark" aria-hidden="true"><use href="#rifera-mark"/></svg> Five pieces</h2><span class="sec-note">RPIECE &bull; NOT DEPLOYED</span></div>
+    <p class="sec-sub">Each piece is one horizontal band of the same pixel cursor — five stacked colors form one whole arrow. Minting goes in order, no skipping: start at Pointer, finish at Void.</p>
     <div class="pieces">
-      <article class="piece" style="--pc:#eef0ff;--pg:rgba(238,240,255,.28)"><div class="piece-stage"><canvas class="shard-piece" data-piece="0" width="300" height="300" role="img" aria-label="Keping 1 Pointer — ujung lancip kursor pixel"></canvas></div><div class="pnum">KEPING 01 / 05</div><h3>1 · Pointer</h3><p>Ujung lancip. Titik mulai setiap kursor.</p><span class="price free">FREE</span></article>
-      <article class="piece" style="--pc:#ff3b30;--pg:rgba(255,59,48,.3)"><div class="piece-stage"><canvas class="shard-piece" data-piece="1" width="300" height="300" role="img" aria-label="Keping 2 Ember — pita kedua kursor pixel"></canvas></div><div class="pnum">KEPING 02 / 05</div><h3>2 · Ember</h3><p>Badan bara. Menyala setelah Pointer terpasang.</p><span class="price paid">0,002 BNB</span></article>
-      <article class="piece" style="--pc:#32d74b;--pg:rgba(50,215,75,.28)"><div class="piece-stage"><canvas class="shard-piece" data-piece="2" width="300" height="300" role="img" aria-label="Keping 3 Verdant — pita tengah kursor pixel"></canvas></div><div class="pnum">KEPING 03 / 05</div><h3>3 · Verdant</h3><p>Pita hijau. Penyeimbang di tengah susunan.</p><span class="price paid">0,002 BNB</span></article>
-      <article class="piece" style="--pc:#32ade6;--pg:rgba(50,173,230,.3)"><div class="piece-stage"><canvas class="shard-piece" data-piece="3" width="300" height="300" role="img" aria-label="Keping 4 Frost — pita keempat kursor pixel"></canvas></div><div class="pnum">KEPING 04 / 05</div><h3>4 · Frost</h3><p>Pita es. Mengunci bentuk kursor.</p><span class="price paid">0,002 BNB</span></article>
-      <article class="piece" style="--pc:#bf5af2;--pg:rgba(191,90,242,.32)"><div class="piece-stage"><canvas class="shard-piece" data-piece="4" width="300" height="300" role="img" aria-label="Keping 5 Void — pita terbawah kursor pixel"></canvas></div><div class="pnum">KEPING 05 / 05</div><h3>5 · Void</h3><p>Ekor terakhir. Kursor utuh dan siap staking.</p><span class="price paid">0,002 BNB</span></article>
+      <article class="piece" style="--pc:#eef0ff;--pg:rgba(238,240,255,.28)"><div class="piece-stage"><canvas class="shard-piece" data-piece="0" width="300" height="300" role="img" aria-label="Piece 1 Pointer — the sharp tip of the pixel cursor"></canvas></div><div class="pnum">PIECE 01 / 05</div><h3>1 · Pointer</h3><p>The sharp tip. Every cursor starts here.</p><span class="price free">FREE</span></article>
+      <article class="piece" style="--pc:#ff3b30;--pg:rgba(255,59,48,.3)"><div class="piece-stage"><canvas class="shard-piece" data-piece="1" width="300" height="300" role="img" aria-label="Piece 2 Ember — second band of the pixel cursor"></canvas></div><div class="pnum">PIECE 02 / 05</div><h3>2 · Ember</h3><p>The ember band. Lights up once Pointer is set.</p><span class="price paid">0.002 BNB</span></article>
+      <article class="piece" style="--pc:#32d74b;--pg:rgba(50,215,75,.28)"><div class="piece-stage"><canvas class="shard-piece" data-piece="2" width="300" height="300" role="img" aria-label="Piece 3 Verdant — middle band of the pixel cursor"></canvas></div><div class="pnum">PIECE 03 / 05</div><h3>3 · Verdant</h3><p>The green band. The balance in the middle.</p><span class="price paid">0.002 BNB</span></article>
+      <article class="piece" style="--pc:#32ade6;--pg:rgba(50,173,230,.3)"><div class="piece-stage"><canvas class="shard-piece" data-piece="3" width="300" height="300" role="img" aria-label="Piece 4 Frost — fourth band of the pixel cursor"></canvas></div><div class="pnum">PIECE 04 / 05</div><h3>4 · Frost</h3><p>The ice band. Locks the cursor shape.</p><span class="price paid">0.002 BNB</span></article>
+      <article class="piece" style="--pc:#bf5af2;--pg:rgba(191,90,242,.32)"><div class="piece-stage"><canvas class="shard-piece" data-piece="4" width="300" height="300" role="img" aria-label="Piece 5 Void — bottom band of the pixel cursor"></canvas></div><div class="pnum">PIECE 05 / 05</div><h3>5 · Void</h3><p>The final tail. Cursor complete and ready to stake.</p><span class="price paid">0.002 BNB</span></article>
     </div>
     <div class="card" style="margin-top:20px">
-      <h3>Aturan koleksi RPIECE</h3>
+      <h3>RPIECE collection rules</h3>
       <div class="rows">
-        <div class="rowline"><span>Urutan mint</span><b>Pointer → Ember → Verdant → Frost → Void</b></div>
-        <div class="rowline"><span>Harga</span><b>FREE + 0,002 + 0,002 + 0,002 + 0,002 BNB</b></div>
-        <div class="rowline"><span>Set lengkap</span><b>0,008 BNB</b></div>
-        <div class="rowline"><span>Maks per wallet</span><b>5 keping (1 set)</b></div>
-        <div class="rowline"><span>Cap supply</span><b>1.111 per keping · total maks 5.555 NFT</b></div>
-        <div class="rowline"><span>Set lengkap maks</span><b>1.111 set</b></div>
-        <div class="rowline"><span>Syarat</span><b>Binance Agent ID wajib</b></div>
-        <div class="rowline"><span>Gambar</span><b>SVG on-chain, beda bentuk tiap keping</b></div>
-        <div class="rowline"><span>Status kontrak</span><b>BELUM DEPLOY — belum ada alamat kontrak</b></div>
+        <div class="rowline"><span>Mint order</span><b>Pointer → Ember → Verdant → Frost → Void</b></div>
+        <div class="rowline"><span>Price</span><b>FREE + 0.002 + 0.002 + 0.002 + 0.002 BNB</b></div>
+        <div class="rowline"><span>Full set</span><b>0.008 BNB</b></div>
+        <div class="rowline"><span>Max per wallet</span><b>5 pieces (1 set)</b></div>
+        <div class="rowline"><span>Supply cap</span><b>1,111 per piece · 5,555 NFT max total</b></div>
+        <div class="rowline"><span>Max full sets</span><b>1,111 sets</b></div>
+        <div class="rowline"><span>Requirement</span><b>Binance Agent ID required</b></div>
+        <div class="rowline"><span>Artwork</span><b>On-chain SVG, different shape per piece</b></div>
+        <div class="rowline"><span>Contract status</span><b>NOT DEPLOYED — no contract address yet</b></div>
       </div>
-      <p class="sec-note" style="margin-top:12px;line-height:1.7">Cap 1.111 per keping — kalau Pointer habis, tidak ada wallet baru yang bisa mulai mint.</p>
+      <p class="sec-note" style="margin-top:12px;line-height:1.7">Cap of 1,111 per piece — if Pointer sells out, no new wallet can start minting.</p>
     </div>
   </section>
 
@@ -257,93 +257,93 @@ footer{margin-top:60px;border-top:2px solid var(--line);padding:26px 0 36px;colo
       <div class="card">
         <h3>Agent skill files</h3>
         <div class="agent-files">
-          <div class="agent-file"><a href="SKILL.md">SKILL.md</a><span>Skill lengkap untuk agent</span></div>
-          <div class="agent-file"><a href="llms.txt">llms.txt</a><span>Ringkasan untuk LLM</span></div>
+          <div class="agent-file"><a href="SKILL.md">SKILL.md</a><span>Full skill for agents</span></div>
+          <div class="agent-file"><a href="llms.txt">llms.txt</a><span>Summary for LLMs</span></div>
           <div class="agent-file"><a href="agents.txt">agents.txt</a><span>Pointer + prompt</span></div>
-          <div class="agent-file"><a href="pieces.json">pieces.json</a><span>Data mint machine-readable</span></div>
-          <div class="agent-file"><a href="robots.txt">robots.txt</a><span>Izin crawler</span></div>
+          <div class="agent-file"><a href="pieces.json">pieces.json</a><span>Machine-readable mint data</span></div>
+          <div class="agent-file"><a href="robots.txt">robots.txt</a><span>Crawler permission</span></div>
         </div>
-        <p class="sec-note" style="margin-top:14px;line-height:1.7">Link relatif — tetap jalan di GitHub Pages repo mana pun, tanpa domain tetap.</p>
+        <p class="sec-note" style="margin-top:14px;line-height:1.7">Relative links — they work on any GitHub Pages repo, no fixed domain.</p>
       </div>
       <div class="prompt-box">
-        <h3>Prompt mint (sama seperti di section Mint)</h3>
-        <div class="prompt-text">Mint keping Rifera Cursor Pieces (RPIECE) berikutnya untuk saya.
-Keping 1 Pointer FREE, keping 2–5 masing-masing 0.002 BNB, maks 5 per wallet, urutan wajib.
-Agent ID wajib. Kontrak resmi RPIECE yang sudah diumumkan saja.
-Lakukan sekarang, lalu laporkan keping yang didapat.</div>
-        <p class="sec-note" style="margin-top:14px;line-height:1.7">Prompt yang sama persis dengan prompt di section Mint di bawah — tidak ada versi lain.</p>
+        <h3>Mint prompt (same as the Mint section)</h3>
+        <div class="prompt-text">Mint RPIECE: check Agent ID on registry 0x60B9262456dE011F7d15a54CdD8c48bAaa8B022F, then call nextMintQuote(wallet) for the exact price.
+Send mint() with exactly the quoted BNB (Pointer FREE, the rest 0.002 BNB each).
+1 set = max 5 pieces per wallet, order Pointer → Ember → Verdant → Frost → Void.
+Cap 1,111 per piece, 5,555 total — contract not deployed yet, check the live address on the web first.</div>
+        <p class="sec-note" style="margin-top:14px;line-height:1.7">Exactly the same prompt as in the Mint section below — there is no other version.</p>
       </div>
     </div>
   </section>
 
   <section id="mint">
-    <div class="sec-head"><h2><svg class="logo-mark" aria-hidden="true"><use href="#rifera-mark"/></svg> Mint via agent</h2><span class="sec-note">Prompt 4 baris &bull; direct execute</span></div>
-    <p class="sec-sub">Mint RPIECE hanya lewat agent dengan Binance Agent ID — tidak ada tombol mint manual. Kontrak <b>belum deploy</b>, jadi prompt di bawah aktif dipakai setelah alamat kontrak resmi diumumkan. Jangan mint ke alamat mana pun sebelum pengumuman resmi.</p>
+    <div class="sec-head"><h2><svg class="logo-mark" aria-hidden="true"><use href="#rifera-mark"/></svg> Mint via agent</h2><span class="sec-note">4-line prompt &bull; direct execute</span></div>
+    <p class="sec-sub">RPIECE mints only through an agent with a Binance Agent ID — there is no manual mint button. The contract is <b>not deployed yet</b>, so use the prompt below once the official contract address is announced. Never mint to any address before the official announcement.</p>
     <div class="grid2">
       <div class="steps">
-        <div class="step"><div class="num">1</div><p><b>Ambil Agent ID.</b> Di aplikasi Binance, buka Agentic Wallet dan klaim Agent ID kamu. Sisakan sedikit BNB untuk gas.</p></div>
-        <div class="step"><div class="num">2</div><p><b>Hubungkan AI kamu.</b> AI apa pun yang terhubung ke Agentic Wallet bisa dipakai.</p></div>
-        <div class="step"><div class="num">3</div><p><b>Copy prompt, kirim ke agent.</b> Agent mint keping berikutnya sesuai urutan — Pointer dulu, lalu Ember, Verdant, Frost, Void.</p></div>
-        <div class="step"><div class="num">4</div><p><b>Ulangi sampai lengkap.</b> Maks 5 keping per wallet. Set lengkap membuka staking pool BNB.</p></div>
+        <div class="step"><div class="num">1</div><p><b>Get your Agent ID.</b> In the Binance app, open Agentic Wallet and claim your Agent ID. Keep a little BNB for gas.</p></div>
+        <div class="step"><div class="num">2</div><p><b>Connect your AI.</b> Any AI connected to Agentic Wallet works.</p></div>
+        <div class="step"><div class="num">3</div><p><b>Copy the prompt, send it to your agent.</b> Your agent mints the next piece in order — Pointer first, then Ember, Verdant, Frost, Void.</p></div>
+        <div class="step"><div class="num">4</div><p><b>Repeat until complete.</b> Max 5 pieces per wallet. A full set unlocks the BNB staking pool.</p></div>
         <div class="card" style="box-shadow:none">
-          <h3>Biaya per keping</h3>
-          <p>Keping 1 Pointer <b>FREE</b> (gas saja). Keping 2 Ember, 3 Verdant, 4 Frost, 5 Void masing-masing <b>0,002 BNB</b>. Total satu set lengkap: <b>0,008 BNB</b> per wallet.</p>
+          <h3>Cost per piece</h3>
+          <p>Piece 1 Pointer <b>FREE</b> (gas only). Pieces 2 Ember, 3 Verdant, 4 Frost, 5 Void cost <b>0.002 BNB</b> each. One full set total: <b>0.008 BNB</b> per wallet.</p>
         </div>
       </div>
       <div class="prompt-box">
         <h3>Prompt for your agent</h3>
-        <div class="prompt-text" id="promptText">Mint keping Rifera Cursor Pieces (RPIECE) berikutnya untuk saya.
-Keping 1 Pointer FREE, keping 2–5 masing-masing 0.002 BNB, maks 5 per wallet, urutan wajib.
-Agent ID wajib. Kontrak resmi RPIECE yang sudah diumumkan saja.
-Lakukan sekarang, lalu laporkan keping yang didapat.</div>
+        <div class="prompt-text" id="promptText">Mint RPIECE: check Agent ID on registry 0x60B9262456dE011F7d15a54CdD8c48bAaa8B022F, then call nextMintQuote(wallet) for the exact price.
+Send mint() with exactly the quoted BNB (Pointer FREE, the rest 0.002 BNB each).
+1 set = max 5 pieces per wallet, order Pointer → Ember → Verdant → Frost → Void.
+Cap 1,111 per piece, 5,555 total — contract not deployed yet, check the live address on the web first.</div>
         <div class="copy-row">
           <button class="btn btn-white" id="btnCopy">Copy prompt</button>
           <span class="copy-msg" id="copyMsg" role="status"></span>
         </div>
-        <p class="sec-note" style="margin-top:16px;line-height:1.8">Status: BELUM DEPLOY — belum ada alamat kontrak RPIECE. Halaman ini tidak menampilkan angka mint apa pun karena belum ada satu pun keping yang terbit.</p>
+        <p class="sec-note" style="margin-top:16px;line-height:1.8">Status: NOT DEPLOYED — no RPIECE contract address yet. This page shows no mint counts because no piece has been issued yet.</p>
       </div>
     </div>
   </section>
 
   <section id="market">
-    <div class="sec-head"><h2><svg class="logo-mark" aria-hidden="true"><use href="#rifera-mark"/></svg> Marketplace keping</h2><span class="sec-note">Khusus RPIECE saja</span></div>
-    <p class="sec-sub">Marketplace ini hanya untuk keping RPIECE. Harga di bawah adalah <b>harga contoh</b> per keping untuk gambaran tampilan — bukan harga mint resmi (mint tetap FREE / 0,002 BNB) dan belum ada listing live karena kontrak belum deploy. Klik Buy untuk melihat prompt belinya di halaman ini juga.</p>
+    <div class="sec-head"><h2><svg class="logo-mark" aria-hidden="true"><use href="#rifera-mark"/></svg> Pieces marketplace</h2><span class="sec-note">RPIECE only</span></div>
+    <p class="sec-sub">This marketplace is for RPIECE pieces only. The prices below are <b>sample prices</b> per piece to preview the layout — not the official mint prices (mint stays FREE / 0.002 BNB) and there are no live listings yet because the contract is not deployed. Click Buy to see the buy prompt on this page too.</p>
     <div class="listings" id="listings"></div>
     <div class="buy-panel" id="buyPanel" hidden>
-      <h3 id="buyTitle">Beli keping</h3>
-      <p>Beli lewat agent kamu dari halaman ini. Copy prompt di bawah dan kirim ke agent setelah kontrak RPIECE resmi deploy dan listing-nya live.</p>
+      <h3 id="buyTitle">Buy piece</h3>
+      <p>Buy through your agent from this page. Copy the prompt below and send it to your agent once the RPIECE contract is officially deployed and the listing is live.</p>
       <div class="prompt-text" id="buyPrompt"></div>
       <div class="copy-row">
-        <button class="btn btn-white" id="btnCopyBuy">Copy prompt beli</button>
+        <button class="btn btn-white" id="btnCopyBuy">Copy buy prompt</button>
         <span class="copy-msg" id="buyCopyMsg" role="status"></span>
       </div>
     </div>
   </section>
 
   <section id="stake">
-    <div class="sec-head"><h2><svg class="logo-mark" aria-hidden="true"><use href="#rifera-mark"/></svg> Staking set lengkap</h2><span class="sec-note">RiferaCursorStake &bull; BELUM DEPLOY</span></div>
-    <p class="sec-sub">Stake <b>1 set lengkap</b> — Pointer + Ember + Verdant + Frost + Void — ke kontrak staking <b>RiferaCursorStake</b> dan dapat reward <b>BNB</b> dari pool. Status: <b>staking BELUM DEPLOY</b> — kontrak staking belum ada alamatnya, jadi belum bisa stake sekarang.</p>
+    <div class="sec-head"><h2><svg class="logo-mark" aria-hidden="true"><use href="#rifera-mark"/></svg> Full-set staking</h2><span class="sec-note">RiferaCursorStake &bull; NOT DEPLOYED</span></div>
+    <p class="sec-sub">Stake <b>1 full set</b> — Pointer + Ember + Verdant + Frost + Void — into the <b>RiferaCursorStake</b> staking contract and earn <b>BNB</b> rewards from the pool. Status: <b>staking is NOT DEPLOYED</b> — the staking contract has no address yet, so you cannot stake yet.</p>
     <div class="grid2" style="grid-template-columns:1fr 1fr">
       <div class="card">
-        <h3>Syarat staking</h3>
+        <h3>Staking requirements</h3>
         <div class="rows">
-          <div class="rowline"><span>Keping wajib</span><b>Pointer + Ember + Verdant + Frost + Void</b></div>
-          <div class="rowline"><span>Cara stake</span><b>5 NFT dikunci ke kontrak staking</b></div>
-          <div class="rowline"><span>Unstake</span><b>5 NFT balik utuh ke wallet kamu</b></div>
-          <div class="rowline"><span>Total biaya set</span><b>0,008 BNB</b></div>
-          <div class="rowline"><span>Status</span><b>BELUM DEPLOY — belum bisa stake</b></div>
+          <div class="rowline"><span>Required pieces</span><b>Pointer + Ember + Verdant + Frost + Void</b></div>
+          <div class="rowline"><span>How to stake</span><b>5 NFTs locked into the staking contract</b></div>
+          <div class="rowline"><span>Unstake</span><b>All 5 NFTs returned to your wallet</b></div>
+          <div class="rowline"><span>Full set cost</span><b>0.008 BNB</b></div>
+          <div class="rowline"><span>Status</span><b>NOT DEPLOYED — staking not open yet</b></div>
         </div>
       </div>
       <div class="card">
         <h3>Reward &amp; pool</h3>
         <div class="rows">
-          <div class="rowline"><span>Reward</span><b>BNB — bukan token baru</b></div>
-          <div class="rowline"><span>Rilis harian</span><b>10% dari sisa pool per hari</b></div>
-          <div class="rowline"><span>Pembagian</span><b>Dibagi rata ke semua set yang lagi di-stake</b></div>
-          <div class="rowline"><span>Sumber pool</span><b>Diisi manual oleh owner dari hasil mint</b></div>
-          <div class="rowline"><span>Klaim</span><b>Kapan saja</b></div>
+          <div class="rowline"><span>Reward</span><b>BNB — not a new token</b></div>
+          <div class="rowline"><span>Daily release</span><b>10% of the remaining pool per day</b></div>
+          <div class="rowline"><span>Split</span><b>Split evenly across all staked sets</b></div>
+          <div class="rowline"><span>Pool source</span><b>Funded manually by the owner from mint proceeds</b></div>
+          <div class="rowline"><span>Claim</span><b>Anytime</b></div>
         </div>
-        <p style="margin-top:14px">Pool diisi manual oleh owner dari hasil mint (fundPool) — <b>tidak ada potongan otomatis</b> dari fee mint. Pool <b>tidak bisa ditarik owner</b>; BNB di pool hanya keluar lewat klaim staker. Klaim bisa kapan saja, dan unstake otomatis membayar reward yang masih pending. Reward hanya jalan saat ada set yang sedang di-stake — kalau tidak ada yang stake, tidak ada yang dilepas dari pool.</p>
+        <p style="margin-top:14px">The pool is funded manually by the owner from mint proceeds (fundPool) — <b>no automatic cut</b> from mint fees. The owner <b>cannot withdraw the pool</b>; BNB in the pool only leaves through staker claims. Claim anytime, and unstaking automatically pays out any pending reward. Rewards only run while sets are staked — if nobody stakes, nothing leaves the pool.</p>
       </div>
     </div>
   </section>
@@ -351,21 +351,21 @@ Lakukan sekarang, lalu laporkan keping yang didapat.</div>
   <section id="faq">
     <div class="sec-head"><h2><svg class="logo-mark" aria-hidden="true"><use href="#rifera-mark"/></svg> FAQ</h2></div>
     <div class="faq">
-      <details open><summary>Apa itu Rifera Cursor Pieces?</summary><p>Koleksi NFT baru bernama RPIECE: satu kursor panah pixel yang dipecah jadi 5 pita horizontal — Pointer, Ember, Verdant, Frost, dan Void. Kelima pita bertumpuk menyusun satu kursor utuh.</p></details>
-      <details><summary>Sudah bisa mint?</summary><p>Belum. Kontrak RPIECE belum deploy dan belum ada alamat kontrak. Prompt mint di halaman ini disiapkan untuk dipakai setelah alamat resmi diumumkan. Jangan kirim BNB ke alamat mana pun yang mengatasnamakan RPIECE sebelum itu.</p></details>
-      <details><summary>Berapa total supply RPIECE?</summary><p>Maks 1.111 set lengkap: cap 1.111 keping per jenis (Pointer, Ember, Verdant, Frost, Void), jadi total maks 5.555 NFT. Karena mint wajib berurutan mulai dari Pointer, kalau Pointer habis, tidak ada wallet baru yang bisa mulai mint. Kontrak belum deploy, jadi belum ada satu pun keping yang terbit — angka di atas adalah cap-nya, bukan jumlah yang sudah mint.</p></details>
-      <details><summary>Berapa harga tiap keping?</summary><p>Keping 1 Pointer FREE (gas saja). Keping 2 Ember, 3 Verdant, 4 Frost, dan 5 Void masing-masing 0,002 BNB. Satu set lengkap total 0,008 BNB, maks 5 keping per wallet, mint wajib berurutan.</p></details>
-      <details><summary>Kenapa harus pakai agent?</summary><p>Mint RPIECE wajib Binance Agent ID. Kamu kirim prompt 4 baris, agent kamu yang memanggil kontrak — tidak ada tombol mint manual untuk manusia.</p></details>
-      <details><summary>Game Shard Rush ini apa?</summary><p>Game browser gratis 100 ronde dengan 4 gaya yang bergantian tiap ronde — RUSH (kumpulkan 5 keping), DODGE (bertahan sampai waktu habis; keping memberi bonus skor dan +5 detik), CHASE (tangkap 5 keping yang kabur), BLITZ (30 detik, kumpulkan keping sebanyak-banyaknya, minimal 5 untuk lolos). Gerakkan kursor (mouse, sentuh, atau WASD) dan hindari glitch. Timer menyusut tiap 10 ronde dari 60 sampai 30 detik, glitch makin banyak dan cepat. Nyawa 3 untuk seluruh permainan, +1 tiap 20 ronde selesai (maks 5). Tamatkan ronde 100 untuk jadi CURSOR MASTER. Tidak perlu wallet untuk main, dan skor game bukan jumlah mint.</p></details>
-      <details><summary>Set lengkap gunanya apa?</summary><p>Set 5 keping lengkap (Pointer + Ember + Verdant + Frost + Void) bisa di-stake ke kontrak RiferaCursorStake: kelima NFT dikunci ke kontrak dan balik utuh pas unstake. Reward-nya BNB — tiap hari 10% dari sisa pool dilepas dan dibagi rata ke semua set yang lagi di-stake. Pool diisi manual oleh owner dari hasil mint, tidak bisa ditarik owner, dan klaim bisa kapan saja. Tapi staking BELUM DEPLOY — kontrak staking belum ada alamatnya, jadi belum bisa stake sekarang.</p></details>
+      <details open><summary>What is Rifera Cursor Pieces?</summary><p>A new NFT collection called RPIECE: one pixel arrow cursor split into 5 horizontal bands — Pointer, Ember, Verdant, Frost, and Void. Stacked together, the five bands form one whole cursor.</p></details>
+      <details><summary>Can I mint yet?</summary><p>Not yet. The RPIECE contract is not deployed and there is no contract address. The mint prompt on this page is ready to use once the official address is announced. Do not send BNB to any address claiming to be RPIECE before that.</p></details>
+      <details><summary>What is the total RPIECE supply?</summary><p>Max 1,111 full sets: a cap of 1,111 pieces per type (Pointer, Ember, Verdant, Frost, Void), so 5,555 NFTs total max. Because minting must go in order starting from Pointer, if Pointer sells out, no new wallet can start minting. The contract is not deployed yet, so no piece has been issued — the numbers above are the cap, not the minted count.</p></details>
+      <details><summary>How much does each piece cost?</summary><p>Piece 1 Pointer is FREE (gas only). Pieces 2 Ember, 3 Verdant, 4 Frost, and 5 Void cost 0.002 BNB each. One full set totals 0.008 BNB, max 5 pieces per wallet, minting in order.</p></details>
+      <details><summary>Why do I need an agent?</summary><p>RPIECE minting requires a Binance Agent ID. You send the 4-line prompt, your agent calls the contract — there is no manual mint button for humans.</p></details>
+      <details><summary>What is the Shard Rush game?</summary><p>A free 100-round browser game with 4 styles rotating each round — RUSH (collect 5 pieces), DODGE (survive until time runs out; pieces give a score bonus and +5 seconds), CHASE (catch 5 fleeing pieces), BLITZ (30 seconds, collect as many pieces as you can, at least 5 to pass). Move the cursor (mouse, touch, or WASD) and dodge the glitches. The timer shrinks every 10 rounds from 60 to 30 seconds, and glitches grow in number and speed. 3 lives for the whole game, +1 every 20 rounds cleared (max 5). Clear round 100 to become CURSOR MASTER. No wallet needed to play, and game scores are not mint counts.</p></details>
+      <details><summary>What is a full set for?</summary><p>A full 5-piece set (Pointer + Ember + Verdant + Frost + Void) can be staked into the RiferaCursorStake contract: all five NFTs are locked into the contract and returned whole on unstake. The reward is BNB — every day 10% of the remaining pool is released and split evenly across all staked sets. The pool is funded manually by the owner from mint proceeds, cannot be withdrawn by the owner, and claims are open anytime. But staking is NOT DEPLOYED — the staking contract has no address yet, so you cannot stake yet.</p></details>
     </div>
   </section>
 </main>
 
 <footer>
   <div class="wrap">
-    Rifera Cursor Pieces (RPIECE) — 5 keping, 1 kursor. Keping 1 FREE, keping 2–5 masing-masing 0,002 BNB, set lengkap 0,008 BNB, maks 5 per wallet. Supply maks 1.111 set · 1.111 keping per jenis · total 5.555 NFT.<br>
-    Status: BELUM DEPLOY — belum ada alamat kontrak. Game di halaman ini gratis dan off-chain.
+    Rifera Cursor Pieces (RPIECE) — 5 pieces, 1 cursor. Piece 1 FREE, pieces 2–5 cost 0.002 BNB each, full set 0.008 BNB, max 5 per wallet. Max supply 1,111 sets · 1,111 pieces per type · 5,555 NFTs total.<br>
+    Status: NOT DEPLOYED — no contract address yet. The game on this page is free and off-chain.
   </div>
 </footer>
 
@@ -518,15 +518,15 @@ document.querySelectorAll('canvas[data-icon]').forEach(function(cv){drawPieceCan
 
 // ===== Marketplace: pieces only, sample prices =====
 var SHOP=[
- {i:0,name:'1 · Pointer',note:'Keping awal · contoh listing',price:'0,0010 BNB'},
- {i:1,name:'2 · Ember',note:'Keping bara · contoh listing',price:'0,0024 BNB'},
- {i:2,name:'3 · Verdant',note:'Keping tengah · contoh listing',price:'0,0028 BNB'},
- {i:3,name:'4 · Frost',note:'Keping es · contoh listing',price:'0,0032 BNB'},
- {i:4,name:'5 · Void',note:'Keping terakhir · contoh listing',price:'0,0040 BNB'}];
+ {i:0,name:'1 · Pointer',note:'First piece · sample listing',price:'0.0010 BNB'},
+ {i:1,name:'2 · Ember',note:'Ember piece · sample listing',price:'0.0024 BNB'},
+ {i:2,name:'3 · Verdant',note:'Middle piece · sample listing',price:'0.0028 BNB'},
+ {i:3,name:'4 · Frost',note:'Ice piece · sample listing',price:'0.0032 BNB'},
+ {i:4,name:'5 · Void',note:'Last piece · sample listing',price:'0.0040 BNB'}];
 var listingsEl=document.getElementById('listings');
 SHOP.forEach(function(s){
   var d=document.createElement('article'); d.className='listing';
-  d.innerHTML='<canvas data-shop="'+s.i+'" width="220" height="220" role="img" aria-label="Keping '+s.name+'"></canvas><h4>'+s.name+'</h4><p>'+s.note+'</p><p style="color:#fff;font-weight:600;font-size:13px">'+s.price+'</p>';
+  d.innerHTML='<canvas data-shop="'+s.i+'" width="220" height="220" role="img" aria-label="Piece '+s.name+'"></canvas><h4>'+s.name+'</h4><p>'+s.note+'</p><p style="color:#fff;font-weight:600;font-size:13px">'+s.price+'</p>';
   var b=document.createElement('button'); b.className='buy'; b.textContent='Buy';
   b.addEventListener('click',function(){openBuy(s);});
   d.appendChild(b); listingsEl.appendChild(d);
@@ -534,18 +534,18 @@ SHOP.forEach(function(s){
 document.querySelectorAll('canvas[data-shop]').forEach(function(cv){drawPieceCanvas(cv,+cv.dataset.shop);});
 var buyPanel=document.getElementById('buyPanel');
 function openBuy(s){
-  document.getElementById('buyTitle').textContent='Beli keping '+s.name+' — '+s.price+' (contoh)';
+  document.getElementById('buyTitle').textContent='Buy piece '+s.name+' — '+s.price+' (sample)';
   document.getElementById('buyPrompt').textContent=
-    'Beli keping '+s.name+' Rifera Cursor Pieces (RPIECE) untuk saya.\n'+
-    'Harga listing contoh '+s.price+'. Hanya listing RPIECE resmi.\n'+
-    'Agent ID wajib. Kontrak resmi RPIECE yang sudah diumumkan saja.\n'+
-    'Lakukan sekarang, lalu laporkan keping yang didapat.';
+    'Buy piece '+s.name+' of Rifera Cursor Pieces (RPIECE) for me.\n'+
+    'Sample listing price '+s.price+'. Official RPIECE listings only.\n'+
+    'Agent ID required. Only the officially announced RPIECE contract.\n'+
+    'Do it now, then report which piece you got.';
   document.getElementById('buyCopyMsg').textContent='';
   buyPanel.hidden=false;
   buyPanel.scrollIntoView({behavior:'smooth',block:'nearest'});
 }
 function copyText(txt,msgEl){
-  function done(){msgEl.textContent='Tersalin — paste ke agent kamu.';setTimeout(function(){msgEl.textContent='';},3200);}
+  function done(){msgEl.textContent='Copied — paste it to your agent.';setTimeout(function(){msgEl.textContent='';},3200);}
   if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(done).catch(function(){fallback();});}else{fallback();}
   function fallback(){var ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');}catch(e){}document.body.removeChild(ta);done();}
 }
@@ -565,10 +565,10 @@ document.getElementById('btnCopyBuy').addEventListener('click',function(){
   var shards=[],glitches=[],score=0,best=0,timeLeft=60,lives=3,got=0,invuln=0,over=false,win=false;
   var round=1,interT=0,dodgeSpawnT=0;
   var STYLES=[
-    {name:'RUSH', color:'#32d74b', desc:'Kumpul 5 keping sebelum waktu habis, hindari glitch.'},
-    {name:'DODGE',color:'#32ade6', desc:'Bertahan sampai waktu habis. Keping = bonus skor + 5 detik.'},
-    {name:'CHASE',color:'#ffd60a', desc:'Kepingnya kabur dari kamu — tangkap semua 5 keping.'},
-    {name:'BLITZ',color:'#ff3b30', desc:'30 detik — kumpul keping sebanyak-banyaknya, minimal 5 untuk lolos.'}
+    {name:'RUSH', color:'#32d74b', desc:'Collect all 5 pieces before time runs out, dodge the glitches.'},
+    {name:'DODGE',color:'#32ade6', desc:'Survive until time runs out. Pieces = score bonus + 5 seconds.'},
+    {name:'CHASE',color:'#ffd60a', desc:'The pieces run away from you — catch all 5.'},
+    {name:'BLITZ',color:'#ff3b30', desc:'30 seconds — collect as many pieces as you can, at least 5 to pass.'}
   ];
   function styleOf(r){return STYLES[(r-1)%4];}
   function timeFor(r){ if(styleOf(r).name==='BLITZ') return 30; return Math.max(30, 60-5*Math.floor((r-1)/10)); }
@@ -632,7 +632,7 @@ document.getElementById('btnCopyBuy').addEventListener('click',function(){
   function endGame(w){
     running=false;over=true;win=w;
     if(score>best)best=score;
-    btn.textContent='Main lagi'; syncHud(); draw(0);
+    btn.textContent='Play again'; syncHud(); draw(0);
   }
   function drawPlayer(){
     ctx.save(); ctx.translate(px,py);
@@ -671,20 +671,20 @@ document.getElementById('btnCopyBuy').addEventListener('click',function(){
       if(over&&win){
         ctx.font='28px "Press Start 2P"'; ctx.fillText('CURSOR MASTER!',W/2,H/2-38);
         ctx.font='15px "IBM Plex Mono"'; ctx.fillStyle='#b3b5d1';
-        ctx.fillText('100 ronde tamat! Skor akhir: '+score,W/2,H/2+2);
-        ctx.fillText('Di dunia nyata: set lengkap RPIECE = syarat staking.',W/2,H/2+30);
+        ctx.fillText('100 rounds cleared! Final score: '+score,W/2,H/2+2);
+        ctx.fillText('In the real world: a full RPIECE set = staking access.',W/2,H/2+30);
       }else if(over){
         ctx.font='28px "Press Start 2P"'; ctx.fillText('GAME OVER',W/2,H/2-38);
         ctx.font='15px "IBM Plex Mono"'; ctx.fillStyle='#b3b5d1';
-        ctx.fillText('Berhenti di ronde '+round+'/100 \u00b7 Gaya '+styleOf(round).name+' \u00b7 Skor: '+score,W/2,H/2+2);
-        ctx.fillText('Tekan Main lagi untuk coba lagi.',W/2,H/2+30);
+        ctx.fillText('Stopped at round '+round+'/100 \u00b7 Style '+styleOf(round).name+' \u00b7 Score: '+score,W/2,H/2+2);
+        ctx.fillText('Press Play again to retry.',W/2,H/2+30);
       }else{
         ctx.font='24px "Press Start 2P"'; ctx.fillText('SHARD RUSH',W/2,H/2-58);
         ctx.font='14px "IBM Plex Mono"'; ctx.fillStyle='#b3b5d1';
-        ctx.fillText('100 ronde \u00b7 4 gaya bergantian: RUSH \u00b7 DODGE \u00b7 CHASE \u00b7 BLITZ',W/2,H/2-16);
-        ctx.fillText('Timer menyusut tiap 10 ronde (60 \u2192 30 dtk), glitch makin ganas.',W/2,H/2+10);
-        ctx.fillText('Nyawa 3 untuk seluruh permainan, +1 tiap 20 ronde selesai.',W/2,H/2+36);
-        ctx.fillText('Tamatkan ronde 100 = CURSOR MASTER. Tekan Start untuk mulai.',W/2,H/2+62);
+        ctx.fillText('100 rounds \u00b7 4 rotating styles: RUSH \u00b7 DODGE \u00b7 CHASE \u00b7 BLITZ',W/2,H/2-16);
+        ctx.fillText('Timer shrinks every 10 rounds (60 \u2192 30s), glitches get meaner.',W/2,H/2+10);
+        ctx.fillText('3 lives for the whole game, +1 every 20 rounds cleared.',W/2,H/2+36);
+        ctx.fillText('Clear round 100 = CURSOR MASTER. Press Start to play.',W/2,H/2+62);
       }
       ctx.textAlign='left';
     }else if(interT>0){
@@ -692,12 +692,12 @@ document.getElementById('btnCopyBuy').addEventListener('click',function(){
       ctx.fillStyle='rgba(4,4,12,.72)'; ctx.fillRect(0,0,W,H);
       ctx.textAlign='center';
       ctx.font='15px "IBM Plex Mono"'; ctx.fillStyle='#b3b5d1';
-      ctx.fillText('RONDE '+round+' / 100',W/2,H/2-64);
+      ctx.fillText('ROUND '+round+' / 100',W/2,H/2-64);
       ctx.font='30px "Press Start 2P"'; ctx.fillStyle=stl.color;
       ctx.fillText(stl.name,W/2,H/2-16);
       ctx.font='14px "IBM Plex Mono"'; ctx.fillStyle='#b3b5d1';
       ctx.fillText(stl.desc,W/2,H/2+18);
-      ctx.fillText('Waktu '+timeFor(round)+' dtk \u00b7 Glitch '+glitchCount(round)+' \u00b7 Nyawa '+lives+' \u00b7 Skor '+score,W/2,H/2+44);
+      ctx.fillText('Time '+timeFor(round)+'s \u00b7 Glitches '+glitchCount(round)+' \u00b7 Lives '+lives+' \u00b7 Score '+score,W/2,H/2+44);
       ctx.textAlign='left';
     }
   }
@@ -784,7 +784,7 @@ document.getElementById('btnCopyBuy').addEventListener('click',function(){
     if(running)return;
     cancelAnimationFrame(raf);
     reset(); running=true; over=false;
-    btn.textContent='Berjalan\u2026';
+    btn.textContent='Playing\u2026';
     lastTs=performance.now();
     raf=requestAnimationFrame(loop);
   });

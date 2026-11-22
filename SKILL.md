@@ -86,10 +86,10 @@ wallet holds a complete set. The agent must hold a Binance Agent ID.
 
 ## Mint prompt (4 lines, direct execute, no domain)
 
-Mint RPIECE: cek Agent ID di registry 0x60B9262456dE011F7d15a54CdD8c48bAaa8B022F, lalu nextMintQuote(wallet) untuk harga pastinya.
-Kirim mint() dengan BNB tepat sesuai quote (Pointer FREE, sisanya 0,002 BNB).
-1 set = 5 keping maks per wallet, urutan Pointer → Ember → Verdant → Frost → Void.
-Cap 1.111 per keping, total 5.555 — kontrak belum deploy, cek alamat live di web dulu.
+Mint RPIECE: check Agent ID on registry 0x60B9262456dE011F7d15a54CdD8c48bAaa8B022F, then call nextMintQuote(wallet) for the exact price.
+Send mint() with exactly the quoted BNB (Pointer FREE, the rest 0.002 BNB each).
+1 set = max 5 pieces per wallet, order Pointer → Ember → Verdant → Frost → Void.
+Cap 1,111 per piece, 5,555 total — contract not deployed yet, check the live address on the web first.
 
 ## Game
 
