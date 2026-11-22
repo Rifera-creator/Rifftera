@@ -17,10 +17,12 @@ forge build
 
 mkdir -p deploy
 cp out/RiferaCursorPieces.sol/RiferaCursorPieces.json deploy/RiferaCursorPieces.json
+cp out/RiferaCursorStake.sol/RiferaCursorStake.json deploy/RiferaCursorStake.json
 
 echo "Exported:"
-f=deploy/RiferaCursorPieces.json
+for f in deploy/RiferaCursorPieces.json deploy/RiferaCursorStake.json; do
 abi_len=$(python3 -c "import json; d=json.load(open('$f')); print(len(d['abi']))")
 bc_len=$(python3 -c "import json; d=json.load(open('$f')); print(len(d['bytecode']['object'])//2)")
 echo "  $f  (abi entries: $abi_len, creation bytecode: ${bc_len} bytes)"
-echo "Deploy page: embed this JSON (abi + bytecode.object)."
+done
+echo "Deploy page: embed these JSONs (abi + bytecode.object)."

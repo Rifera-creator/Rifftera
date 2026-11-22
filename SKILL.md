@@ -99,6 +99,27 @@ pieces), DODGE (survive the timer), CHASE (catch fleeing pieces), BLITZ
 Finish round 100 to become CURSOR MASTER. The game is play only — playing
 does not mint anything.
 
+## Staking
+
+RiferaCursorStake — stake a complete set of 5 pieces, earn BNB from the pool.
+- Contract: NOT DEPLOYED yet (same as RPIECE — no address yet, do not
+  invent one).
+- Stake: `stake(uint256[5] tokenIds)` — exactly one of each piece (Pointer 0,
+  Ember 1, Verdant 2, Frost 3, Void 4), all owned by the caller, approved
+  first. The 5 NFTs lock in the staking contract; `unstake()` returns them
+  and pays pending rewards.
+- Rewards: 10% of the remaining pool per day (`DAILY_RELEASE_BPS` = 1000),
+  split equally among staked sets. Rewards only accrue while at least one
+  set is staked; idle days are never paid retroactively.
+- Pool: funded manually by the owner from mint revenue via `fundPool()`
+  (payable). No automatic split from mint fees. The pool has NO owner
+  withdraw — it only leaves via `claim()` / `unstake()` by stakers.
+- Claim: `claim()` pays pending BNB any time; `unstake()` auto-pays pending.
+- Selectors: `stake(uint256[5])` 0x17c54c64 · `unstake()` 0x2def6620 ·
+  `claim()` 0x4e71d92d · `fundPool()` 0x70f37d27 ·
+  `pendingReward(address)` 0xf40f0f52 · `poolBalance()` 0x96365d44 ·
+  `stakedSets()` 0xc1ca80cc · `stakedBy(address)` 0x5f56a31a
+
 ## Files
 
 - `SKILL.md` (this file) — full skill

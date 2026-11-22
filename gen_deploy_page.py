@@ -16,6 +16,7 @@ def art(name):
     return {"abi": d["abi"], "bytecode": d["bytecode"]["object"]}
 
 PIECES = art("RiferaCursorPieces")
+STAKE = art("RiferaCursorStake")
 
 TEMPLATE = r"""<!DOCTYPE html>
 <html lang="en">
@@ -68,6 +69,7 @@ TEMPLATE = r"""<!DOCTYPE html>
       <li>Payment must be <b>exact</b> — underpayment and overpayment both revert. Always call <b>nextMintQuote(wallet)</b> first.</li>
       <li>Max <b>5 pieces per wallet</b> (one complete set, one of each, in order). No 6th mint, no duplicates.</li>
       <li><b>Supply cap: 1,111 per piece</b> (Pointer, Ember, Verdant, Frost, Void) — <b>5,555 total</b>. A sold-out piece reverts new mints of that piece (PieceSoldOut); since every wallet starts at Pointer, once Pointer sells out no new wallet can start. Check remaining with <b>mintedPerPiece(piece)</b> / <b>remainingPerPiece(piece)</b>.</li>
+      <li><b>Staking:</b> a complete set (one of each piece) can be staked in <b>RiferaCursorStake</b> to share the BNB pool — <b>10% of the remaining pool is released per day</b>, split evenly between staked sets. The pool is funded <b>manually</b> (fundPool, step 08) from mint proceeds — there is <b>no automatic split</b> from mint fees, and <b>no owner withdraw of the pool</b>: pool BNB only leaves via staker claims.</li>
     </ul>
   </section>
 
@@ -120,13 +122,40 @@ Agent ID required. Reply with the tx link only.</pre>
     <p class="sub">Replace __PIECES_ADDR__ with the deployed contract address from step 02 after you deploy.</p>
   </section>
 
+  <section class="step" id="step-stake">
+    <h2><span class="n">07</span>Deploy RiferaCursorStake <span class="pill done" id="pill-stake">Not deployed</span></h2>
+    <p>Stake one complete set (Pointer + Ember + Verdant + Frost + Void) to share the BNB pool: <b>10% of the remaining pool is released per day</b>, split evenly between staked sets. Deploying staking <b>does NOT open mint</b> and <b>does NOT fund the pool</b> — mint stays closed until you press Open Mint (step 03), and funding is a separate manual step (08).</p>
+    <p><label>RiferaCursorPieces (RPIECE) address — deploy step 02 first, or paste it</label><input id="in-stake-pieces" class="mono" type="text" placeholder="0x..." /></p>
+    <button class="btn ghost" id="btn-fill-pieces" type="button" disabled>Use deployed Pieces address</button>
+    <ul>
+      <li>Constructor: <b>(rpiece, owner)</b> — owner is the connected wallet. The owner has <b>no privileged functions</b> over the pool or anyone's NFTs.</li>
+      <li>Staking needs a complete set held by one wallet; the 5 NFTs move into the staking contract and return in full on unstake.</li>
+      <li>Rewards only accrue while at least one set is staked. With zero stakers the pool stays whole.</li>
+    </ul>
+    <button class="btn" id="btn-deploy-stake" type="button" disabled>Deploy RiferaCursorStake</button>
+    <p>Stake contract: <span class="mono" id="stake-addr">—</span></p>
+    <p><label>Already deployed? Paste the staking contract address to resume</label><input id="in-stake" class="mono" type="text" placeholder="0x..." /></p>
+    <button class="btn ghost" id="btn-use-stake" type="button" disabled>Use this staking address</button>
+  </section>
+
+  <section class="step" id="step-fund">
+    <h2><span class="n">08</span>Fund the pool (manual, optional)</h2>
+    <p>Send BNB into the staking pool with <b>fundPool()</b>. <b>Anyone can fund</b> — the owner is expected to fund it from mint proceeds. There is <b>no automatic split</b> from mint fees. Pool BNB can <b>only</b> leave through staker claims; there is no owner withdraw.</p>
+    <p><label>Amount (BNB)</label><input id="in-fund" class="mono" type="text" placeholder="e.g. 1" /></p>
+    <button class="btn green" id="btn-fund" type="button" disabled>Fund Pool</button>
+    <button class="btn green" id="btn-refresh-stake" type="button" disabled>Refresh Staking Status</button>
+    <div class="kv" id="stake-status">Deploy the staking contract first.</div>
+  </section>
+
   <section class="step">
-    <h2><span class="n">06</span>After deploy</h2>
+    <h2><span class="n">09</span>After deploy</h2>
     <ul>
       <li>Verify the contract on BscScan / Sourcify (solc 0.8.24, optimizer 200, evm cancun, constructor arg = Agent ID registry above). In this repo: <b>./verify.sh &lt;PIECES_ADDRESS&gt;</b></li>
+      <li>Verify the staking contract too (if deployed): <b>./verify.sh &lt;PIECES_ADDRESS&gt; 56 &lt;STAKE_ADDRESS&gt; &lt;STAKE_OWNER&gt;</b> — constructor args are (rpiece, owner).</li>
       <li>Put the deployed address into the Rifera Game web (artifact rifera-game): Pieces section, Marketplace Buy, and the agent prompt.</li>
       <li>The old RiferaFirstTake NFT (0x0Cd348360109dd7f966B94a37Ff9BB0542b07Ec3, 7,620 takes) is a <b>separate collection</b> and stays as-is. Do not wire pieces to it.</li>
       <li>No funding step, no claim pool, no LP pairing in this contract — paid mint BNB goes to the owner immediately.</li>
+      <li>Staking needs no mint-open to deploy or fund — but nobody can stake until they hold a complete set, which needs mint open (step 03), and rewards need a funded pool (step 08).</li>
     </ul>
   </section>
 
@@ -135,11 +164,13 @@ Agent ID required. Reply with the tx link only.</pre>
 
 <script>
 const ART_PIECES = __ART_PIECES__;
+const ART_STAKE = __ART_STAKE__;
 const REGISTRY = "0x60B9262456dE011F7d15a54CdD8c48bAaa8B022F";
 
 const $ = (id) => document.getElementById(id);
 let provider = null, signer = null, account = null;
 let piecesAddr = null;
+let stakeAddr = null;
 
 function log(msg, cls) {
   const el = $("log");
@@ -176,6 +207,9 @@ async function connect() {
     log("Connected: " + account, "ok");
     $("btn-deploy").disabled = false;
     $("btn-use-pieces").disabled = false;
+    $("btn-deploy-stake").disabled = false;
+    $("btn-use-stake").disabled = false;
+    $("btn-fill-pieces").disabled = false;
   } catch (e) {
     $("wallet-status").textContent = "Connect failed: " + (e && e.message ? e.message : e);
     log("Connect failed: " + (e && e.message ? e.message : e), "err");
@@ -192,6 +226,7 @@ async function deployPieces() {
     await c.waitForDeployment();
     piecesAddr = await c.getAddress();
     $("pieces-addr").textContent = piecesAddr;
+    $("in-stake-pieces").value = piecesAddr;
     setPill("pill-deploy", "Deployed", "live");
     log("RiferaCursorPieces deployed: " + piecesAddr, "ok");
     $("btn-open").disabled = false;
@@ -240,11 +275,87 @@ function useAddr() {
   if (!isAddr(v)) { log("Invalid address.", "err"); return; }
   piecesAddr = v;
   $("pieces-addr").textContent = v;
+  $("in-stake-pieces").value = v;
   setPill("pill-deploy", "Set", "live");
   $("btn-open").disabled = false;
   $("btn-refresh").disabled = false;
   $("open-status").textContent = "Mint state unknown — press Refresh Status, then Open Mint if closed.";
   log("Contract set: " + v, "ok");
+}
+
+async function deployStake() {
+  const rp = $("in-stake-pieces").value.trim();
+  if (!isAddr(rp)) { log("Enter a valid RPIECE address first (step 02 or paste it).", "err"); return; }
+  $("btn-deploy-stake").disabled = true;
+  try {
+    const f = new ethers.ContractFactory(ART_STAKE.abi, ART_STAKE.bytecode, signer);
+    log("Deploying RiferaCursorStake ... (confirm in wallet)");
+    const c = await f.deploy(rp, account);
+    log("Deploy tx: " + c.deploymentTransaction().hash);
+    await c.waitForDeployment();
+    stakeAddr = await c.getAddress();
+    $("stake-addr").textContent = stakeAddr;
+    setPill("pill-stake", "Deployed", "live");
+    log("RiferaCursorStake deployed: " + stakeAddr, "ok");
+    $("btn-fund").disabled = false;
+    $("btn-refresh-stake").disabled = false;
+    $("stake-status").textContent = "Staking deployed. Fund the pool (optional), then stakers can stake complete sets.";
+  } catch (e) { log("Deploy staking failed: " + (e && e.message ? e.message : e), "err"); $("btn-deploy-stake").disabled = false; }
+}
+
+async function fundPool() {
+  if (!stakeAddr) { log("Deploy the staking contract first.", "err"); return; }
+  const amt = $("in-fund").value.trim();
+  let value;
+  try { value = ethers.parseEther(amt); } catch (e) { log("Invalid BNB amount.", "err"); return; }
+  if (value <= 0n) { log("Amount must be above 0.", "err"); return; }
+  $("btn-fund").disabled = true;
+  try {
+    const c = new ethers.Contract(stakeAddr, ART_STAKE.abi, signer);
+    log("Funding pool with " + amt + " BNB ... (confirm in wallet)");
+    const tx = await c.fundPool({ value });
+    log("fundPool tx: " + tx.hash);
+    await tx.wait();
+    log("Pool funded with " + amt + " BNB.", "ok");
+    refreshStake();
+  } catch (e) { log("Fund pool failed: " + (e && e.message ? e.message : e), "err"); }
+  $("btn-fund").disabled = false;
+}
+
+async function refreshStake() {
+  if (!stakeAddr) { $("stake-status").textContent = "Deploy the staking contract first."; return; }
+  try {
+    const c = new ethers.Contract(stakeAddr, ART_STAKE.abi, provider);
+    const lines = [
+      "RPIECE: " + await c.rpiece(),
+      "Owner: " + await c.owner(),
+      "Pool (unreleased): " + ethers.formatEther(await c.poolBalance()) + " BNB",
+      "Staked sets: " + await c.stakedSets(),
+      "Daily release: " + await c.DAILY_RELEASE_BPS() + " bps (10% of remaining pool per day)",
+      "accRewardPerSet: " + await c.accRewardPerSet(),
+      "Contract balance: " + ethers.formatEther(await provider.getBalance(stakeAddr)) + " BNB",
+    ];
+    $("stake-status").textContent = lines.join("\n");
+    log("Staking status refreshed.", "ok");
+  } catch (e) { log("Refresh staking failed: " + (e && e.message ? e.message : e), "err"); }
+}
+
+function useStakeAddr() {
+  const v = $("in-stake").value.trim();
+  if (!isAddr(v)) { log("Invalid address.", "err"); return; }
+  stakeAddr = v;
+  $("stake-addr").textContent = v;
+  setPill("pill-stake", "Set", "live");
+  $("btn-fund").disabled = false;
+  $("btn-refresh-stake").disabled = false;
+  $("stake-status").textContent = "Staking address set — press Refresh Staking Status.";
+  log("Staking contract set: " + v, "ok");
+}
+
+function fillPiecesAddr() {
+  if (!piecesAddr) { log("Deploy the Pieces contract first (step 02).", "err"); return; }
+  $("in-stake-pieces").value = piecesAddr;
+  log("RPIECE address filled: " + piecesAddr, "ok");
 }
 
 $("btn-connect").addEventListener("click", connect);
@@ -253,12 +364,18 @@ $("btn-deploy").addEventListener("click", deployPieces);
 $("btn-open").addEventListener("click", openMint);
 $("btn-refresh").addEventListener("click", refresh);
 $("btn-use-pieces").addEventListener("click", useAddr);
+$("btn-deploy-stake").addEventListener("click", deployStake);
+$("btn-fund").addEventListener("click", fundPool);
+$("btn-refresh-stake").addEventListener("click", refreshStake);
+$("btn-use-stake").addEventListener("click", useStakeAddr);
+$("btn-fill-pieces").addEventListener("click", fillPiecesAddr);
 </script>
 </body>
 </html>
 """
 
 html = TEMPLATE.replace("__ART_PIECES__", json.dumps(PIECES))
+html = html.replace("__ART_STAKE__", json.dumps(STAKE))
 OUT.parent.mkdir(parents=True, exist_ok=True)
 OUT.write_text(html)
 print("wrote", OUT, len(html), "bytes")

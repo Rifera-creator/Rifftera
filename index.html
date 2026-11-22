@@ -321,21 +321,29 @@ Lakukan sekarang, lalu laporkan keping yang didapat.</div>
   </section>
 
   <section id="stake">
-    <div class="sec-head"><h2><svg class="logo-mark" aria-hidden="true"><use href="#rifera-mark"/></svg> Staking set lengkap</h2></div>
-    <p class="sec-sub">Pegang kelima keping dalam satu wallet, dan set kamu memenuhi syarat staking pool BNB.</p>
+    <div class="sec-head"><h2><svg class="logo-mark" aria-hidden="true"><use href="#rifera-mark"/></svg> Staking set lengkap</h2><span class="sec-note">RiferaCursorStake &bull; BELUM DEPLOY</span></div>
+    <p class="sec-sub">Stake <b>1 set lengkap</b> — Pointer + Ember + Verdant + Frost + Void — ke kontrak staking <b>RiferaCursorStake</b> dan dapat reward <b>BNB</b> dari pool. Status: <b>staking BELUM DEPLOY</b> — kontrak staking belum ada alamatnya, jadi belum bisa stake sekarang.</p>
     <div class="grid2" style="grid-template-columns:1fr 1fr">
       <div class="card">
         <h3>Syarat staking</h3>
         <div class="rows">
           <div class="rowline"><span>Keping wajib</span><b>Pointer + Ember + Verdant + Frost + Void</b></div>
-          <div class="rowline"><span>Jumlah</span><b>5 keping dalam 1 wallet</b></div>
+          <div class="rowline"><span>Cara stake</span><b>5 NFT dikunci ke kontrak staking</b></div>
+          <div class="rowline"><span>Unstake</span><b>5 NFT balik utuh ke wallet kamu</b></div>
           <div class="rowline"><span>Total biaya set</span><b>0,008 BNB</b></div>
-          <div class="rowline"><span>Status</span><b>Mulai setelah RPIECE deploy</b></div>
+          <div class="rowline"><span>Status</span><b>BELUM DEPLOY — belum bisa stake</b></div>
         </div>
       </div>
       <div class="card">
-        <h3>Cara kerjanya</h3>
-        <p>Mint berurutan sampai set lengkap, pegang kelimanya di wallet yang sama, lalu daftarkan set itu ke staking pool BNB lewat agent. Keping yang sedang di-staking tetap milik wallet kamu. Detail pool diumumkan bersamaan dengan deploy kontrak — halaman ini tidak mengarang angka pool sebelum resmi.</p>
+        <h3>Reward &amp; pool</h3>
+        <div class="rows">
+          <div class="rowline"><span>Reward</span><b>BNB — bukan token baru</b></div>
+          <div class="rowline"><span>Rilis harian</span><b>10% dari sisa pool per hari</b></div>
+          <div class="rowline"><span>Pembagian</span><b>Dibagi rata ke semua set yang lagi di-stake</b></div>
+          <div class="rowline"><span>Sumber pool</span><b>Diisi manual oleh owner dari hasil mint</b></div>
+          <div class="rowline"><span>Klaim</span><b>Kapan saja</b></div>
+        </div>
+        <p style="margin-top:14px">Pool diisi manual oleh owner dari hasil mint (fundPool) — <b>tidak ada potongan otomatis</b> dari fee mint. Pool <b>tidak bisa ditarik owner</b>; BNB di pool hanya keluar lewat klaim staker. Klaim bisa kapan saja, dan unstake otomatis membayar reward yang masih pending. Reward hanya jalan saat ada set yang sedang di-stake — kalau tidak ada yang stake, tidak ada yang dilepas dari pool.</p>
       </div>
     </div>
   </section>
@@ -349,7 +357,7 @@ Lakukan sekarang, lalu laporkan keping yang didapat.</div>
       <details><summary>Berapa harga tiap keping?</summary><p>Keping 1 Pointer FREE (gas saja). Keping 2 Ember, 3 Verdant, 4 Frost, dan 5 Void masing-masing 0,002 BNB. Satu set lengkap total 0,008 BNB, maks 5 keping per wallet, mint wajib berurutan.</p></details>
       <details><summary>Kenapa harus pakai agent?</summary><p>Mint RPIECE wajib Binance Agent ID. Kamu kirim prompt 4 baris, agent kamu yang memanggil kontrak — tidak ada tombol mint manual untuk manusia.</p></details>
       <details><summary>Game Shard Rush ini apa?</summary><p>Game browser gratis 100 ronde dengan 4 gaya yang bergantian tiap ronde — RUSH (kumpulkan 5 keping), DODGE (bertahan sampai waktu habis; keping memberi bonus skor dan +5 detik), CHASE (tangkap 5 keping yang kabur), BLITZ (30 detik, kumpulkan keping sebanyak-banyaknya, minimal 5 untuk lolos). Gerakkan kursor (mouse, sentuh, atau WASD) dan hindari glitch. Timer menyusut tiap 10 ronde dari 60 sampai 30 detik, glitch makin banyak dan cepat. Nyawa 3 untuk seluruh permainan, +1 tiap 20 ronde selesai (maks 5). Tamatkan ronde 100 untuk jadi CURSOR MASTER. Tidak perlu wallet untuk main, dan skor game bukan jumlah mint.</p></details>
-      <details><summary>Set lengkap gunanya apa?</summary><p>Set 5 keping lengkap dalam satu wallet memenuhi syarat staking pool BNB. Detail pool diumumkan saat kontrak deploy.</p></details>
+      <details><summary>Set lengkap gunanya apa?</summary><p>Set 5 keping lengkap (Pointer + Ember + Verdant + Frost + Void) bisa di-stake ke kontrak RiferaCursorStake: kelima NFT dikunci ke kontrak dan balik utuh pas unstake. Reward-nya BNB — tiap hari 10% dari sisa pool dilepas dan dibagi rata ke semua set yang lagi di-stake. Pool diisi manual oleh owner dari hasil mint, tidak bisa ditarik owner, dan klaim bisa kapan saja. Tapi staking BELUM DEPLOY — kontrak staking belum ada alamatnya, jadi belum bisa stake sekarang.</p></details>
     </div>
   </section>
 </main>
