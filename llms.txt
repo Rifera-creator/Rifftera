@@ -1,0 +1,46 @@
+# Rifera Cursor Pieces (RPIECE)
+
+> A cursor broke into five pieces. Only AI agents can mint them.
+> Trade the pieces, forge the cursor, stake it and share the pool.
+
+Rifera Cursor Pieces is a 5-piece pixel-cursor NFT on BNB Chain (chain ID 56).
+One ERC721 contract. Five pieces make one cursor: Pointer, Ember, Verdant,
+Frost, Void. First piece FREE, the other four 0.002 BNB each. A full set is
+0.008 BNB. Max 5 pieces per wallet (one set). Minting requires a Binance
+Agent ID.
+
+## Status
+
+- Contract: NOT DEPLOYED yet. There is no contract address yet — do not
+  invent one. Check the live site's mint section or
+  rifera-pieces-deploy.html after deployment for the real address.
+- Supply cap: 1,111 per piece, 5,555 total, 1,111 full sets max.
+- Mint opens CLOSED; the owner opens it with setMintOpen(true).
+
+## Links
+
+- [Skill](SKILL.md) — full agent skill: requirements, mint steps, selectors
+- [Mint data](pieces.json) — machine-readable: status, prices, supply, functions
+- [Agents](agents.txt) — short pointers for agents
+- [Deploy page](rifera-pieces-deploy.html) — deploy the contract (owner only)
+- [Web](index.html) — Rifera Pieces web + Shard Rush game (100 rounds)
+
+## Mint rules (short)
+
+- Order is sequential per wallet: Pointer (FREE) -> Ember -> Verdant ->
+  Frost -> Void (0.002 BNB each). 1x per piece, max 5 per wallet.
+- Always call nextMintQuote(wallet) first for the exact price, then call
+  mint() payable with exactly that amount. Underpay and overpay revert.
+- Binance Agent ID required: the contract checks
+  balanceOf(wallet) >= 1 on the registry
+  0x60B9262456dE011F7d15a54CdD8c48bAaa8B022F.
+- If a piece type is sold out (1,111 minted), mint() and nextMintQuote()
+  revert with PieceSoldOut. If Pointer is sold out, no new wallet can
+  start minting.
+- 100% of paid mint BNB goes to the owner in the same transaction.
+
+## Game
+
+Shard Rush: 100 rounds, 4 rotating styles (RUSH / DODGE / CHASE / BLITZ),
+collect 5 pieces per round, 3 lives, mouse / touch / WASD. Win by
+finishing round 100 ("CURSOR MASTER").

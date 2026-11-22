@@ -136,6 +136,11 @@ canvas.shard-piece{position:relative;width:152px;height:152px;image-rendering:pi
 .buy-panel[hidden]{display:none}
 .buy-panel h3{margin:0 0 8px;font-size:16px}
 .buy-panel p{margin:0 0 12px;color:var(--muted);line-height:1.6;font-size:14px}
+.agent-files{display:grid;gap:10px;margin-top:14px}
+.agent-file{display:flex;justify-content:space-between;align-items:center;gap:12px;border:1.5px solid var(--line);padding:12px 14px;background:#0a0a16;font-family:"IBM Plex Mono";font-size:12.5px;color:var(--muted)}
+.agent-file a{font-family:"Press Start 2P";font-size:10px;color:var(--green);line-height:1.5;white-space:nowrap}
+.agent-file a:hover{color:#fff}
+.agent-file span{text-align:right}
 .faq{margin-top:18px;border:2px solid var(--line);background:var(--panel);box-shadow:5px 5px 0 #000}
 .faq details{border-bottom:2px solid var(--line)}
 .faq details:last-child{border-bottom:0}
@@ -242,6 +247,32 @@ footer{margin-top:60px;border-top:2px solid var(--line);padding:26px 0 36px;colo
         <div class="rowline"><span>Status kontrak</span><b>BELUM DEPLOY — belum ada alamat kontrak</b></div>
       </div>
       <p class="sec-note" style="margin-top:12px;line-height:1.7">Cap 1.111 per keping — kalau Pointer habis, tidak ada wallet baru yang bisa mulai mint.</p>
+    </div>
+  </section>
+
+  <section id="agents">
+    <div class="sec-head"><h2><svg class="logo-mark" aria-hidden="true"><use href="#rifera-mark"/></svg> FOR AGENTS</h2><span class="sec-note">Agent skill files &bull; relative links</span></div>
+    <p class="sec-sub">Agents and bots welcome — minting is for AI agents holding a Binance Agent ID.</p>
+    <div class="grid2">
+      <div class="card">
+        <h3>Agent skill files</h3>
+        <div class="agent-files">
+          <div class="agent-file"><a href="SKILL.md">SKILL.md</a><span>Skill lengkap untuk agent</span></div>
+          <div class="agent-file"><a href="llms.txt">llms.txt</a><span>Ringkasan untuk LLM</span></div>
+          <div class="agent-file"><a href="agents.txt">agents.txt</a><span>Pointer + prompt</span></div>
+          <div class="agent-file"><a href="pieces.json">pieces.json</a><span>Data mint machine-readable</span></div>
+          <div class="agent-file"><a href="robots.txt">robots.txt</a><span>Izin crawler</span></div>
+        </div>
+        <p class="sec-note" style="margin-top:14px;line-height:1.7">Link relatif — tetap jalan di GitHub Pages repo mana pun, tanpa domain tetap.</p>
+      </div>
+      <div class="prompt-box">
+        <h3>Prompt mint (sama seperti di section Mint)</h3>
+        <div class="prompt-text">Mint keping Rifera Cursor Pieces (RPIECE) berikutnya untuk saya.
+Keping 1 Pointer FREE, keping 2–5 masing-masing 0.002 BNB, maks 5 per wallet, urutan wajib.
+Agent ID wajib. Kontrak resmi RPIECE yang sudah diumumkan saja.
+Lakukan sekarang, lalu laporkan keping yang didapat.</div>
+        <p class="sec-note" style="margin-top:14px;line-height:1.7">Prompt yang sama persis dengan prompt di section Mint di bawah — tidak ada versi lain.</p>
+      </div>
     </div>
   </section>
 

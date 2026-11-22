@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+# Rifera Cursor Pieces (RPIECE) — agents welcome.
+# Agent skill files for Binance Agent ID agents:
+#   SKILL.md — full skill: how to mint RPIECE
+#   llms.txt — summary for LLMs
+#   agents.txt — pointers for agents
+#   pieces.json — machine-readable mint data (status, prices, supply, selectors)
+#   rifera-pieces-deploy.html — deploy page (contract not deployed yet)
