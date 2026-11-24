@@ -98,6 +98,14 @@ section{padding:52px 0 8px}
 .shard-ic{display:inline-block;width:22px;height:22px;opacity:.28;vertical-align:-6px;margin-right:2px;image-rendering:pixelated}
 .shard-ic.got{opacity:1}
 #cv{display:block;width:100%;height:auto;background:#0a0a18;touch-action:none;cursor:crosshair}
+.canvas-wrap{position:relative}
+.game-overlay{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:16px 14px 18px;background:rgba(6,6,15,.94);border-top:2px solid var(--line);text-align:center}
+.game-overlay[hidden]{display:none}
+.game-overlay-head{margin:0 0 12px;font-weight:700;font-size:16px;line-height:1.5;color:#fff}
+.game-overlay-line{margin:0 0 10px;font-size:14px;line-height:1.5;color:var(--muted)}
+.game-mint-line{margin:14px 0 0;text-align:center;font-family:"IBM Plex Mono";font-size:13.5px;line-height:1.7;color:var(--muted)}
+.game-mint-line a{color:var(--green);text-decoration:underline;font-weight:600}
+.game-mint-line a:hover{color:#fff}
 .game-help{display:flex;gap:8px 18px;flex-wrap:wrap;padding:12px 14px;border-top:2px solid var(--line);color:var(--muted);font-size:13.5px;background:var(--panel)}
 .game-help b{color:#fff}
 .progress{height:10px;background:#0a0a16;border-bottom:2px solid var(--line)}
@@ -241,13 +249,24 @@ footer{margin-top:60px;border-top:2px solid var(--line);padding:26px 0 36px;colo
         <button class="btn btn-green" id="btnStart">Start</button>
       </div>
       <div class="progress" role="progressbar" aria-label="Round progress out of 100" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="gProgWrap"><div class="progress-fill" id="gProg"></div></div>
+      <div class="canvas-wrap">
       <canvas id="cv" width="900" height="520" aria-label="Shard Rush game — 100 rounds, 4 rotating styles, collect pieces and dodge glitches"></canvas>
+      <div class="game-overlay" id="roundClearCta" hidden>
+        <p class="game-overlay-head">You collected 5 pieces — now mint the real ones.</p>
+        <a class="btn btn-green" href="#mint">Mint the real pieces — Pointer FREE</a>
+      </div>
+      <div class="game-overlay" id="gameOverCta" hidden>
+        <p class="game-overlay-line">Want the real pieces? Mint them — Pointer FREE</p>
+        <a class="btn btn-green" href="#mint">Mint the real pieces — Pointer FREE</a>
+      </div>
+      </div>
       <div class="game-help">
         <span><b>Move:</b> mouse / touch &amp; drag / WASD / arrows</span>
         <span><b>Win:</b> clear round 100 — CURSOR MASTER</span>
         <span><b>Lose:</b> lives run out or the round timer ends</span>
       </div>
     </div>
+    <p class="game-mint-line">Playing with shards? The real pieces are mintable — <a href="#mint">Pointer FREE, 0.002 BNB each</a>.</p>
   </section>
 
   <section id="pieces">
@@ -624,6 +643,10 @@ document.getElementById('btnCopyBuy').addEventListener('click',function(){
   function glitchCap(r){ return glitchCount(r)+3; }
   function glitchSpeed(r){ return Math.min(235, 50+(r-1)*2.1); }
   var elScore=document.getElementById('gScore'),elBest=document.getElementById('gBest'),elTime=document.getElementById('gTime'),elShard=document.getElementById('gShard'),elRound=document.getElementById('gRound'),elStyle=document.getElementById('gStyle'),elLives=document.getElementById('gLives'),elProg=document.getElementById('gProg'),elProgWrap=document.getElementById('gProgWrap'),btn=document.getElementById('btnStart');
+  var roundClearCta=document.getElementById('roundClearCta'),gameOverCta=document.getElementById('gameOverCta');
+  function hideGameCtas(){ if(roundClearCta)roundClearCta.hidden=true; if(gameOverCta)gameOverCta.hidden=true; }
+  function showRoundClearCta(){ if(gameOverCta)gameOverCta.hidden=true; if(roundClearCta)roundClearCta.hidden=false; }
+  function showGameOverCta(){ if(roundClearCta)roundClearCta.hidden=true; if(gameOverCta)gameOverCta.hidden=false; }
   var icons=document.querySelectorAll('.shard-ic');
   function hearts(){var s='';for(var i=0;i<5;i++){ if(i<lives) s+='\u2764'; else if(i<3) s+='\u2661'; }return s;}
   function syncHud(){
@@ -667,6 +690,7 @@ document.getElementById('btnCopyBuy').addEventListener('click',function(){
   }
   function reset(){
     score=0;lives=3;round=1;interT=0;over=false;win=false;
+    hideGameCtas();
     setupRound();
   }
   function completeRound(){
@@ -675,11 +699,13 @@ document.getElementById('btnCopyBuy').addEventListener('click',function(){
     if(round>=100){ score+=500; endGame(true); return; }
     if(round%20===0&&lives<5) lives++;
     round++; interT=2.0;
+    showRoundClearCta();
     setupRound();
   }
   function endGame(w){
     running=false;over=true;win=w;
     if(score>best)best=score;
+    showGameOverCta();
     btn.textContent='Play again'; syncHud(); draw(0);
   }
   function drawPlayer(){
@@ -752,7 +778,7 @@ document.getElementById('btnCopyBuy').addEventListener('click',function(){
   function loop(ts){
     if(!running)return;
     var dt=Math.min(0.05,(ts-lastTs)/1000||0.016); lastTs=ts;
-    if(interT>0){interT-=dt; draw(ts); raf=requestAnimationFrame(loop); return;}
+    if(interT>0){interT-=dt; if(interT<=0&&roundClearCta)roundClearCta.hidden=true; draw(ts); raf=requestAnimationFrame(loop); return;}
     timeLeft-=dt; if(invuln>0)invuln-=dt;
     var sp=330;
     if(keys['arrowleft']||keys['a'])tx-=sp*dt;
